@@ -1,16 +1,9 @@
 # C_Serg_Library
 
-(see raw or code)
-
-/*****************************************************************************************************************/
-/*****************************************************************************************************************/
-/************************************* BIBLIOTECA DE FUNCIONES DE C, MANUAL **************************************/
-/************************************** AUTOR: SERGIO JUAN ROLLÁN MORALEJO ***************************************/
-/*****************************************       VERSIÓN NO: 1.0       *******************************************/
-/************************************** FECHA DE FINALIZACIÓN: 03-07-2022 ****************************************/
-/*****************************************************************************************************************/
-/*****************************************************************************************************************/
-
+BIBLIOTECA DE FUNCIONES DE C, MANUAL
+AUTOR: SERGIO JUAN ROLLÁN MORALEJO
+VERSIÓN NO: 1.0   
+FECHA DE FINALIZACIÓN: 03-07-2023 
 
 
 Objetivo de la biblioteca: reducir lo máximo posible el número de ".h" que se incluyan en todos los proyectos de C del usuario. Se incluirá en los códigos fuente escribiendo al principio del documento '#include "sergioteca.h"'
@@ -54,8 +47,8 @@ Sus aportaciones a la abstracción, legibilidad, portabilidad y comodidad del le
 
 
 -------------------------------------------------------------------------------------------------------------------
------------------------------------------ CAPÍTULO 1: CONSTANTES ÚTILES -------------------------------------------
--------------------------------------------------------------------------------------------------------------------
+---------------- CAPÍTULO 1: CONSTANTES ÚTILES ----------------
+---------------------------------------------------------------
 
 * Para cambiar de línea o realizar un retorno de carro, el programador podrá despreocuparse de la secuencia de la función printf y de sus caracteres especiales y teclear "NUEVA_LINEA;" o "RETORNO_DE_CARRO;"
 * Para reflejar éxito o fallo en la ejecución de una función computacionalmente costosa, el programador podrá utilizar las constantes "EXITO", "FALLO" y "SUPERFALLO".
@@ -66,8 +59,8 @@ Sus aportaciones a la abstracción, legibilidad, portabilidad y comodidad del le
 
 
 -------------------------------------------------------------------------------------------------------------------
-------------------------------------------- CAPÍTULO 2: TIPO BOOLEANO ---------------------------------------------
--------------------------------------------------------------------------------------------------------------------
+------------------ CAPÍTULO 2: TIPO BOOLEANO ------------------
+---------------------------------------------------------------
 
 * Podrán declararse variables de tipo "boolean", que podrán valer "TRUE" o "FALSE".
 * Aunque TRUE y FALSE son macros que valen 1 y 0 respectivamente, se recomienda realizar comprobaciones con el operador '==' para aumentar la portabilidad. Por ejemplo, si se define una función "boolean funcion1();", con "return TRUE" y "return FALSE" dentro, y se utiliza en una sentencia condicional 'if', que sea en la forma "if(funcion1()==TRUE)", en lugar de solo "if(funcion1)".
@@ -76,8 +69,8 @@ Sus aportaciones a la abstracción, legibilidad, portabilidad y comodidad del le
 
 
 -------------------------------------------------------------------------------------------------------------------
----------------------------------------- CAPÍTULO 3: FUNCIONES MISCELÁNEAS ----------------------------------------
--------------------------------------------------------------------------------------------------------------------
+------------- CAPÍTULO 3: FUNCIONES MISCELÁNEAS  --------------
+---------------------------------------------------------------
 
 * La función "aproximar" recibe un float y ofrecerá el número entero más cercano a él. Esto sirve como contraste a la operación por defecto de C para pasar un float a un int, que es el truncado. Declaración: "int aproximar(float numero)". Más información en la documentación de la propia función.
 * La función "aleatorioEntre2" generará un número real aleatorio entre dos dados, con una precisión a escoger. Declaración: "double aleatorioEntre2(double limiteInferior, double limiteSuperior, int cifrasDePrecision)". Si el límite inferior es mayor al superior, simplemente se intercambiarán. Más información en la documentación de la propia función.
@@ -89,8 +82,8 @@ Sus aportaciones a la abstracción, legibilidad, portabilidad y comodidad del le
 
 
 -------------------------------------------------------------------------------------------------------------------
-------------------------------------- CAPÍTULO 4: LECTURA DE DATOS POR TECLADO ------------------------------------
--------------------------------------------------------------------------------------------------------------------
+-------------- CAPÍTULO 4: LECTURA DE DATOS POR TECLADO --------------
+---------------------------------------------------------------
 
 * Podrá leerse cualquier tipo de dato entre 'int', 'float', 'double', 'long' y 'string' invocando a la función macro "leer".
 * "   int num = leer(num, "Introduce un número entero: ");"
@@ -103,8 +96,8 @@ Sus aportaciones a la abstracción, legibilidad, portabilidad y comodidad del le
 
 
 -------------------------------------------------------------------------------------------------------------------
--------------------------------------- CAPÍTULO 5: IMPRIMIR DATOS POR CONSOLA -------------------------------------
--------------------------------------------------------------------------------------------------------------------
+-------------- CAPÍTULO 5: IMPRIMIR DATOS POR CONSOLA --------------
+---------------------------------------------------------------
 
 * Podrá imprimirse cualquier tipo de dato entre 'int', 'float', 'double', 'long' y 'string' invocando a la función macro "print".
 * " int num=7; print(num);"
@@ -119,8 +112,8 @@ Sus aportaciones a la abstracción, legibilidad, portabilidad y comodidad del le
 
 
 -------------------------------------------------------------------------------------------------------------------
------------------------------------- CAPÍTULO 6: OPERACIONES ÚTILES CON STRINGS -----------------------------------
--------------------------------------------------------------------------------------------------------------------
+-------------- CAPÍTULO 6: OPERACIONES ÚTILES CON STRINGS --------------
+---------------------------------------------------------------
 
 * La función "todoMayusculas" convierte todos los caracteres de la 'a' a la 'z' que haya en un string a mayúsculas, lo estuvieran ya o no. Declaración: "string todoMayusculas(string cadenaParaConvertir)". Más información en la documentación de la propia función. Lo mismo para la función "todoMinusculas".
 * La función "meterLetraEnCadena" es una operación simple de colocar un carácter al final de un string. Declaración: "int meterLetraEnCadena(string *cadena, char caracterAlFinal)". Más información en la documentación de la propia función.
@@ -133,8 +126,8 @@ Sus aportaciones a la abstracción, legibilidad, portabilidad y comodidad del le
 
 
 -------------------------------------------------------------------------------------------------------------------
---------------------------------- CAPÍTULO 7: OPERACIONES CON VECTORES Y MATRICES ---------------------------------
--------------------------------------------------------------------------------------------------------------------
+-------------- CAPÍTULO 7: OPERACIONES CON VECTORES Y MATRICES --------------
+---------------------------------------------------------------
 
 * Se definen operaciones para los tipo de dato "vector" y "vectorf" mencionados en el capítulo 1 de este manual. Son "leerVectorI/F", "imprimirVectorI/F", "productoEscalarI/F", "productoVectorialI/F" y "concatenarVectoresI/F".
 * Declaraciones: "vector leerVectorI(int numeroElementos, string cadenaParaImprimir)","vectorf leerVectorF(int numeroElementos, string cadenaParaImprimir)", "void imprimirVectorI(vector imprimido, int numeroDeElementosQueTiene)", "void imprimirVectorF(vectorf imprimido, int numeroDeElementosQueTiene)", "int productoEscalarI(vector vector1,  vector vector2, int numeroElementosQueTienen)", "float productoEscalarF(vectorf vector1, vectorf vector2, int numeroElementosQueTienen)", "vector productoVectorialI(vector vector1,  vector vector2)", "vectorf productoVectorialF(vectorf vector1,  vectorf vector2)", "vector concatenarVectoresI(vector vectorIzquierda, vector vectorDerecha, int numElementosPrimero, int numElementosSegundo)", "vectorf concatenarVectoresF(vectorf vectorIzquierda, vectorf vectorDerecha, int numElementosPrimero, int numElementosSegundo)". Más información en las documentaciones de las propias funciones.
@@ -145,8 +138,8 @@ Sus aportaciones a la abstracción, legibilidad, portabilidad y comodidad del le
 
 
 -------------------------------------------------------------------------------------------------------------------
-------------------------- CAPÍTULO 8: OPERACIONES CON LA ESTRUCTURA DE DATOS MATRIZ OBJETO ------------------------
--------------------------------------------------------------------------------------------------------------------
+-------------- CAPÍTULO 8: OPERACIONES CON MATRICES OBJETO --------------
+---------------------------------------------------------------
 
 * Se define una estructura de datos especial llamada 'tipoMatriz', con su análoga 'tipoMatrizf' para números reales, que será muy útil para ayudar al programador a no tener que preocuparse en absoluto por los tamaños, siendo todos ellos manejados de forma subyacente por la API. Esta define todas las funciones comentadas en el capítulo anterior para matrices. Adoptarán los mismos nombres, con el sufijo "_O" al final. Es decir:
 * Para leer una matriz, "tipoMatriz[/f] leerMatriz[I/F]_O(int filas, int columnas, string imprimir)"
@@ -163,8 +156,8 @@ Sus aportaciones a la abstracción, legibilidad, portabilidad y comodidad del le
 
 
 -------------------------------------------------------------------------------------------------------------------
----------------------------------------- CAPÍTULO 9: OPERACIONES CON PILAS ----------------------------------------
--------------------------------------------------------------------------------------------------------------------
+-------------- CAPÍTULO 9: OPERACIONES CON PILAS --------------
+---------------------------------------------------------------
 
 * Se define una estructura de datos especial llamada 'Pila'. Funcionará como un almacenamiento de datos de tipo LIFO. 
 * El tipo de dato que almacenará dependerá de lo que el usuario defina con la macro 'TIPO_INFO_PILAS'. Por ejemplo, "#define TIPO_INFO_PILAS float" hará que la estructura almacene números reales. Si no se realiza esta acción, el tipo por defecto será 'int'. Naturalmente, por restricciones del preprocesador de C, solo se podrá trabajar con un tipo de dato por programa.
@@ -175,8 +168,8 @@ Ofrecerá las operaciones de inicializado "void pilaCreaVacia(Pila *pilaParaInic
 
 
 -------------------------------------------------------------------------------------------------------------------
---------------------------------------- CAPÍTULO 10: OPERACIONES CON COLAS ----------------------------------------
--------------------------------------------------------------------------------------------------------------------
+-------------- CAPÍTULO 10: OPERACIONES CON COLAS --------------
+---------------------------------------------------------------
 
 * Se define una estructura de datos especial llamada 'Cola'. Funcionará como un almacenamiento de datos de tipo FIFO. 
 * El tipo de dato que almacenará dependerá de lo que el usuario defina con la macro 'TIPO_INFO_COLAS'. Por ejemplo, "#define TIPO_INFO_COLAS float" hará que la estructura almacene números reales. Si no se realiza esta acción, el tipo por defecto será 'int'. Naturalmente, por restricciones del preprocesador de C, solo se podrá trabajar con un tipo de dato por programa.
@@ -187,8 +180,8 @@ Ofrecerá las operaciones de inicializado "void colaCreaVacia(Cola *colaParaInic
 
 
 -------------------------------------------------------------------------------------------------------------------
----------------------- CAPÍTULO 11: OPERACIONES CON LISTAS ENLAZADAS CON ORIENTACION A OBJETOS --------------------
--------------------------------------------------------------------------------------------------------------------
+-------------- CAPÍTULO 11: LISTAS ENLAZADAS CON ORIENTACION A OBJETOS --------------
+---------------------------------------------------------------
 
 * Se define una estructura de datos especial llamada 'tipoLista'. Funcionará como una lista enlazada de cualquier tipo de dato definido con unas operaciones definidas.
 * Para este caso, como es muy común utilizar listas enlazadas con tipos de dato diferentes, se han definido cinco datos. Los tres primeros responden a las macros 'TIPO1_INFO_LISTA', 'TIPO2_INFO_LISTA' y 'TIPO3_INFO_LISTA', que por defecto serán 'int'. El cuarto será siempre 'int', y el último será siempre 'float'.
@@ -213,8 +206,8 @@ Ofrecerá las operaciones de inicializado "void colaCreaVacia(Cola *colaParaInic
 
 
 -------------------------------------------------------------------------------------------------------------------
-------------------------------------- CAPÍTULO 12: OTRAS ESTRUCTURAS DE DATOS -------------------------------------
--------------------------------------------------------------------------------------------------------------------
+-------------- CAPÍTULO 12: OTRAS ESTRUCTURAS DE DATOS --------------
+---------------------------------------------------------------
 
 * Se define el tipo de dato 'Arbol', que almacenará una serie de datos en forma de árbol. 
 * Su tipo de dato se controlará con la macro TIPO_INFO_ARBOL. 
@@ -230,22 +223,21 @@ Ofrecerá las operaciones de inicializado "void colaCreaVacia(Cola *colaParaInic
 
 
 -------------------------------------------------------------------------------------------------------------------
--------------------------------------- CAPÍTULO 13: LÍNEAS DE TRABAJO FUTURO --------------------------------------
--------------------------------------------------------------------------------------------------------------------
+-------------- CAPÍTULO 13: LÍNEAS DE TRABAJO FUTURO --------------
+---------------------------------------------------------------
 
-* Habrá que corregir errores menores y realizar más pruebas de depuración y de caminos.
-* Quedará pendiente documentar las funciones de las estructuras de datos del capítulo 12, que no son tan utilizadas ni importantes como el resto.
+* Corregir errores menores y realizar más pruebas de depuración y de caminos.
+* Quedará pendiente documentar las funciones de las estructuras de datos del capítulo 12.
 * Han quedado definidas, pero sin implementar, las estructuras de datos 'hiperplano' y 'codigo'. En futuras versiones, podrán utilizarse para realizar operaciones geométricas con objetos de cualquier dimensión (pues los vectores se limitan a una y las matrices a dos) y operaciones de aplicación de la teoría de códigos correctores de errores.
-* Esta documentación deberá ser un '.html' con formato, imágenes de ejemplo y facilidad visual de lectura, en lugar de un '.txt' plano.
 
 
 
 
 -------------------------------------------------------------------------------------------------------------------
------------------------------------- CAPÍTULO 14: IDEAS PARA FUTURAS VERSIONES ------------------------------------
--------------------------------------------------------------------------------------------------------------------
+-------------- CAPÍTULO 14: IDEAS PARA FUTURAS VERSIONES --------------
+---------------------------------------------------------------
 
-* Una función que permita hacer una pausa, tipo 'pause("Pulsa intro para continuar...");'
+* Una función que permita hacer una pausa, tipo 'pause("Pulsa intro para continuar...");', que no dependa del sistema operativo.
 * Añadir métodos de ordenación a las listas enlazadas.
 * Añadir a las opciones de lectura una que reciba un array de opciones (sirva de expansión al "Y/N" de la función yesOrNo).
 * También añadir versiones de contraseña 'leerPassword', también polimórfica para int, string, etc.
@@ -256,7 +248,7 @@ Ofrecerá las operaciones de inicializado "void colaCreaVacia(Cola *colaParaInic
 * Importación de librerías multicomputador como MPI.
 * Permitir delegar la ejecución de una función en particular a otro proceso.
 * Funciones de exclusión mutua y acceso a recursos.
-* Acceso seguro a un array, que haga que si haces lista[10] en una lista de tamaño 8, devuelva lista[7] e igual con el límite inferior.
+* Acceso seguro a un array, que haga que si uno escribe "lista[10]" en una lista de tamaño 8, devuelva "lista[7]" e igual con el límite inferior, y funciones similares.
 
 
 
