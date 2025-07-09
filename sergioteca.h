@@ -17,14 +17,11 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
-#include <unistd.h>
 #include <ctype.h>
 #include <math.h>
 #include <time.h>
 #include <limits.h>
 #include <conio.h>
-#include <termios.h>
-#include <sys/file.h>
 #include <sys/types.h>
 
 
@@ -261,8 +258,22 @@ typedef struct{
 
 
 
-
-
+//////////////////////////////////////////////// Intercambiar variables
+#define SWAP_UNSIGNED(a, b) do { (a) = (a) + (b); (b) = (a) - (b); (a) = (a) - (b); } while(0)
+#define SWAP_SIGNED_OR_FLOAT(a, b) (a) = ((a*b)/(b=a)); //no usar con ceros
+#define SWAP_XOR(a, b) do { (a) ^= (b); (b) ^= (a); (a) ^= (b); } while(0)
+#define SWAP(a, b) _Generic((a), \
+    unsigned char: SWAP_UNSIGNED, \
+    unsigned short: SWAP_UNSIGNED, \
+    unsigned int: SWAP_UNSIGNED, \
+    unsigned long: SWAP_UNSIGNED, \
+    unsigned long long: SWAP_UNSIGNED, \
+    float: SWAP_SIGNED_OR_FLOAT, \
+    double: SWAP_SIGNED_OR_FLOAT, \
+    long double: SWAP_SIGNED_OR_FLOAT, \
+    default: SWAP_XOR \
+)(a, b)
+////////////////////////////////////////////////
 
 
 
@@ -285,15 +296,33 @@ typedef struct{
 	y ojo por si se pueden meter maquinas de turing, grafos y automatas */
 
 
-//operaciones auxiliares
+//operaciones auxiliares y aleatorias
 int aproximar(float); //si recibe 5.63 devuelve 6, si recibe 5.48 devuelve 5
 double aleatorioEntre2(double, double, int);
 int enteroAleatorioConSigno(int, int);
+int aleatorioBinomial(int n, double p);
+double aleatorioNormal(double mu, double sigma);
 boolean yesOrNo(string); //imprime el string, y pide un Y o un N, devolviendo true o false.
 
+//descomponer
+int descomponerFactoresPrimos(int n, int *factores);
+int descomponerPolinomioRuffini(const int *coef, int grado, int *raices);
 
+// mcd y mcm
+int mcd(int a, int b);
+int mcm(int a, int b);
+int mcd_descp(int a, int b);
+int mcm_descp(int a, int b);
+// distancia en teclado QWERTY
+float distanciaTecladoQWERTY(char a, char b);
 
-
+//combinatoria
+long combinaciones(int n, int m);
+long combinacionesConRepeticion(int n, int m);
+long variaciones(int n, int m);
+long variacionesConRepeticion(int n, int m);
+long permutaciones(int n);
+long permutacionesConRepeticion(int n, const int *ms, int k);
 
 
 //operaciones de lectura
@@ -599,7 +628,7 @@ tipoMatriz concatenarMatricesEnVerticalI_O(tipoMatriz ma, tipoMatriz mb);
 matrizf  concatenarMatricesEnVerticalF(matrizf,matrizf, int,int,int);
 tipoMatrizf concatenarMatricesEnVerticalF_O(tipoMatrizf ma, tipoMatrizf mb);
 vector   concatenarVectoresI(vector, vector,int,int);
-vectorf  concatenarVectoresF_O(vectorf, vectorf, int,int);
+vectorf  concatenarVectoresF(vectorf, vectorf, int,int);
 
 
 
@@ -656,10 +685,48 @@ boolean bitEsDeInfo(bit_t**,int,int);
 
 
 //operaciones con hiperplanos (no disponible en version 1.0)
-hiperplano leerPlano(dimension);
+hiperplano leerPlano(int dimension);
 void imprimirPlano(hiperplano);
 hiperplano hijo(hiperplano, int);
 hiperplano planoOrtogonal(hiperplano, int);
+
+
+
+
+
+
+
+
+
+
+void mostrarLista(struct s*);
+
+
+
+
+
+
+
+
+
+
+tipoGrafo* creaGrafo();
+void verGrafo(tipoGrafo *g);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

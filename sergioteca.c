@@ -1,9 +1,10 @@
 /*****************************************************************************************************************/
 /*****************************************************************************************************************/
 /********************************** BIBLIOTECA DE FUNCIONES DE C, CÓDIGO FUENTE **********************************/
-/************************************** AUTOR: SERGIO JUAN ROLLÁN MORALEJO ***************************************/
-/*****************************************       VERSIÓN NO: 1.0       *******************************************/
-/************************************** FECHA DE FINALIZACIÓN: 03-07-2022 ****************************************/
+/**********************************     AUTOR: SERGIO JUAN ROLLÁN MORALEJO      **********************************/
+/**********************************              VERSIÓN NO: 1.0                **********************************/
+/**********************************      FECHA DE PUBLICACIÓN: 03-07-2022       **********************************/
+/**********************************     FECHA DE ACTUALIZACIÓN: 09-07-2025      **********************************/
 /*****************************************************************************************************************/
 /*****************************************************************************************************************/
 #include "sergioteca.h"
@@ -51,7 +52,7 @@ string leerString(string u, string s, int i)
 	NUEVA_LINEA;
 	fgets(r, i, stdin);
 	for (j = 0; j < i; j++) if (r[j] == '\0') break; else u[j] = r[j];
-	u[j] = '\0';tod
+	u[j] = '\0';
 	return u;
 }
 
@@ -163,23 +164,15 @@ int enteroAleatorioConSigno(int inf, int sup)
  */
 string substring(string cad, int inf, int sup)
 {
-	string s=NULL;
-	string result=NULL;
-	int i=0;
-	char c;
-	if(cad==NULL || sup>strlen(cad) || inf>sup) return NULL;
-	if(NULL==(result=malloc(sizeof(char)*(sup-inf+1)))) return NULL;
-	memset(result, '\0', sizeof(result));
-	if(inf==sup) return &cad[inf];
-	c=siguienteChar(cad);
-	while(++i<inf) c=siguienteChar(NULL);
-	while(i<=sup)
-	{
-		c=siguienteChar(NULL);
-		meterLetraEnCadena(&result, c);
-		i++;
-	}
-	return result;
+    if (cad == NULL || inf < 0 || sup < inf || sup >= (int)strlen(cad)) return NULL;
+    int len = sup - inf + 1;
+    string result = malloc((len + 1) * sizeof(char));
+    if (result == NULL) return NULL;
+    for (int i = 0; i < len; i++) {
+        result[i] = cad[inf + i];
+    }
+    result[len] = '\0';
+    return result;
 }
 
 /**
@@ -212,25 +205,16 @@ int numaparicioneschar(string s, char cc)
  */
 int numaparicionessub(string s, string ss)
 {
-	int i=0, j=0;
-	char c, cc;
-	string sub;
-	if(s==NULL || ss==NULL) return FALLO;
-	cc=ss[0];
-	c=siguienteChar(s);
-	while(c!='\0')
-	{
-		j++;
-		if(c==cc)
-		{
-			sub=substring(s, j-1, j-1+strlen(ss)-1);
-			j+=strlen(ss)-1;
-			printf("%c, %s\t%s\n", cc, sub, ss);
-			if(!strcmp(sub, ss)) i++;
-		}
-		c=siguienteChar(NULL);
-	}
-	return i;
+    if (s == NULL || ss == NULL || strlen(ss) == 0) return 0;
+    int count = 0;
+    int len_s = strlen(s);
+    int len_ss = strlen(ss);
+    for (int i = 0; i <= len_s - len_ss; i++) {
+        int j = 0;
+        while (j < len_ss && s[i + j] == ss[j]) j++;
+        if (j == len_ss) count++;
+    }
+    return count;
 }
 
 /** 
@@ -564,6 +548,12 @@ matriz leerMatrizI(int f, int c, string s)
 	for (i = 0; i < f; i++) if (NULL == (mat[i] = malloc(c * sizeof(int)))) return NULL;
 
     println(s);
+	if(f==1)
+	{
+		printf("Introduce la fila:\n");
+		for (j = 0; j < c; j++) mat[0][j] = leer(mat[0][j], "");
+		return mat;
+	}
 	for (i = 0; i < f; i++)
 	{
 		if (i) printf("Siguiente fila:\n");
@@ -586,19 +576,24 @@ tipoMatriz leerMatrizI_O(int f, int c, string s)
 	matriz mat; 
 	tipoMatriz tMat;
 
-	if (NULL == (mat = malloc(f * sizeof(vector )))) return NULL;
-	for (i = 0; i < f; i++) if (NULL == (mat[i] = malloc(c * sizeof(int)))) return NULL;
-    println(s);
-	for (i = 0; i < f; i++)
-	{
-		if (i) printf("Siguiente fila:\n");
-		else printf("Primera fila:\n");
-		for (j = 0; j < c; j++) mat[i][j] = leer(mat[i][j], "");
-	}
-	tMat.filas=f;
-	tMat.columnas=c;
-	tMat.matrix=mat
-	return tMat;
+	if (NULL == (mat = malloc(f * sizeof(vector )))) {
+        tMat.matrix = NULL;
+        tMat.filas = f;
+        tMat.columnas = c;
+        return tMat;
+    }
+    for (i = 0; i < f; i++) {
+        if (NULL == (mat[i] = malloc(c * sizeof(int)))) {
+            tMat.matrix = NULL;
+            tMat.filas = f;
+            tMat.columnas = c;
+            return tMat;
+        }
+    }
+    tMat.matrix = mat;
+    tMat.filas = f;
+    tMat.columnas = c;
+    return tMat;
 }
 
 /**
@@ -616,10 +611,17 @@ matrizf leerMatrizF(int f, int c, string s)
 	if (NULL == (mat = malloc(f * sizeof(vectorf)))) return NULL;
 	for (i = 0; i < f; i++) if (NULL == (mat[i] = malloc(c * sizeof(float)))) return NULL;
 
-	printf("%s",s);
+	println(s);
+	if(f==1)
+	{
+		printf("Introduce la fila:\n");
+		for (j = 0; j < c; j++) mat[0][j] = leer(mat[0][j], "");
+		return mat;
+	}
 	for (i = 0; i < f; i++)
 	{
-		if (i > 0) printf("Siguiente fila:\n");
+		if (i) printf("Siguiente fila:\n");
+		else printf("Primera fila:\n");
 		for (j = 0; j < c; j++) mat[i][j] = leer(mat[i][j], "");
 	}
 	return mat;
@@ -638,19 +640,24 @@ tipoMatrizf leerMatrizF_O(int f, int c, string s)
 	matrizf mat; int i, j;
 	tipoMatrizf tMat;
 	
-	if (NULL == (mat = malloc(f * sizeof(vectorf)))) return NULL;
-	for (i = 0; i < f; i++) if (NULL == (mat[i] = malloc(c * sizeof(float)))) return NULL;
-
-	printf("%s",s);
-	for (i = 0; i < f; i++)
-	{
-		if (i > 0) printf("Siguiente fila:\n");
-		for (j = 0; j < c; j++) mat[i][j] = leer(mat[i][j], "");
-	}
-	tMat.filas=f;
-	tMat.columnas=c;
-	tMat.matrix=mat
-	return tMat;
+	if (NULL == (mat = malloc(f * sizeof(vectorf)))) {
+        tMat.matrix = NULL;
+        tMat.filas = f;
+        tMat.columnas = c;
+        return tMat;
+    }
+    for (i = 0; i < f; i++) {
+        if (NULL == (mat[i] = malloc(c * sizeof(float)))) {
+            tMat.matrix = NULL;
+            tMat.filas = f;
+            tMat.columnas = c;
+            return tMat;
+        }
+    }
+    tMat.matrix = mat;
+    tMat.filas = f;
+    tMat.columnas = c;
+    return tMat;
 }
 
 /**
@@ -941,15 +948,14 @@ matriz  sumarMatrI(matriz  ma, matriz  mb, int f, int c)
  */
 tipoMatriz sumarMatrI_O(tipoMatriz ma, tipoMatriz mb)
 {
-	
-	tipoMatriz tMat;
-	if(ma.columnas!=mb.columnas) return ma;
-	if(ma.filas!=mb.filas) return ma;
-	tMat.filas=ma.filas;
-	tMat.columnas=ma.columnas;
-	tMat.matrix=sumarMatrI(ma,mb,ma.filas,ma.columnas);
-	if(tMat.matrix==NULL) return ma;
-	return tMat;
+    tipoMatriz tMat;
+    if(ma.columnas!=mb.columnas) return ma;
+    if(ma.filas!=mb.filas) return ma;
+    tMat.filas=ma.filas;
+    tMat.columnas=ma.columnas;
+    tMat.matrix=sumarMatrI(ma.matrix, mb.matrix, ma.filas, ma.columnas);
+    if(tMat.matrix==NULL) return ma;
+    return tMat;
 }
 
 /**
@@ -989,14 +995,14 @@ matrizf sumarMatrF(matrizf ma, matrizf mb, int f, int c)
  */
 tipoMatrizf sumarMatrF_O(tipoMatrizf ma, tipoMatrizf mb)
 {
-	tipoMatrizf tMat;
-	if(ma.columnas!=mb.columnas) return ma;
-	if(ma.filas!=mb.filas) return ma;
-	tMat.filas=ma.filas;
-	tMat.columnas=ma.columnas;
-	tMat.matrix=sumarMatrF(ma,mb,ma.filas,ma.columnas);
-	if(tMat.matrix==NULL) return ma;
-	return tMat;
+    tipoMatrizf tMat;
+    if(ma.columnas!=mb.columnas) return ma;
+    if(ma.filas!=mb.filas) return ma;
+    tMat.filas=ma.filas;
+    tMat.columnas=ma.columnas;
+    tMat.matrix=sumarMatrF(ma.matrix, mb.matrix, ma.filas, ma.columnas);
+    if(tMat.matrix==NULL) return ma;
+    return tMat;
 }
 
 /**
@@ -1036,14 +1042,14 @@ matriz  restarMatrI(matriz  ma, matriz  mb, int f, int c)
  */
 tipoMatriz restarMatrI_O(tipoMatriz ma, tipoMatriz mb)
 {
-	tipoMatriz tMat;
-	if(ma.columnas!=mb.columnas) return ma;
-	if(ma.filas!=mb.filas) return ma;
-	tMat.filas=ma.filas;
-	tMat.columnas=ma.columnas;
-	tMat.matrix=restarMatrI(ma,mb,ma.filas,ma.columnas);
-	if(tMat.matrix==NULL) return ma;
-	return tMat;
+    tipoMatriz tMat;
+    if(ma.columnas!=mb.columnas) return ma;
+    if(ma.filas!=mb.filas) return ma;
+    tMat.filas=ma.filas;
+    tMat.columnas=ma.columnas;
+    tMat.matrix=restarMatrI(ma.matrix, mb.matrix, ma.filas, ma.columnas);
+    if(tMat.matrix==NULL) return ma;
+    return tMat;
 }
 
 /**
@@ -1083,14 +1089,14 @@ matrizf restarMatrF(matrizf ma, matrizf mb, int f, int c)
  */
 tipoMatrizf restarMatrF_O(tipoMatrizf ma, tipoMatrizf mb)
 {
-	tipoMatrizf tMat;
-	if(ma.columnas!=mb.columnas) return ma;
-	if(ma.filas!=mb.filas) return ma;
-	tMat.filas=ma.filas;
-	tMat.columnas=ma.columnas;
-	tMat.matrix=  restarMatrF(ma,mb,ma.filas,ma.columnas);
-	if(tMat.matrix==NULL) return ma;
-	return tMat;
+    tipoMatrizf tMat;
+    if(ma.columnas!=mb.columnas) return ma;
+    if(ma.filas!=mb.filas) return ma;
+    tMat.filas=ma.filas;
+    tMat.columnas=ma.columnas;
+    tMat.matrix=restarMatrF(ma.matrix, mb.matrix, ma.filas, ma.columnas);
+    if(tMat.matrix==NULL) return ma;
+    return tMat;
 }
 
 /**
@@ -1370,13 +1376,13 @@ matrizf concatenarMatricesEnVerticalF(matrizf ma, matrizf mb, int a, int c, int 
  */
 tipoMatrizf concatenarMatricesEnVerticalF_O(tipoMatrizf ma, tipoMatrizf mb)
 {
-	tipoMatriz tMat;
-	if(ma.columnas!=mb.columnas) return ma;
-	tMat.filas=ma.filas+mb.filas;
-	tMat.columnas=ma.columnas;
-	tMat.matrix=concatenarMatricesEnVerticalI(ma.matrix, mb.matrix, ma.filas, mb.filas, mb.columnas);
-	if(tMat.matrix==NULL) return ma;
-	return tMat;
+    tipoMatrizf tMat;
+    if(ma.columnas!=mb.columnas) return ma;
+    tMat.filas=ma.filas+mb.filas;
+    tMat.columnas=ma.columnas;
+    tMat.matrix=concatenarMatricesEnVerticalF(ma.matrix, mb.matrix, ma.filas, mb.filas, mb.columnas);
+    if(tMat.matrix==NULL) return ma;
+    return tMat;
 }
 
 /**
@@ -2736,10 +2742,7 @@ int vaciarLaLista(tipoLista *tipo)
  */
 FILE* abrirFpBloq(string nombre, string modo)
 {
-	FILE* f = fopen(nombre, modo);
-	if(f==NULL) return NULL;
-	if (-1 == flock(fileno(f), LOCK_EX)) return NULL;
-	return f;
+    return fopen(nombre, modo);
 }
 
 /**
@@ -2750,13 +2753,7 @@ FILE* abrirFpBloq(string nombre, string modo)
  */
 void cerrarFpBloq(FILE* f)
 {
-	int fd;
-	if (f != NULL)
-	{
-		fd = fileno(f);
-		flock(fd, LOCK_UN);
-		close(fd);
-	}
+    fclose(f);
 }
 
 
@@ -3357,22 +3354,23 @@ void crearMonticulo(Monticulo *m)
 
 void heapsort(Monticulo *m)
 {
-	tipoElementoMonticulo vector[m->tam];
-	int nElementos;
-	int i;
-	tipoElementoMonticulo elemento;
+    tipoElementoMonticulo *vector = malloc(m->tam * sizeof(tipoElementoMonticulo));
+    int nElementos;
+    int i;
+    tipoElementoMonticulo elemento;
 
-	nElementos = m->tam;
+    nElementos = m->tam;
 
-	crearMonticulo(m);
-	
-	for(i=0;i<nElementos;i++)
-	{
-		eliminarMinimo(m,&elemento);
-		vector[i]=elemento;
-	}
-	for(i=0;i<nElementos;i++)
-		insertar(vector[i],m);
+    crearMonticulo(m);
+    
+    for(i=0;i<nElementos;i++)
+    {
+        eliminarMinimo(m,&elemento);
+        vector[i]=elemento;
+    }
+    for(i=0;i<nElementos;i++)
+        insertar(vector[i],m);
+    free(vector);
 }
 
 //
@@ -3569,6 +3567,315 @@ Arbol especular(Arbol raiz)
 	return nuevoNodo;
 }
 
+// Implementación de buscarMin para árbol binario de búsqueda
+Arbol buscarMin(Arbol raiz) {
+    if (raiz == NULL) return NULL;
+    while (raiz->izq != NULL) raiz = raiz->izq;
+    return raiz;
+}
+
+// Implementación de iniciarGrafo como wrapper de iniciar
+void iniciarGrafo(tipoGrafo *g) {
+    iniciar(g);
+}
+
+/**
+ * Descompone un número en factores primos.
+ * @param n Número a descomponer
+ * @param factores Array de salida donde se guardan los factores primos
+ * @return Número de factores encontrados
+ */
+int descomponerFactoresPrimos(int n, int *factores) {
+    int count = 0;
+    for (int i = 2; i * i <= n; i++) {
+        while (n % i == 0) {
+            factores[count++] = i;
+            n /= i;
+        }
+    }
+    if (n > 1) factores[count++] = n;
+    return count;
+}
+
+// Devuelve 1 si x es raíz del polinomio de grado n con coeficientes coef[]
+static int esRaizPoli(const int *coef, int grado, int x) {
+    int res = coef[0];
+    for (int i = 1; i <= grado; i++)
+        res = res * x + coef[i];
+    return res == 0;
+}
+
+// Aplica Ruffini y reduce el polinomio en grado
+static void ruffini(const int *coef, int grado, int raiz, int *nuevo) {
+    nuevo[0] = coef[0];
+    for (int i = 1; i < grado; i++)
+        nuevo[i] = nuevo[i-1] * raiz + coef[i];
+}
+
+/**
+ * Descompone un polinomio en raíces enteras usando Ruffini.
+ * @param coef Coeficientes del polinomio (grado+1 elementos, mayor a menor)
+ * @param grado Grado del polinomio
+ * @param raices Array de salida donde se guardan las raíces encontradas
+ * @return Número de raíces enteras encontradas
+ * @example int raices[100], coef = [6,-3,7,0,-2,4]; descomponerPolinomioRuffini(coef, 5, raices);
+ */
+int descomponerPolinomioRuffini(const int *coef, int grado, int *raices) {
+    int *temp = malloc((grado+1) * sizeof(int));
+    int actual_grado = grado;
+    int *actual = malloc((grado+1) * sizeof(int));
+    for (int i = 0; i <= grado; i++) actual[i] = coef[i];
+    int num_raices = 0;
+    while (actual_grado > 0) {
+        int cte = actual[actual_grado];
+        int encontrado = 0;
+        for (int d = 1; d <= abs(cte); d++) {
+            if (cte % d == 0) {
+                for (int signo = -1; signo <= 1; signo += 2) {
+                    int r = d * signo;
+                    if (esRaizPoli(actual, actual_grado, r)) {
+                        raices[num_raices++] = r;
+                        ruffini(actual, actual_grado, r, temp);
+                        for (int i = 0; i < actual_grado; i++) actual[i] = temp[i];
+                        actual_grado--;
+                        encontrado = 1;
+                        break;
+                    }
+                }
+            }
+            if (encontrado) break;
+        }
+        if (!encontrado) break;
+    }
+    free(temp);
+    free(actual);
+    return num_raices;
+}
+
+// Función auxiliar para calcular el factorial de un número
+static long factorial(int n) {
+    if (n < 0) return 0;
+    long res = 1;
+    for (int i = 2; i <= n; i++) res *= i;
+    return res;
+}
+
+long combinaciones(int n, int m) {
+    if (m < 0 || n < 0 || m > n) return 0;
+    return factorial(n) / (factorial(m) * factorial(n - m));
+}
+
+long combinacionesConRepeticion(int n, int m) {
+    // C'(n, m) = C(n + m - 1, m)
+    if (n <= 0 || m < 0) return 0;
+    return combinaciones(n + m - 1, m);
+}
+
+long variaciones(int n, int m) {
+    if (m < 0 || n < 0 || m > n) return 0;
+    long res = 1;
+    for (int i = 0; i < m; i++) res *= (n - i);
+    return res;
+}
+
+long variacionesConRepeticion(int n, int m) {
+    if (n < 0 || m < 0) return 0;
+    long res = 1;
+    for (int i = 0; i < m; i++) res *= n;
+    return res;
+}
+
+long permutaciones(int n) {
+    if (n < 0) return 0;
+    return factorial(n);
+}
+
+/**
+ * Calcula permutaciones con repeticiones: P(n; m1, m2, ..., mk)
+ * @param n Total de elementos
+ * @param ms Array de repeticiones
+ * @param k Número de repeticiones (tamaño de ms)
+ * @return Número de permutaciones o -1 si suma(ms) > n
+ * @example int ms[] = {2, 2, 1}; int result = permutacionesConRepeticion(8, ms, 3)
+ */
+long permutacionesConRepeticion(int n, const int *ms, int k) {
+    int suma = 0;
+    for (int i = 0; i < k; i++) suma += ms[i];
+    if (suma > n) return -1;
+    long res = factorial(n);
+    for (int i = 0; i < k; i++) res /= factorial(ms[i]);
+    return res;
+}
+
+/**
+ * Genera un valor aleatorio según una distribución binomial B(n, p)
+ * @param n Número de ensayos
+ * @param p Probabilidad de éxito en cada ensayo (0 <= p <= 1)
+ * @return Número de éxitos
+ * @example int x = aleatorioBinomial(10, 0.5); // x entre 0 y 10
+ */
+int aleatorioBinomial(int n, double p) {
+    static int seeded = 0;
+    if (!seeded) { srand((unsigned)time(NULL)); seeded = 1; }
+    int x = 0;
+    for (int i = 0; i < n; i++) {
+        if ((double)rand() / RAND_MAX < p) x++;
+    }
+    return x;
+}
+
+/**
+ * Genera un valor aleatorio según una distribución normal (Gaussiana) N(mu, sigma^2)
+ * @param mu Media
+ * @param sigma Desviación estándar
+ * @return Valor aleatorio generado
+ * @example double x = aleatorioNormal(0, 1); // x ~ N(0,1)
+ */
+double aleatorioNormal(double mu, double sigma) {
+    static int seeded = 0;
+    if (!seeded) { srand((unsigned)time(NULL)); seeded = 1; }
+    static int hasSpare = 0;
+    static double spare;
+    if (hasSpare) {
+        hasSpare = 0;
+        return mu + sigma * spare;
+    }
+    hasSpare = 1;
+    double u, v, s;
+    do {
+        u = (double)rand() / RAND_MAX * 2.0 - 1.0;
+        v = (double)rand() / RAND_MAX * 2.0 - 1.0;
+        s = u * u + v * v;
+    } while (s >= 1.0 || s == 0.0);
+    s = sqrt(-2.0 * log(s) / s);
+    spare = v * s;
+    return mu + sigma * (u * s);
+}
+
+/**
+ * Calcula el máximo común divisor (MCD) de dos números enteros usando el algoritmo de Euclides.
+ * @param a Primer número
+ * @param b Segundo número
+ * @return MCD de a y b
+ * @example int r = mcd(18, 24); // r = 6
+ */
+int mcd(int a, int b) {
+    if (a < 0) a = -a;
+    if (b < 0) b = -b;
+    while (b != 0) {
+        int t = b;
+        b = a % b;
+        a = t;
+    }
+    return a;
+}
+
+/**
+ * Calcula el mínimo común múltiplo (MCM) de dos números enteros.
+ * @param a Primer número
+ * @param b Segundo número
+ * @return MCM de a y b
+ * @example int r = mcm(18, 24); // r = 72
+ */
+int mcm(int a, int b) {
+    if (a == 0 || b == 0) return 0;
+    int res = mcd(a, b);
+    return a * b / res;
+}
+
+/**
+ * Calcula el máximo común divisor (MCD) de dos números usando la descomposición en factores primos.
+ * @param a Primer número
+ * @param b Segundo número
+ * @return MCD de a y b
+ * @example int r = mcd_descp(18, 24); // r = 6
+ */
+int mcd_descp(int a, int b) {
+    if (a == 0 || b == 0) return 0;
+    int fa[32], fb[32];
+    int na = descomponerFactoresPrimos(a < 0 ? -a : a, fa);
+    int nb = descomponerFactoresPrimos(b < 0 ? -b : b, fb);
+    int res = 1;
+    int i = 0, j = 0;
+    while (i < na && j < nb) {
+        if (fa[i] == fb[j]) {
+            res *= fa[i];
+            i++; j++;
+        } else if (fa[i] < fb[j]) {
+            i++;
+        } else {
+            j++;
+        }
+    }
+    return res;
+}
+
+/**
+ * Calcula el mínimo común múltiplo (MCM) de dos números usando la descomposición en factores primos.
+ * @param a Primer número
+ * @param b Segundo número
+ * @return MCM de a y b
+ * @example int r = mcm_descp(18, 24); // r = 72
+ */
+int mcm_descp(int a, int b) {
+    if (a == 0 || b == 0) return 0;
+    int fa[32], fb[32];
+    int na = descomponerFactoresPrimos(a < 0 ? -a : a, fa);
+    int nb = descomponerFactoresPrimos(b < 0 ? -b : b, fb);
+    int res = 1;
+    int i = 0, j = 0;
+    while (i < na || j < nb) {
+        if (i < na && (j >= nb || fa[i] < fb[j])) {
+            res *= fa[i];
+            i++;
+        } else if (j < nb && (i >= na || fb[j] < fa[i])) {
+            res *= fb[j];
+            j++;
+        } else {
+            res *= fa[i];
+            i++; j++;
+        }
+    }
+    return res;
+}
+
+/**
+ * Calcula la distancia entre dos letras en el teclado QWERTY (solo letras a-z, case-insensitive)
+ * se considera que la distancia vertical es 0.5 y la horizontal es 1
+ * @param a Letra origen
+ * @param b Letra destino
+ * @return Distancia euclídea entre las letras en el teclado
+ * @example float d = distanciaTecladoQWERTY('f', 't'); // d = 1.5
+ */
+float distanciaTecladoQWERTY(char a, char b) {
+    static const char *filas[] = {"qwertyuiop", "asdfghjkl", "zxcvbnm"};
+    int pos[2][2];
+    char letras[2] = {a, b};
+    for (int k = 0; k < 2; k++) 
+    {
+        char c = tolower(letras[k]);
+        int found = 0;
+        for (int f = 0; f < 3 && !found; f++) 
+        {
+            const char *row = filas[f];
+            for (int col = 0; row[col]; col++) 
+            {
+                if (row[col] == c) 
+                {
+                    pos[k][0] = col;
+                    pos[k][1] = f;
+                    found = 1;
+                    break;
+                }
+            }
+        }
+        if (!found) return -1.0f;
+    }
+    int dx = abs(pos[0][0] - pos[1][0]);
+    int dy = abs(pos[0][1] - pos[1][1]);
+    float dist = dx * 1.0f + dy * 0.5f;
+    return dist;
+}
 
 
 
@@ -3592,29 +3899,30 @@ Arbol especular(Arbol raiz)
 
 
 
-palabra encriptar(palabra,codigo){return NULL;} //throw new UnimplementedError();
-palabra desencriptar(palabra,codigo){return NULL;} //throw new UnimplementedError();
-palabra sindrome(palabra,codigo){return NULL;} //throw new UnimplementedError();
-codigo generarG_estandar(int, int){codigo c; return c;} //throw new UnimplementedError();
-int peso(palabra){return 1;} //throw new UnimplementedError();
-void *normalizarG(codigo*){return NULL;} //throw new UnimplementedError();
-int H2G_estandar(codigo*){return 1;} //throw new UnimplementedError();
-int G2H_estandar(codigo*){return 1;} //throw new UnimplementedError();
-int calcularS(codigo*){return 1;} //throw new UnimplementedError();
-int calcularT(codigo*){return 1;} //throw new UnimplementedError();
-int calcularNyM(codigo*){return 1;} //throw new UnimplementedError();
-int calcularD(codigo*){return 1;} //throw new UnimplementedError();
-codigo generarCodigoInicializado(byte_t**){codigo c; return c;} //throw new UnimplementedError();
-codigo generarHamming(int){codigo c; return c;} //throw new UnimplementedError();
-bit_t sacarBit(short int){return __1;} //throw new UnimplementedError();
-boolean bitEsDeInfo(bit_t**,int,int){return FALSE;} //throw new UnimplementedError();
+
+palabra encriptar(palabra p, codigo c){return NULL;} //throw new UnimplementedError();
+palabra desencriptar(palabra p, codigo c){return NULL;} //throw new UnimplementedError();
+palabra sindrome(palabra p, codigo c){return NULL;} //throw new UnimplementedError();
+codigo generarG_estandar(int a, int b){codigo c; return c;} //throw new UnimplementedError();
+int peso(palabra p){return 1;} //throw new UnimplementedError();
+void *normalizarG(codigo* c){return NULL;} //throw new UnimplementedError();
+int H2G_estandar(codigo* c){return 1;} //throw new UnimplementedError();
+int G2H_estandar(codigo* c){return 1;} //throw new UnimplementedError();
+int calcularS(codigo* c){return 1;} //throw new UnimplementedError();
+int calcularT(codigo* c){return 1;} //throw new UnimplementedError();
+int calcularNyM(codigo* c){return 1;} //throw new UnimplementedError();
+int calcularD(codigo* c){return 1;} //throw new UnimplementedError();
+codigo generarCodigoInicializado(byte_t** b){codigo c; return c;} //throw new UnimplementedError();
+codigo generarHamming(int n){codigo c; return c;} //throw new UnimplementedError();
+bit_t sacarBit(short int s){return __1;} //throw new UnimplementedError();
+boolean bitEsDeInfo(bit_t** b, int i, int j){return FALSE;} //throw new UnimplementedError();
 
 
 
-hiperplano leerPlano(dimension){hiperplano h; return h;} //throw new UnimplementedError();
-void imprimirPlano(hiperplano){} //throw new UnimplementedError();
-hiperplano hijo(hiperplano, int){hiperplano h; return h;} //throw new UnimplementedError();
-hiperplano planoOrtogonal(hiperplano, int){hiperplano h; return h;} //throw new UnimplementedError();
+hiperplano leerPlano(int dimension) { hiperplano h; return h; }
+void imprimirPlano(hiperplano h) { (void)h; }
+hiperplano hijo(hiperplano h, int n) { (void)h; (void)n; hiperplano res; return res; }
+hiperplano planoOrtogonal(hiperplano h, int n) { (void)h; (void)n; hiperplano res; return res; }
 
 
 
