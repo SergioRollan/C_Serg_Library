@@ -222,6 +222,32 @@ typedef struct{
 ////////////////////////////////////////////////
 
 
+//////////////////////////////////////////////// procesos ssoo
+typedef struct{
+	int pid;
+	int turnoLlegada;
+	int tiempoEjecucion;
+	int tiempoRestante;
+	int tiempoEspera;
+	int tiempoRespuesta;
+	int tiempoRetorno;
+}proceso;
+typedef struct{
+	proceso *procesos;
+	int numProcesos;
+	int cuanto;
+	int esperaMaxima;
+	int* pidsTurnos;
+	int numeroTotalTurnos;
+	float tiempoCambioProceso;
+	float tiempoTurno;
+	float tiempoPromedio;
+	float tiempoTotal;
+	boolean codigoError;
+}ssoo;
+////////////////////////////////////////////////
+
+
 //////////////////////////////////////////////// hiperplanos
 #ifndef TIPO_INFO_HIPERFLANOS
   #define TIPO_INFO_HIPERFLANOS int
@@ -296,13 +322,16 @@ typedef struct{
 	y ojo por si se pueden meter maquinas de turing, grafos y automatas */
 
 
-//operaciones auxiliares y aleatorias
+//operaciones auxiliares
 int aproximar(float); //si recibe 5.63 devuelve 6, si recibe 5.48 devuelve 5
+void alwaysPause(void); //imprime "Pulsa intro para continuar..." y espera a que se pulse intro.
+boolean yesOrNo(string); //imprime el string, y pide un Y o un N, devolviendo true o false.
+
+// numeros aleatorios
 double aleatorioEntre2(double, double, int);
 int enteroAleatorioConSigno(int, int);
 int aleatorioBinomial(int n, double p);
 double aleatorioNormal(double mu, double sigma);
-boolean yesOrNo(string); //imprime el string, y pide un Y o un N, devolviendo true o false.
 
 //descomponer
 int descomponerFactoresPrimos(int n, int *factores);
@@ -311,8 +340,11 @@ int descomponerPolinomioRuffini(const int *coef, int grado, int *raices);
 // mcd y mcm
 int mcd(int a, int b);
 int mcm(int a, int b);
+int mcd_n(const int *valores, int n);
+int mcm_n(const int *valores, int n);
 int mcd_descp(int a, int b);
 int mcm_descp(int a, int b);
+
 // distancia en teclado QWERTY
 float distanciaTecladoQWERTY(char a, char b);
 
@@ -474,7 +506,11 @@ int borrarPrincipio(lista*);
 int borrarFinal(lista*);
 int vaciarLista(lista*);
 int tamannoDeLaLista(nodo);
+void mostrarLista(struct s*);
+
+
 boolean estaVacia(lista);
+
 
 
 
@@ -532,6 +568,8 @@ int esMonticulo(Monticulo m);
 
 //operaciones con grafos
 
+tipoGrafo* creaGrafo();
+void verGrafo(tipoGrafo *g);
 void iniciarGrafo(tipoGrafo *g);
 void profundidad(int v_inicio,tipoGrafo *grafo);
 void profundidadMejorado(int v_inicio, tipoGrafo * grafo);
@@ -662,6 +700,16 @@ boolean colaArbolVacia(ColaArbol *);
 int colaArbolInserta(tipoElementoCDA, ColaArbol *);
 tipoElementoCDA colaArbolSuprime(ColaArbol *);
 
+// Planificación de procesos en sistemas operativos
+int inicializarProcesoPid(proceso *p, int pid, int turnoLlegada, int tiempoEjecucion);
+ssoo proc_FCFS(ssoo sistema);
+ssoo proc_RR(ssoo sistema);
+ssoo proc_SPN(ssoo sistema);
+ssoo proc_SRN(ssoo sistema);
+ssoo proc_HRRN(ssoo sistema);
+ssoo proc_RA(ssoo sistema);
+
+
 
 
 //operaciones con codigos (no disponible en version 1.0)
@@ -692,47 +740,54 @@ hiperplano planoOrtogonal(hiperplano, int);
 
 
 
+int bubbleSortI(int *v, int n);
+int bubbleSortF(float *v, int n);
+int selectionSortI(int *v, int n);
+int selectionSortF(float *v, int n);
+int insertionSortI(int *v, int n);
+int insertionSortF(float *v, int n);
+int mergeSortI(int *v, int n);
+int mergeSortF(float *v, int n);
+int quickSortI(int *v, int n);
+int quickSortF(float *v, int n);
+int shellSortI(int *v, int n);
+int shellSortF(float *v, int n);
+int gnomeSortI(int *v, int n);
+int gnomeSortF(float *v, int n);
+int combSortI(int *v, int n);
+int combSortF(float *v, int n);
+int oddEvenSortI(int *v, int n);
+int oddEvenSortF(float *v, int n);
+int bitonicSortI(int *v, int n);
+int bitonicSortF(float *v, int n);
+int pancakeSortI(int *v, int n);
+int pancakeSortF(float *v, int n);
+int stoogeSortI(int *v, int n);
+int stoogeSortF(float *v, int n);
+int sleepSortI(int *v, int n);
+int sleepSortF(float *v, int n);
+int cycleSortI(int *v, int n);
+int cycleSortF(float *v, int n);
+int countingSort(int *v, int n);
+int radixSort(int *v, int n);
+int bucketSort(int *v, int n);
+int pigeonholeSort(int *v, int n);
 
 
+// Algoritmos de búsqueda para enteros
+int linearSearch(const int *vector, int n, int valorBuscado);
+int binarySearch(const int *vector, int n, int valorBuscado);
+int ternarySearch(const int *vector, int n, int valorBuscado);
+int exponentialSearch(const int *vector, int n, int valorBuscado);
+int jumpSearch(const int *vector, int n, int valorBuscado);
+int fibonacciSearch(const int *vector, int n, int valorBuscado);
 
-
-
-
-
-void mostrarLista(struct s*);
-
-
-
-
-
-
-
-
-
-
-tipoGrafo* creaGrafo();
-void verGrafo(tipoGrafo *g);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Algoritmos de búsqueda para floats
+int linearSearchF(const float *vector, int n, float valorBuscado);
+int binarySearchF(const float *vector, int n, float valorBuscado);
+int ternarySearchF(const float *vector, int n, float valorBuscado);
+int exponentialSearchF(const float *vector, int n, float valorBuscado);
+int jumpSearchF(const float *vector, int n, float valorBuscado);
+int fibonacciSearchF(const float *vector, int n, float valorBuscado);
 
 

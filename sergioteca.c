@@ -172,7 +172,7 @@ string substring(string cad, int inf, int sup)
         result[i] = cad[inf + i];
     }
     result[len] = '\0';
-    return result;
+	return result;
 }
 
 /**
@@ -593,7 +593,7 @@ tipoMatriz leerMatrizI_O(int f, int c, string s)
     tMat.matrix = mat;
     tMat.filas = f;
     tMat.columnas = c;
-    return tMat;
+	return tMat;
 }
 
 /**
@@ -657,7 +657,7 @@ tipoMatrizf leerMatrizF_O(int f, int c, string s)
     tMat.matrix = mat;
     tMat.filas = f;
     tMat.columnas = c;
-    return tMat;
+	return tMat;
 }
 
 /**
@@ -948,14 +948,14 @@ matriz  sumarMatrI(matriz  ma, matriz  mb, int f, int c)
  */
 tipoMatriz sumarMatrI_O(tipoMatriz ma, tipoMatriz mb)
 {
-    tipoMatriz tMat;
-    if(ma.columnas!=mb.columnas) return ma;
-    if(ma.filas!=mb.filas) return ma;
-    tMat.filas=ma.filas;
-    tMat.columnas=ma.columnas;
+	tipoMatriz tMat;
+	if(ma.columnas!=mb.columnas) return ma;
+	if(ma.filas!=mb.filas) return ma;
+	tMat.filas=ma.filas;
+	tMat.columnas=ma.columnas;
     tMat.matrix=sumarMatrI(ma.matrix, mb.matrix, ma.filas, ma.columnas);
-    if(tMat.matrix==NULL) return ma;
-    return tMat;
+	if(tMat.matrix==NULL) return ma;
+	return tMat;
 }
 
 /**
@@ -995,14 +995,14 @@ matrizf sumarMatrF(matrizf ma, matrizf mb, int f, int c)
  */
 tipoMatrizf sumarMatrF_O(tipoMatrizf ma, tipoMatrizf mb)
 {
-    tipoMatrizf tMat;
-    if(ma.columnas!=mb.columnas) return ma;
-    if(ma.filas!=mb.filas) return ma;
-    tMat.filas=ma.filas;
-    tMat.columnas=ma.columnas;
+	tipoMatrizf tMat;
+	if(ma.columnas!=mb.columnas) return ma;
+	if(ma.filas!=mb.filas) return ma;
+	tMat.filas=ma.filas;
+	tMat.columnas=ma.columnas;
     tMat.matrix=sumarMatrF(ma.matrix, mb.matrix, ma.filas, ma.columnas);
-    if(tMat.matrix==NULL) return ma;
-    return tMat;
+	if(tMat.matrix==NULL) return ma;
+	return tMat;
 }
 
 /**
@@ -1042,14 +1042,14 @@ matriz  restarMatrI(matriz  ma, matriz  mb, int f, int c)
  */
 tipoMatriz restarMatrI_O(tipoMatriz ma, tipoMatriz mb)
 {
-    tipoMatriz tMat;
-    if(ma.columnas!=mb.columnas) return ma;
-    if(ma.filas!=mb.filas) return ma;
-    tMat.filas=ma.filas;
-    tMat.columnas=ma.columnas;
+	tipoMatriz tMat;
+	if(ma.columnas!=mb.columnas) return ma;
+	if(ma.filas!=mb.filas) return ma;
+	tMat.filas=ma.filas;
+	tMat.columnas=ma.columnas;
     tMat.matrix=restarMatrI(ma.matrix, mb.matrix, ma.filas, ma.columnas);
-    if(tMat.matrix==NULL) return ma;
-    return tMat;
+	if(tMat.matrix==NULL) return ma;
+	return tMat;
 }
 
 /**
@@ -1089,14 +1089,14 @@ matrizf restarMatrF(matrizf ma, matrizf mb, int f, int c)
  */
 tipoMatrizf restarMatrF_O(tipoMatrizf ma, tipoMatrizf mb)
 {
-    tipoMatrizf tMat;
-    if(ma.columnas!=mb.columnas) return ma;
-    if(ma.filas!=mb.filas) return ma;
-    tMat.filas=ma.filas;
-    tMat.columnas=ma.columnas;
+	tipoMatrizf tMat;
+	if(ma.columnas!=mb.columnas) return ma;
+	if(ma.filas!=mb.filas) return ma;
+	tMat.filas=ma.filas;
+	tMat.columnas=ma.columnas;
     tMat.matrix=restarMatrF(ma.matrix, mb.matrix, ma.filas, ma.columnas);
-    if(tMat.matrix==NULL) return ma;
-    return tMat;
+	if(tMat.matrix==NULL) return ma;
+	return tMat;
 }
 
 /**
@@ -1377,12 +1377,12 @@ matrizf concatenarMatricesEnVerticalF(matrizf ma, matrizf mb, int a, int c, int 
 tipoMatrizf concatenarMatricesEnVerticalF_O(tipoMatrizf ma, tipoMatrizf mb)
 {
     tipoMatrizf tMat;
-    if(ma.columnas!=mb.columnas) return ma;
-    tMat.filas=ma.filas+mb.filas;
-    tMat.columnas=ma.columnas;
+	if(ma.columnas!=mb.columnas) return ma;
+	tMat.filas=ma.filas+mb.filas;
+	tMat.columnas=ma.columnas;
     tMat.matrix=concatenarMatricesEnVerticalF(ma.matrix, mb.matrix, ma.filas, mb.filas, mb.columnas);
-    if(tMat.matrix==NULL) return ma;
-    return tMat;
+	if(tMat.matrix==NULL) return ma;
+	return tMat;
 }
 
 /**
@@ -3094,6 +3094,11 @@ void dijkstra2(int vInicio, tipoGrafo *g){
         }
 }
 
+/**
+ * Busca el vértice con la distancia mínima no alcanzada en un grafo.
+ * @param g Puntero al grafo
+ * @return El vértice con la distancia mínima no alcanzada
+ */
 int buscarVerticeDistanciaMinimaNoAlcanzado(tipoGrafo *g){
 
         int i;
@@ -3110,6 +3115,10 @@ int buscarVerticeDistanciaMinimaNoAlcanzado(tipoGrafo *g){
         return ver;
 }
 
+/**
+ * Crea un nuevo grafo con los vértices y arcos especificados.
+ * @return Puntero al nuevo grafo creado
+ */
 tipoGrafo* creaGrafo(){
 
         int i;
@@ -3230,12 +3239,26 @@ tipoGrafo* creaGrafo(){
   return g;
 }
 
-
-
+/**
+ * Inicializa un montículo.
+ * @param m Puntero al montículo
+ * @return void
+ */
 void iniciaMonticulo(Monticulo *m){m->tam=0;}
 
+/**
+ * Comprueba si un montículo está vacío.
+ * @param m Montículo a comprobar
+ * @return TRUE si está vacío, FALSE en caso contrario
+ */
 int vacioMonticulo(Monticulo m){return m.tam == 0;}
 
+/**
+ * Filtra un montículo de forma descendente.
+ * @param m Puntero al montículo
+ * @param i Índice del elemento a filtrar
+ * @return void
+ */
 void filtradoDescendente(Monticulo *m, int i)
 {
 	int hijo,finFiltrado = 0;
@@ -3261,6 +3284,12 @@ void filtradoDescendente(Monticulo *m, int i)
 	}
 }
 
+/**
+ * Filtra un montículo de forma ascendente.
+ * @param m Puntero al montículo
+ * @param i Índice del elemento a filtrar
+ * @return void
+ */
 void filtradoAscendente(Monticulo *m, int i)
 {
 	tipoElementoMonticulo temp;
@@ -3274,6 +3303,12 @@ void filtradoAscendente(Monticulo *m, int i)
 	}
 }
 
+/**
+ * Inserta un elemento en un montículo.
+ * @param x Elemento a insertar
+ * @param m Puntero al montículo
+ * @return 0 si se inserta correctamente, -1 si el montículo está lleno
+ */
 int insertar(tipoElementoMonticulo x, Monticulo *m)
 {
 	int i;
@@ -3290,6 +3325,12 @@ int insertar(tipoElementoMonticulo x, Monticulo *m)
 	return 0;
 }
 
+/**
+ * Elimina el elemento mínimo de un montículo.
+ * @param m Puntero al montículo
+ * @param minimo Puntero al elemento mínimo
+ * @return 0 si se elimina correctamente, -1 si el montículo está vacío
+ */
 int eliminarMinimo(Monticulo *m, tipoElementoMonticulo *minimo)
 {
 	int i;
@@ -3306,6 +3347,13 @@ int eliminarMinimo(Monticulo *m, tipoElementoMonticulo *minimo)
 	return 0;
 }
 
+/**
+ * Decrementa la clave de un elemento en un montículo.
+ * @param pos Posición del elemento
+ * @param cantidad Cantidad a decrementar
+ * @param m Puntero al montículo
+ * @return void
+ */
 void decrementarClave(int pos, tipoClaveMonticulo cantidad, Monticulo *m)
 {
 	m->elemento[pos].clave = m->elemento[pos].clave - cantidad;
@@ -3313,6 +3361,13 @@ void decrementarClave(int pos, tipoClaveMonticulo cantidad, Monticulo *m)
 	filtradoAscendente(m,pos);
 }
 
+/**
+ * Incrementa la clave de un elemento en un montículo.
+ * @param pos Posición del elemento
+ * @param cantidad Cantidad a incrementar
+ * @param m Puntero al montículo
+ * @return void
+ */
 void incrementarClave(int pos, tipoClaveMonticulo cantidad, Monticulo *m)
 {
 	m->elemento[pos].clave = m->elemento[pos].clave + cantidad;
@@ -3320,6 +3375,11 @@ void incrementarClave(int pos, tipoClaveMonticulo cantidad, Monticulo *m)
 	filtradoDescendente(m,pos);
 }
 
+/**
+ * Comprueba si un montículo es válido.
+ * @param m Montículo a comprobar
+ * @return 1 si es válido, 0 en caso contrario
+ */
 int esMonticulo(Monticulo m)
 {
 	int i=1, activo=1;
@@ -3343,6 +3403,11 @@ int esMonticulo(Monticulo m)
 	return activo;
 }
 
+/**
+ * Crea un montículo a partir de un vector.
+ * @param m Puntero al montículo
+ * @return void
+ */
 void crearMonticulo(Monticulo *m)
 {
 	int i,n;
@@ -3352,31 +3417,37 @@ void crearMonticulo(Monticulo *m)
 		filtradoDescendente(m,i);
 }
 
+/**
+ * Ordena un montículo usando el algoritmo Heapsort.
+ * @param m Puntero al montículo
+ * @return void
+ */
 void heapsort(Monticulo *m)
 {
     tipoElementoMonticulo *vector = malloc(m->tam * sizeof(tipoElementoMonticulo));
-    int nElementos;
-    int i;
-    tipoElementoMonticulo elemento;
+	int nElementos;
+	int i;
+	tipoElementoMonticulo elemento;
 
-    nElementos = m->tam;
+	nElementos = m->tam;
 
-    crearMonticulo(m);
-    
-    for(i=0;i<nElementos;i++)
-    {
-        eliminarMinimo(m,&elemento);
-        vector[i]=elemento;
-    }
-    for(i=0;i<nElementos;i++)
-        insertar(vector[i],m);
+	crearMonticulo(m);
+	
+	for(i=0;i<nElementos;i++)
+	{
+		eliminarMinimo(m,&elemento);
+		vector[i]=elemento;
+	}
+	for(i=0;i<nElementos;i++)
+		insertar(vector[i],m);
     free(vector);
 }
 
-//
-// Reserva de memoria para un nuevo nodo de árbol binario
-//
-
+/**
+ * Crea un nuevo nodo de árbol binario con la información dada.
+ * @param info Información a almacenar en el nodo
+ * @return Puntero al nuevo nodo creado, o NULL si hay error de memoria
+ */
 Arbol creaArbol(tipoInfoArbol info)
 {
 	tipoNodo * nuevo;
@@ -3387,10 +3458,11 @@ Arbol creaArbol(tipoInfoArbol info)
 	return nuevo;
 }
 
-//
-// Recorrido en amplitud o por niveles: necesita una cola de punteros a nodos de árbol binario
-//
-
+/**
+ * Recorre un árbol binario en amplitud (por niveles) e imprime los nodos.
+ * @param raiz Raíz del árbol a recorrer
+ * @return void
+ */
 void amplitudArbol(Arbol raiz)
 {
 	ColaArbol c;
@@ -3407,10 +3479,11 @@ void amplitudArbol(Arbol raiz)
 	}
 }
 
-// 
-// Recorridos en profundidad "recursivos"
-//
-
+/**
+ * Recorre un árbol binario en preorden e imprime los nodos.
+ * @param raiz Raíz del árbol a recorrer
+ * @return void
+ */
 void preOrden(Arbol raiz)
 {
 	if (raiz!=NULL)
@@ -3420,6 +3493,12 @@ void preOrden(Arbol raiz)
 		preOrden(raiz->der);
 	}
 }
+
+/**
+ * Recorre un árbol binario en inorden e imprime los nodos.
+ * @param raiz Raíz del árbol a recorrer
+ * @return void
+ */
 void enOrden(Arbol raiz)
 {
 	if (raiz!=NULL)
@@ -3429,6 +3508,12 @@ void enOrden(Arbol raiz)
 		enOrden(raiz->der);
 	}
 }
+
+/**
+ * Recorre un árbol binario en postorden e imprime los nodos.
+ * @param raiz Raíz del árbol a recorrer
+ * @return void
+ */
 void postOrden(Arbol raiz)
 {
 	if (raiz!=NULL)
@@ -3439,10 +3524,11 @@ void postOrden(Arbol raiz)
 	}
 }
 
-//
-// Otras funciones
-//
-
+/**
+ * Calcula la altura de un árbol binario.
+ * @param raiz Raíz del árbol
+ * @return Altura del árbol (número de niveles)
+ */
 int altura(Arbol raiz)
 {
     int izq = -1, der = -1;
@@ -3459,6 +3545,13 @@ int altura(Arbol raiz)
 	else 			return izq;
 }
 
+/**
+ * Sustituye todas las apariciones de un valor por otro en un árbol binario.
+ * @param raiz Raíz del árbol
+ * @param x Valor a buscar
+ * @param y Valor por el que se sustituye
+ * @return Número de sustituciones realizadas
+ */
 int sustituye(Arbol raiz, tipoInfoArbol x, tipoInfoArbol y)
 {
 	int sustituciones = 0;
@@ -3478,6 +3571,11 @@ int sustituye(Arbol raiz, tipoInfoArbol x, tipoInfoArbol y)
 	return sustituciones;
 }
 
+/**
+ * Cuenta el número de nodos de un árbol binario.
+ * @param raiz Raíz del árbol
+ * @return Número de nodos
+ */
 int numNodos(Arbol raiz)
 {
 	int nodos=-1; 
@@ -3491,6 +3589,12 @@ int numNodos(Arbol raiz)
 	return nodos; 
 }
 
+
+/**
+ * Cuenta el número de nodos hoja de un árbol binario.
+ * @param raiz Raíz del árbol
+ * @return Número de nodos hoja
+ */
 int numNodosHoja(Arbol raiz)
 {
 	int nodosHoja = 0;
@@ -3505,6 +3609,11 @@ int numNodosHoja(Arbol raiz)
 	return nodosHoja;
 }
 
+/**
+ * Cuenta el número de nodos internos de un árbol binario.
+ * @param raiz Raíz del árbol
+ * @return Número de nodos internos
+ */
 int numNodosInternos(Arbol raiz)
 {
 	int nodosInternos = 0;
@@ -3518,6 +3627,11 @@ int numNodosInternos(Arbol raiz)
 	return nodosInternos;
 }
 
+/**
+ * Cuenta el número de nodos con un solo hijo en un árbol binario.
+ * @param raiz Raíz del árbol
+ * @return Número de nodos con un solo hijo
+ */
 int numHijoUnico(Arbol raiz)
 {
 	int numHijosUnicos = 0;
@@ -3531,6 +3645,11 @@ int numHijoUnico(Arbol raiz)
 	return numHijosUnicos;
 }
 
+/**
+ * Busca el nodo con el valor máximo en un árbol binario.
+ * @param raiz Raíz del árbol
+ * @return Puntero al nodo con el valor máximo, o NULL si el árbol está vacío
+ */
 Arbol buscarMax(Arbol raiz)
 {
 	Arbol temp, temp2;
@@ -3544,6 +3663,23 @@ Arbol buscarMax(Arbol raiz)
 	return NULL;
 }
 
+/**
+ * Busca el nodo con el valor mínimo en un árbol binario de búsqueda.
+ * @param raiz Raíz del árbol
+ * @return Puntero al nodo con el valor mínimo, o NULL si el árbol está vacío
+ */
+Arbol buscarMin(Arbol raiz) {
+    if (raiz == NULL) return NULL;
+    while (raiz->izq != NULL) raiz = raiz->izq;
+    return raiz;
+}
+
+/**
+ * Comprueba si dos árboles binarios son similares en estructura.
+ * @param r1 Primer árbol
+ * @param r2 Segundo árbol
+ * @return TRUE si son similares, FALSE en caso contrario
+ */
 boolean similares(Arbol r1,Arbol r2)
 {
 	if(r1 == NULL && r2 == NULL) return TRUE;
@@ -3551,6 +3687,12 @@ boolean similares(Arbol r1,Arbol r2)
 	return FALSE;
 }
 
+/**
+ * Comprueba si dos árboles binarios son equivalentes (estructura y valores).
+ * @param r1 Primer árbol
+ * @param r2 Segundo árbol
+ * @return TRUE si son equivalentes, FALSE en caso contrario
+ */
 boolean equivalentes(Arbol r1,Arbol r2)
 {
 	if(r1 == NULL && r2 == NULL) return TRUE;
@@ -3558,6 +3700,11 @@ boolean equivalentes(Arbol r1,Arbol r2)
 	return FALSE;
 }
 
+/**
+ * Devuelve el árbol especular (espejo) de un árbol binario.
+ * @param raiz Raíz del árbol
+ * @return Nuevo árbol especular
+ */
 Arbol especular(Arbol raiz)
 {
 	if(raiz == NULL) return NULL;
@@ -3567,14 +3714,11 @@ Arbol especular(Arbol raiz)
 	return nuevoNodo;
 }
 
-// Implementación de buscarMin para árbol binario de búsqueda
-Arbol buscarMin(Arbol raiz) {
-    if (raiz == NULL) return NULL;
-    while (raiz->izq != NULL) raiz = raiz->izq;
-    return raiz;
-}
-
-// Implementación de iniciarGrafo como wrapper de iniciar
+/**
+ * Inicializa los campos de un grafo (wrapper de iniciar).
+ * @param g Puntero al grafo
+ * @return void
+ */
 void iniciarGrafo(tipoGrafo *g) {
     iniciar(g);
 }
@@ -3840,12 +3984,52 @@ int mcm_descp(int a, int b) {
 }
 
 /**
+ * Calcula el máximo común divisor (MCD) de un array de números enteros.
+ * Utiliza el algoritmo de Euclides de forma iterativa.
+ * @param valores Array de enteros (no debe ser NULL)
+ * @param n Número de elementos del array (debe ser mayor que 0)
+ * @return MCD de todos los valores del array, o 0 si n <= 0
+ * @example int nums[] = {12, 18, 24, 30}; int r = mcd_n(nums, 4); // r = 6
+ */
+int mcd_n(const int *valores, int n) 
+{
+    if (valores == NULL || n <= 0) return 0;
+    int resultado = valores[0];
+    for (int i = 1; i < n; i++) 
+	{
+        resultado = mcd(resultado, valores[i]);
+        if (resultado == 1) break;
+    }
+    return resultado;
+}
+
+/**
+ * Calcula el mínimo común múltiplo (MCM) de un array de números enteros.
+ * Utiliza la relación mcm(a, b) = |a * b| / mcd(a, b) de forma iterativa.
+ * @param valores Array de enteros (no debe ser NULL)
+ * @param n Número de elementos del array (debe ser mayor que 0)
+ * @return MCM de todos los valores del array, o 0 si n <= 0
+ * @example int nums[] = {12, 18, 24, 30}; int r = mcm_n(nums, 4); // r = 120
+ */
+int mcm_n(const int *valores, int n) 
+{
+    if (valores == NULL || n <= 0) return 0;
+    int resultado = valores[0];
+    for (int i = 1; i < n; i++) 
+	{
+        resultado = mcm(resultado, valores[i]);
+        if (resultado == 0) break;
+    }
+    return resultado;
+}
+
+/**
  * Calcula la distancia entre dos letras en el teclado QWERTY (solo letras a-z, case-insensitive)
  * se considera que la distancia vertical es 0.5 y la horizontal es 1
  * @param a Letra origen
  * @param b Letra destino
  * @return Distancia euclídea entre las letras en el teclado
- * @example float d = distanciaTecladoQWERTY('f', 't'); // d = 1.5
+ * @example float d = distanciaTecladoQWERTY('f', 't'); // d = 0.5
  */
 float distanciaTecladoQWERTY(char a, char b) {
     static const char *filas[] = {"qwertyuiop", "asdfghjkl", "zxcvbnm"};
@@ -3928,6 +4112,1876 @@ hiperplano planoOrtogonal(hiperplano h, int n) { (void)h; (void)n; hiperplano re
 
 
 
+
+
+
+
+
+
+// --- Algoritmos de planificación de procesos ---
+
+/**
+ * Inicializa un proceso con los valores dados.
+ * @param p Puntero al proceso a inicializar
+ * @param pid Identificador del proceso
+ * @param turnoLlegada Instante en el que el proceso comienza a pedir ejecución
+ * @param tiempoEjecucion Número de turnos que necesita para ejecutarse
+ * @return EXITO si todo va bien, FALLO o SUPERFALLO si hay error
+ * @example proceso p; inicializarProcesoPid(&p, 1, 0, 5);
+ */
+int inicializarProcesoPid(proceso *p, int pid, int turnoLlegada, int tiempoEjecucion) {
+    if (!p || tiempoEjecucion < 0 || pid < 0 || turnoLlegada < 0) return SUPERFALLO;
+    p->pid = pid;
+    p->turnoLlegada = turnoLlegada;
+    p->tiempoEjecucion = tiempoEjecucion;
+    p->tiempoRestante = tiempoEjecucion;
+    p->tiempoEspera = -1;
+    p->tiempoRespuesta = -1;
+    p->tiempoRetorno = -1;
+    return EXITO;
+}
+
+/**
+ * Planificación First Come First Serve (FCFS).
+ * Ejecuta los procesos en orden de llegada, sin interrupciones.
+ * Desempata por menor tiempoEjecucion y después por posición en el array.
+ * @param sistema Estructura ssoo con los procesos y parámetros inicializados
+ * @return ssoo actualizado tras la planificación
+ */
+ssoo proc_FCFS(ssoo sistema) {
+    if (!sistema.procesos || sistema.numProcesos <= 0) { sistema.codigoError = SUPERFALLO; return sistema; }
+    int turnos = 0, completados = 0, actual = -1;
+    int totalTurnos = 0;
+    for (int i = 0; i < sistema.numProcesos; i++)
+        totalTurnos += sistema.procesos[i].tiempoEjecucion;
+    int tamEjecutados = totalTurnos + 1;
+    int *ejecutados = malloc(sizeof(int) * tamEjecutados);
+    if (!ejecutados) { sistema.codigoError = SUPERFALLO; return sistema; }
+    for (int i = 0; i < sistema.numProcesos; i++)
+    {
+        sistema.procesos[i].tiempoRestante = sistema.procesos[i].tiempoEjecucion;
+        sistema.procesos[i].tiempoEspera = 0;
+        sistema.procesos[i].tiempoRetorno = -1;
+        sistema.procesos[i].tiempoRespuesta = -1;
+    }
+    int tiempo = 0;
+    while (completados < sistema.numProcesos)
+    {
+        int elegido = -1;
+        for (int i = 0; i < sistema.numProcesos; i++)
+        {
+            if (sistema.procesos[i].tiempoRestante > 0 && sistema.procesos[i].turnoLlegada <= tiempo)
+            {
+                if (elegido == -1 ||
+                    sistema.procesos[i].turnoLlegada < sistema.procesos[elegido].turnoLlegada ||
+                    (sistema.procesos[i].turnoLlegada == sistema.procesos[elegido].turnoLlegada &&
+                     (sistema.procesos[i].tiempoEjecucion < sistema.procesos[elegido].tiempoEjecucion ||
+                      (sistema.procesos[i].tiempoEjecucion == sistema.procesos[elegido].tiempoEjecucion && i < elegido))))
+                {
+                    elegido = i;
+                }
+            }
+        }
+        if (elegido == -1)
+        {
+            tiempo++;
+            continue;
+        }
+        actual = elegido;
+        while (sistema.procesos[actual].tiempoRestante > 0)
+        {
+            if (turnos >= tamEjecutados)
+            {
+                tamEjecutados *= 2;
+                int *nuevo = realloc(ejecutados, sizeof(int) * tamEjecutados);
+                if (!nuevo) { free(ejecutados); sistema.codigoError = SUPERFALLO; return sistema; }
+                ejecutados = nuevo;
+            }
+            ejecutados[turnos++] = sistema.procesos[actual].pid;
+            for (int j = 0; j < sistema.numProcesos; j++)
+                if (j != actual && sistema.procesos[j].tiempoRestante > 0 && sistema.procesos[j].turnoLlegada <= tiempo)
+                    sistema.procesos[j].tiempoEspera++;
+            sistema.procesos[actual].tiempoRestante--;
+            tiempo++;
+        }
+        sistema.procesos[actual].tiempoRetorno = tiempo - sistema.procesos[actual].turnoLlegada;
+        sistema.procesos[actual].tiempoRespuesta = (float)(sistema.procesos[actual].tiempoEspera + sistema.procesos[actual].tiempoEjecucion) / sistema.procesos[actual].tiempoEjecucion;
+        completados++;
+    }
+    sistema.numeroTotalTurnos = turnos;
+    sistema.pidsTurnos = malloc(sizeof(int) * turnos);
+    for (int i = 0; i < turnos; i++) sistema.pidsTurnos[i] = ejecutados[i];
+    float suma = 0;
+    for (int i = 0; i < sistema.numProcesos; i++) suma += sistema.procesos[i].tiempoRetorno * sistema.procesos[i].tiempoRetorno;
+    sistema.tiempoPromedio = suma / sistema.numProcesos;
+    float tiempoTotal = sistema.tiempoTurno;
+    int ultimoProceso = ejecutados[0];
+    for (int i = 1; i < sistema.numeroTotalTurnos; i++) {
+        actual = ejecutados[i];
+        if (ultimoProceso != actual) {
+            tiempoTotal += sistema.tiempoCambioProceso;
+        }
+        tiempoTotal += sistema.tiempoTurno;
+        ultimoProceso = actual;
+    }
+    sistema.tiempoTotal = tiempoTotal;
+    sistema.codigoError = EXITO;
+    free(ejecutados);
+    return sistema;
+}
+
+/**
+ * Planificación Round Robin (RR).
+ * Ejecuta los procesos en orden de llegada, pero ningún proceso puede estar más de 'cuanto' turnos seguidos.
+ * Desempata por menor turnoLlegada, luego menor tiempoEjecucion, luego posición en el array.
+ * @param sistema Estructura ssoo con los procesos y parámetros inicializados
+ * @return ssoo actualizado tras la planificación
+ */
+ssoo proc_RR(ssoo sistema) 
+{
+    if (!sistema.procesos || sistema.numProcesos <= 0 || sistema.cuanto <= 0) { sistema.codigoError = SUPERFALLO; return sistema; }
+    int turnos = 0, completados = 0, actual = -1;
+    int totalTurnos = 0;
+    for (int i = 0; i < sistema.numProcesos; i++) totalTurnos += sistema.procesos[i].tiempoEjecucion;
+    int tamEjecutados = totalTurnos + 1;
+    int *ejecutados = malloc(sizeof(int) * tamEjecutados);
+    if (!ejecutados) { sistema.codigoError = SUPERFALLO; return sistema; }
+    Cola cola;
+    colaCreaVacia(&cola);
+    for (int i = 0; i < sistema.numProcesos; i++) 
+	{
+        sistema.procesos[i].tiempoRestante = sistema.procesos[i].tiempoEjecucion;
+        sistema.procesos[i].tiempoEspera = 0;
+        sistema.procesos[i].tiempoRetorno = -1;
+        sistema.procesos[i].tiempoRespuesta = -1;
+    }
+    int tiempo = 0;
+    int *enCola = calloc(sistema.numProcesos, sizeof(int));
+    while (completados < sistema.numProcesos)
+	{
+        int *nuevos = malloc(sizeof(int) * sistema.numProcesos);
+        int numNuevos = 0;
+        for (int i = 0; i < sistema.numProcesos; i++)
+            if (!enCola[i] && sistema.procesos[i].turnoLlegada <= tiempo && sistema.procesos[i].tiempoRestante > 0)
+                nuevos[numNuevos++] = i;
+        if (numNuevos > 1) {
+            for (int i = 0; i < numNuevos-1; i++) {
+                for (int j = i+1; j < numNuevos; j++) {
+                    int a = nuevos[i], b = nuevos[j];
+                    if (sistema.procesos[a].turnoLlegada > sistema.procesos[b].turnoLlegada ||
+                        (sistema.procesos[a].turnoLlegada == sistema.procesos[b].turnoLlegada &&
+                         (sistema.procesos[a].tiempoEjecucion > sistema.procesos[b].tiempoEjecucion ||
+                          (sistema.procesos[a].tiempoEjecucion == sistema.procesos[b].tiempoEjecucion && a > b)))) {
+                        int tmp = nuevos[i]; nuevos[i] = nuevos[j]; nuevos[j] = tmp;
+                    }
+                }
+            }
+        }
+        for (int k = 0; k < numNuevos; k++) 
+		{
+            colaInserta(nuevos[k], &cola);
+            enCola[nuevos[k]] = 1;
+        }
+        free(nuevos);
+        if (colaVacia(&cola)) 
+		{
+            tiempo++;
+            continue;
+        }
+        actual = colaSuprime(&cola);
+        int quantum = 0;
+        while (sistema.procesos[actual].tiempoRestante > 0 && quantum < sistema.cuanto) 
+		{
+            if (turnos >= tamEjecutados) 
+			{
+                tamEjecutados *= 2;
+                int *nuevo = realloc(ejecutados, sizeof(int) * tamEjecutados);
+                if (!nuevo) { free(ejecutados); sistema.codigoError = SUPERFALLO; return sistema; }
+                ejecutados = nuevo;
+            }
+            ejecutados[turnos++] = sistema.procesos[actual].pid;
+            for (int j = 0; j < sistema.numProcesos; j++)
+                if (j != actual && sistema.procesos[j].tiempoRestante > 0 && sistema.procesos[j].turnoLlegada <= tiempo)
+                    sistema.procesos[j].tiempoEspera++;
+            sistema.procesos[actual].tiempoRestante--;
+            tiempo++;
+            quantum++;
+            int *nuevos2 = malloc(sizeof(int) * sistema.numProcesos);
+            int numNuevos2 = 0;
+            for (int i = 0; i < sistema.numProcesos; i++)
+                if (!enCola[i] && sistema.procesos[i].turnoLlegada <= tiempo && sistema.procesos[i].tiempoRestante > 0)
+                    nuevos2[numNuevos2++] = i;
+            if (numNuevos2 > 1) 
+			{
+                for (int i = 0; i < numNuevos2-1; i++) 
+				{
+                    for (int j = i+1; j < numNuevos2; j++) 
+					{
+                        int a = nuevos2[i], b = nuevos2[j];
+                        if (sistema.procesos[a].turnoLlegada > sistema.procesos[b].turnoLlegada ||
+                            (sistema.procesos[a].turnoLlegada == sistema.procesos[b].turnoLlegada &&
+                             (sistema.procesos[a].tiempoEjecucion > sistema.procesos[b].tiempoEjecucion ||
+                              (sistema.procesos[a].tiempoEjecucion == sistema.procesos[b].tiempoEjecucion && a > b)))){
+								int tmp = nuevos2[i]; nuevos2[i] = nuevos2[j]; nuevos2[j] = tmp;
+							  }
+                    }
+                }
+            }
+            for (int k = 0; k < numNuevos2; k++) 
+			{
+                colaInserta(nuevos2[k], &cola);
+                enCola[nuevos2[k]] = 1;
+            }
+            free(nuevos2);
+        }
+        if (sistema.procesos[actual].tiempoRestante > 0) 
+		{
+            colaInserta(actual, &cola);
+        } else 
+		{
+            sistema.procesos[actual].tiempoRetorno = tiempo - sistema.procesos[actual].turnoLlegada;
+            sistema.procesos[actual].tiempoRespuesta = (float)(sistema.procesos[actual].tiempoEspera + sistema.procesos[actual].tiempoEjecucion) / sistema.procesos[actual].tiempoEjecucion;
+            completados++;
+        }
+    }
+    sistema.numeroTotalTurnos = turnos;
+    sistema.pidsTurnos = malloc(sizeof(int) * turnos);
+    for (int i = 0; i < turnos; i++) sistema.pidsTurnos[i] = ejecutados[i];
+    float suma = 0;
+    for (int i = 0; i < sistema.numProcesos; i++) suma += sistema.procesos[i].tiempoRetorno * sistema.procesos[i].tiempoRetorno;
+    sistema.tiempoPromedio = suma / sistema.numProcesos;
+    float tiempoTotal = sistema.tiempoTurno;
+    int ultimoProceso = ejecutados[0];
+    for (int i = 1; i < sistema.numeroTotalTurnos; i++) 
+	{
+        actual = ejecutados[i];
+        if (ultimoProceso != actual) tiempoTotal += sistema.tiempoCambioProceso;
+        tiempoTotal += sistema.tiempoTurno;
+        ultimoProceso = actual;
+    }
+    sistema.tiempoTotal = tiempoTotal;
+    sistema.codigoError = EXITO;
+    free(ejecutados); free(enCola);
+    return sistema;
+}
+
+/**
+ * Planificación Shortest Process Next (SPN).
+ * Ejecuta el proceso con menor tiempoEjecucion entre los listos. Desempata por llegada y posición.
+ * @param sistema Estructura ssoo con los procesos y parámetros inicializados
+ * @return ssoo actualizado tras la planificación
+ */
+ssoo proc_SPN(ssoo sistema) 
+{
+    if (!sistema.procesos || sistema.numProcesos <= 0) { sistema.codigoError = SUPERFALLO; return sistema; }
+    int turnos = 0, completados = 0, actual = -1;
+    int totalTurnos = 0;
+    for (int i = 0; i < sistema.numProcesos; i++) totalTurnos += sistema.procesos[i].tiempoEjecucion;
+    int tamEjecutados = totalTurnos + 1;
+    int *ejecutados = malloc(sizeof(int) * tamEjecutados);
+    if (!ejecutados) { sistema.codigoError = SUPERFALLO; return sistema; }
+    for (int i = 0; i < sistema.numProcesos; i++) 
+	{
+        sistema.procesos[i].tiempoRestante = sistema.procesos[i].tiempoEjecucion;
+        sistema.procesos[i].tiempoEspera = 0;
+        sistema.procesos[i].tiempoRetorno = -1;
+        sistema.procesos[i].tiempoRespuesta = -1;
+    }
+    int tiempo = 0;
+    while (completados < sistema.numProcesos) 
+	{
+        int elegido = -1;
+        for (int i = 0; i < sistema.numProcesos; i++) 
+		{
+            if (sistema.procesos[i].tiempoRestante > 0 && sistema.procesos[i].turnoLlegada <= tiempo) 
+			{
+                if (elegido == -1 ||
+                    sistema.procesos[i].tiempoEjecucion < sistema.procesos[elegido].tiempoEjecucion ||
+                    (sistema.procesos[i].tiempoEjecucion == sistema.procesos[elegido].tiempoEjecucion &&
+                     (sistema.procesos[i].turnoLlegada < sistema.procesos[elegido].turnoLlegada ||
+                      (sistema.procesos[i].turnoLlegada == sistema.procesos[elegido].turnoLlegada && i < elegido))))
+                    	elegido = i;
+            }
+        }
+        if (elegido == -1) { tiempo++; continue; }
+        int actual = elegido;
+        while (sistema.procesos[actual].tiempoRestante > 0) 
+		{
+            if (turnos >= tamEjecutados) 
+			{
+                tamEjecutados *= 2;
+                int *nuevo = realloc(ejecutados, sizeof(int) * tamEjecutados);
+                if (!nuevo) { free(ejecutados); sistema.codigoError = SUPERFALLO; return sistema; }
+                ejecutados = nuevo;
+            }
+            ejecutados[turnos++] = sistema.procesos[actual].pid;
+            for (int j = 0; j < sistema.numProcesos; j++)
+                if (j != actual && sistema.procesos[j].tiempoRestante > 0 && sistema.procesos[j].turnoLlegada <= tiempo)
+                    sistema.procesos[j].tiempoEspera++;
+            sistema.procesos[actual].tiempoRestante--;
+            tiempo++;
+        }
+        sistema.procesos[actual].tiempoRetorno = tiempo - sistema.procesos[actual].turnoLlegada;
+        sistema.procesos[actual].tiempoRespuesta = (float)(sistema.procesos[actual].tiempoEspera + sistema.procesos[actual].tiempoEjecucion) / sistema.procesos[actual].tiempoEjecucion;
+        completados++;
+    }
+    sistema.numeroTotalTurnos = turnos;
+    sistema.pidsTurnos = malloc(sizeof(int) * turnos);
+    for (int i = 0; i < turnos; i++) sistema.pidsTurnos[i] = ejecutados[i];
+    float suma = 0;
+    for (int i = 0; i < sistema.numProcesos; i++) suma += sistema.procesos[i].tiempoRetorno * sistema.procesos[i].tiempoRetorno;
+    sistema.tiempoPromedio = suma / sistema.numProcesos;
+    float tiempoTotal = sistema.tiempoTurno;
+    int ultimoProceso = ejecutados[0];
+    for (int i = 1; i < sistema.numeroTotalTurnos; i++) 
+	{
+        actual = ejecutados[i];
+        if (ultimoProceso != actual) tiempoTotal += sistema.tiempoCambioProceso;
+        tiempoTotal += sistema.tiempoTurno;
+        ultimoProceso = actual;
+    }
+    sistema.tiempoTotal = tiempoTotal;
+    sistema.codigoError = EXITO;
+    free(ejecutados);
+    return sistema;
+}
+
+/**
+ * Planificación Shortest Remaining Next (SRN).
+ * Ejecuta el proceso con menor tiempoRestante entre los listos. Desempata por llegada y posición.
+ * @param sistema Estructura ssoo con los procesos y parámetros inicializados
+ * @return ssoo actualizado tras la planificación
+ */
+ssoo proc_SRN(ssoo sistema) 
+{
+    if (!sistema.procesos || sistema.numProcesos <= 0) { sistema.codigoError = SUPERFALLO; return sistema; }
+    int turnos = 0, completados = 0, actual = -1;
+    int totalTurnos = 0;
+    for (int i = 0; i < sistema.numProcesos; i++) totalTurnos += sistema.procesos[i].tiempoEjecucion;
+    int tamEjecutados = totalTurnos + 1;
+    int *ejecutados = malloc(sizeof(int) * tamEjecutados);
+    if (!ejecutados) { sistema.codigoError = SUPERFALLO; return sistema; }
+    for (int i = 0; i < sistema.numProcesos; i++) 
+	{
+        sistema.procesos[i].tiempoRestante = sistema.procesos[i].tiempoEjecucion;
+        sistema.procesos[i].tiempoEspera = 0;
+        sistema.procesos[i].tiempoRetorno = -1;
+        sistema.procesos[i].tiempoRespuesta = -1;
+    }
+    int tiempo = 0;
+    while (completados < sistema.numProcesos) 
+	{
+        int elegido = -1;
+        for (int i = 0; i < sistema.numProcesos; i++) {
+            if (sistema.procesos[i].tiempoRestante > 0 && sistema.procesos[i].turnoLlegada <= tiempo) 
+			{
+                if (elegido == -1 ||
+                    sistema.procesos[i].tiempoRestante < sistema.procesos[elegido].tiempoRestante ||
+                    (sistema.procesos[i].tiempoRestante == sistema.procesos[elegido].tiempoRestante &&
+                     (sistema.procesos[i].turnoLlegada < sistema.procesos[elegido].turnoLlegada ||
+                      (sistema.procesos[i].turnoLlegada == sistema.procesos[elegido].turnoLlegada && i < elegido)))) 
+                        elegido = i;
+            }
+        }
+        if (elegido == -1) { tiempo++; continue; }
+        int actual = elegido;
+        if (turnos >= tamEjecutados) 
+		{
+            tamEjecutados *= 2;
+            int *nuevo = realloc(ejecutados, sizeof(int) * tamEjecutados);
+            if (!nuevo) { free(ejecutados); sistema.codigoError = SUPERFALLO; return sistema; }
+            ejecutados = nuevo;
+        }
+        ejecutados[turnos++] = sistema.procesos[actual].pid;
+        for (int j = 0; j < sistema.numProcesos; j++)
+            if (j != actual && sistema.procesos[j].tiempoRestante > 0 && sistema.procesos[j].turnoLlegada <= tiempo)
+                sistema.procesos[j].tiempoEspera++;
+        sistema.procesos[actual].tiempoRestante--;
+        tiempo++;
+        if (sistema.procesos[actual].tiempoRestante == 0) 
+		{
+            sistema.procesos[actual].tiempoRetorno = tiempo - sistema.procesos[actual].turnoLlegada;
+            sistema.procesos[actual].tiempoRespuesta = (float)(sistema.procesos[actual].tiempoEspera + sistema.procesos[actual].tiempoEjecucion) / sistema.procesos[actual].tiempoEjecucion;
+            completados++;
+        }
+    }
+    sistema.numeroTotalTurnos = turnos;
+    sistema.pidsTurnos = malloc(sizeof(int) * turnos);
+    for (int i = 0; i < turnos; i++) sistema.pidsTurnos[i] = ejecutados[i];
+    float suma = 0;
+    for (int i = 0; i < sistema.numProcesos; i++) suma += sistema.procesos[i].tiempoRetorno * sistema.procesos[i].tiempoRetorno;
+    sistema.tiempoPromedio = suma / sistema.numProcesos;
+    float tiempoTotal = sistema.tiempoTurno;
+    int ultimoProceso = ejecutados[0];
+    for (int i = 1; i < sistema.numeroTotalTurnos; i++) 
+	{
+		actual = ejecutados[i];
+        if (ultimoProceso != actual) tiempoTotal += sistema.tiempoCambioProceso;
+        tiempoTotal += sistema.tiempoTurno;
+        ultimoProceso = actual;
+    }
+    sistema.tiempoTotal = tiempoTotal;
+    sistema.codigoError = EXITO;
+    free(ejecutados);
+    return sistema;
+}
+
+/**
+ * Planificación Highest Response Ratio Next (HRRN).
+ * Ejecuta el proceso con menor tiempoRespuesta entre los listos. Desempata por llegada y posición.
+ * @param sistema Estructura ssoo con los procesos y parámetros inicializados
+ * @return ssoo actualizado tras la planificación
+ 
+ */
+ssoo proc_HRRN(ssoo sistema) 
+{
+    if (!sistema.procesos || sistema.numProcesos <= 0) { sistema.codigoError = SUPERFALLO; return sistema; }
+    int turnos = 0, completados = 0, actual = -1;
+    int totalTurnos = 0;
+    for (int i = 0; i < sistema.numProcesos; i++) totalTurnos += sistema.procesos[i].tiempoEjecucion;
+    int tamEjecutados = totalTurnos + 1;
+    int *ejecutados = malloc(sizeof(int) * tamEjecutados);
+    if (!ejecutados) { sistema.codigoError = SUPERFALLO; return sistema; }
+    for (int i = 0; i < sistema.numProcesos; i++) 
+	{
+        sistema.procesos[i].tiempoRestante = sistema.procesos[i].tiempoEjecucion;
+        sistema.procesos[i].tiempoEspera = 0;
+        sistema.procesos[i].tiempoRetorno = -1;
+        sistema.procesos[i].tiempoRespuesta = -1;
+    }
+    int tiempo = 0;
+    while (completados < sistema.numProcesos) 
+	{
+        int elegido = -1;
+        float mejorRespuesta = -1.0f;
+        for (int i = 0; i < sistema.numProcesos; i++) 
+		{
+            if (sistema.procesos[i].tiempoRestante > 0 && sistema.procesos[i].turnoLlegada <= tiempo) 
+			{
+                float respuesta = (float)(sistema.procesos[i].tiempoEspera + sistema.procesos[i].tiempoEjecucion) / sistema.procesos[i].tiempoEjecucion;
+                if (elegido == -1 || respuesta > mejorRespuesta ||
+                    (respuesta == mejorRespuesta &&
+                     (sistema.procesos[i].turnoLlegada < sistema.procesos[elegido].turnoLlegada ||
+                      (sistema.procesos[i].turnoLlegada == sistema.procesos[elegido].turnoLlegada && i < elegido)))) 
+						{
+							elegido = i;
+							mejorRespuesta = respuesta;
+						}
+            }
+        }
+        if (elegido == -1) { tiempo++; continue; }
+        actual = elegido;
+        if (turnos >= tamEjecutados) 
+		{
+            tamEjecutados *= 2;
+            int *nuevo = realloc(ejecutados, sizeof(int) * tamEjecutados);
+            if (!nuevo) { free(ejecutados); sistema.codigoError = SUPERFALLO; return sistema; }
+            ejecutados = nuevo;
+        }
+        ejecutados[turnos++] = sistema.procesos[actual].pid;
+        for (int j = 0; j < sistema.numProcesos; j++)
+            if (j != actual && sistema.procesos[j].tiempoRestante > 0 && sistema.procesos[j].turnoLlegada <= tiempo)
+                sistema.procesos[j].tiempoEspera++;
+        sistema.procesos[actual].tiempoRestante--;
+        tiempo++;
+        if (sistema.procesos[actual].tiempoRestante == 0)
+		{
+            sistema.procesos[actual].tiempoRetorno = tiempo - sistema.procesos[actual].turnoLlegada;
+            sistema.procesos[actual].tiempoRespuesta = (float)(sistema.procesos[actual].tiempoEspera + sistema.procesos[actual].tiempoEjecucion) / sistema.procesos[actual].tiempoEjecucion;
+            completados++;
+        }
+    }
+    sistema.numeroTotalTurnos = turnos;
+    sistema.pidsTurnos = malloc(sizeof(int) * turnos);
+    for (int i = 0; i < turnos; i++) sistema.pidsTurnos[i] = ejecutados[i];
+    float suma = 0;
+    for (int i = 0; i < sistema.numProcesos; i++) suma += sistema.procesos[i].tiempoRetorno * sistema.procesos[i].tiempoRetorno;
+    sistema.tiempoPromedio = suma / sistema.numProcesos;
+    float tiempoTotal = sistema.tiempoTurno;
+    int ultimoProceso = ejecutados[0];
+    for (int i = 1; i < sistema.numeroTotalTurnos; i++) 
+	{
+        actual = ejecutados[i];
+        if (ultimoProceso != actual) tiempoTotal += sistema.tiempoCambioProceso;
+        tiempoTotal += sistema.tiempoTurno;
+        ultimoProceso = actual;
+    }
+    sistema.tiempoTotal = tiempoTotal;
+    sistema.codigoError = EXITO;
+    free(ejecutados);
+    return sistema;
+}
+
+/**
+ * Planificación Retroalimentación (RA).
+ * Mezcla de HRRN y RR, usando el cuanto para limitar la ejecución continua.
+ * @param sistema Estructura ssoo con los procesos y parámetros inicializados
+ * @return ssoo actualizado tras la planificación
+ */
+ssoo proc_RA(ssoo sistema) 
+{
+    if (!sistema.procesos || sistema.numProcesos <= 0 || sistema.cuanto <= 0) { sistema.codigoError = SUPERFALLO; return sistema; }
+    int turnos = 0, completados = 0, actual = -1;
+    int totalTurnos = 0;
+    for (int i = 0; i < sistema.numProcesos; i++) totalTurnos += sistema.procesos[i].tiempoEjecucion;
+    int tamEjecutados = totalTurnos + 1;
+    int *ejecutados = malloc(sizeof(int) * tamEjecutados);
+    if (!ejecutados) { sistema.codigoError = SUPERFALLO; return sistema; }
+    Cola cola;
+    colaCreaVacia(&cola);
+    for (int i = 0; i < sistema.numProcesos; i++) 
+	{
+        sistema.procesos[i].tiempoRestante = sistema.procesos[i].tiempoEjecucion;
+        sistema.procesos[i].tiempoEspera = 0;
+        sistema.procesos[i].tiempoRetorno = -1;
+        sistema.procesos[i].tiempoRespuesta = -1;
+    }
+    int tiempo = 0;
+    int *enCola = calloc(sistema.numProcesos, sizeof(int));
+    while (completados < sistema.numProcesos) 
+	{
+        for (int i = 0; i < sistema.numProcesos; i++) 
+		{
+            if (!enCola[i] && sistema.procesos[i].turnoLlegada <= tiempo && sistema.procesos[i].tiempoRestante > 0) 
+			{
+                colaInserta(i, &cola);
+                enCola[i] = 1;
+            }
+        }
+        if (colaVacia(&cola)) { tiempo++; continue; }
+        // Selección del proceso con mayor ratio de respuesta, desempate por llegada y posición
+        tipoCeldaC *mejorCelda = cola.frente, *antMejor = NULL, *ant = NULL, *act = cola.frente;
+        float mejorResp = -1.0f;
+        while (act) 
+		{
+            int idx = act->elemento;
+            float resp = (float)(sistema.procesos[idx].tiempoEspera + sistema.procesos[idx].tiempoEjecucion) / sistema.procesos[idx].tiempoEjecucion;
+            if (mejorCelda == NULL || resp > mejorResp || (resp == mejorResp && (sistema.procesos[idx].turnoLlegada < sistema.procesos[mejorCelda->elemento].turnoLlegada || (sistema.procesos[idx].turnoLlegada == sistema.procesos[mejorCelda->elemento].turnoLlegada && idx < mejorCelda->elemento)))) 
+			{
+                mejorCelda = act;
+                mejorResp = resp;
+                antMejor = ant;
+            }
+            ant = act;
+            act = act->sig;
+        }
+        // Sacar el proceso seleccionado de la cola
+        if (antMejor) antMejor->sig = mejorCelda->sig;
+        else cola.frente = mejorCelda->sig;
+        if (mejorCelda == cola.fondo) cola.fondo = antMejor;
+        actual = mejorCelda->elemento;
+        free(mejorCelda);
+        int quantum = 0;
+        while (sistema.procesos[actual].tiempoRestante > 0 && quantum < sistema.cuanto) 
+		{
+            if (turnos >= tamEjecutados)
+			{
+                tamEjecutados *= 2;
+                int *nuevo = realloc(ejecutados, sizeof(int) * tamEjecutados);
+                if (!nuevo) { free(ejecutados); sistema.codigoError = SUPERFALLO; return sistema; }
+                ejecutados = nuevo;
+            }
+            ejecutados[turnos++] = sistema.procesos[actual].pid;
+            for (int j = 0; j < sistema.numProcesos; j++)
+                if (j != actual && sistema.procesos[j].tiempoRestante > 0 && sistema.procesos[j].turnoLlegada <= tiempo)
+                    sistema.procesos[j].tiempoEspera++;
+            sistema.procesos[actual].tiempoRestante--;
+            tiempo++;
+            quantum++;
+            for (int i = 0; i < sistema.numProcesos; i++) 
+			{
+                if (!enCola[i] && sistema.procesos[i].turnoLlegada <= tiempo && sistema.procesos[i].tiempoRestante > 0) 
+				{
+                    colaInserta(i, &cola);
+                    enCola[i] = 1;
+                }
+            }
+        }
+        if (sistema.procesos[actual].tiempoRestante > 0) 
+		{
+            colaInserta(actual, &cola);
+        } else 
+		{
+            sistema.procesos[actual].tiempoRetorno = tiempo - sistema.procesos[actual].turnoLlegada;
+            sistema.procesos[actual].tiempoRespuesta = (float)(sistema.procesos[actual].tiempoEspera + sistema.procesos[actual].tiempoEjecucion) / sistema.procesos[actual].tiempoEjecucion;
+            completados++;
+        }
+    }
+    sistema.numeroTotalTurnos = turnos;
+    sistema.pidsTurnos = malloc(sizeof(int) * turnos);
+    for (int i = 0; i < turnos; i++) sistema.pidsTurnos[i] = ejecutados[i];
+    float suma = 0;
+    for (int i = 0; i < sistema.numProcesos; i++) suma += sistema.procesos[i].tiempoRetorno * sistema.procesos[i].tiempoRetorno;
+    sistema.tiempoPromedio = suma / sistema.numProcesos;
+    float tiempoTotal = sistema.tiempoTurno;
+    int ultimoProceso = ejecutados[0];
+    for (int i = 1; i < sistema.numeroTotalTurnos; i++) 
+	{
+        actual = ejecutados[i];
+        if (ultimoProceso != actual) tiempoTotal += sistema.tiempoCambioProceso;
+        tiempoTotal += sistema.tiempoTurno;
+        ultimoProceso = actual;
+    }
+    sistema.tiempoTotal = tiempoTotal;
+    sistema.codigoError = EXITO;
+    free(ejecutados); free(enCola);
+    return sistema;
+}
+
+
+
+
+
+
+/**
+ * Pausa la ejecución hasta que el usuario pulse Intro.
+ * Mensaje fijo: "Pulsa intro para continuar..."
+ * No depende del sistema operativo.
+ * @return void
+ */
+void alwaysPause(void) {
+    printf("Pulsa intro para continuar...");
+    int c;
+    do { c = getchar(); } while (c != '\n' && c != EOF);
+}
+
+
+
+/******************************* ORDENACIÓN CLÁSICA *******************************/
+
+/**
+ * Ordena un vector de enteros usando el algoritmo Bubble Sort.
+ * @param v Vector de enteros
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int bubbleSortI(int *v, int n)
+{
+    if (!v || n < 1) return FALLO;
+    int i, j, tmp;
+    for (i = 0; i < n-1; i++) 
+        for (j = 0; j < n-i-1; j++) 
+            if (v[j] > v[j+1])
+                tmp = v[j]; v[j] = v[j+1]; v[j+1] = tmp;
+    return EXITO;
+}
+
+/**
+ * Ordena un vector de floats usando el algoritmo Bubble Sort.
+ * @param v Vector de floats
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int bubbleSortF(float *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int i, j;
+    float tmp;
+    for (i = 0; i < n-1; i++)
+        for (j = 0; j < n-i-1; j++)
+            if (v[j] > v[j+1])
+                tmp = v[j]; v[j] = v[j+1]; v[j+1] = tmp;
+    return EXITO;
+}
+
+/**
+ * Ordena un vector de enteros usando el algoritmo Selection Sort.
+ * @param v Vector de enteros
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int selectionSortI(int *v, int n)
+{
+    if (!v || n < 1) return FALLO;
+    int i, j, min, tmp;
+    for (i = 0; i < n-1; i++) 
+	{
+        min = i;
+        for (j = i+1; j < n; j++)
+            if (v[j] < v[min]) min = j;
+        tmp = v[i]; v[i] = v[min]; v[min] = tmp;
+    }
+    return EXITO;
+}
+/**
+ * Ordena un vector de floats usando el algoritmo Selection Sort.
+ * @param v Vector de floats
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int selectionSortF(float *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int i, j, min;
+    float tmp;
+    for (i = 0; i < n-1; i++) 
+	{
+        min = i;
+        for (j = i+1; j < n; j++)
+            if (v[j] < v[min]) min = j;
+        tmp = v[i]; v[i] = v[min]; v[min] = tmp;
+    }
+    return EXITO;
+}
+
+/**
+ * Ordena un vector de enteros usando el algoritmo Insertion Sort.
+ * @param v Vector de enteros
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int insertionSortI(int *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int i, j, key;
+    for (i = 1; i < n; i++) 
+	{
+        key = v[i];
+        j = i - 1;
+        while (j >= 0 && v[j] > key)
+		{
+            v[j+1] = v[j];
+            j--;
+        }
+        v[j+1] = key;
+    }
+    return EXITO;
+}
+/**
+ * Ordena un vector de floats usando el algoritmo Insertion Sort.
+ * @param v Vector de floats
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int insertionSortF(float *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int i, j;
+    float key;
+    for (i = 1; i < n; i++) 
+	{
+        key = v[i];
+        j = i - 1;
+        while (j >= 0 && v[j] > key) 
+		{
+            v[j+1] = v[j];
+            j--;
+        }
+        v[j+1] = key;
+    }
+    return EXITO;
+}
+
+// --- MERGE SORT AUXILIARES ---
+static void mergeI(int *v, int l, int m, int r) 
+{
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 = r - m;
+    int *L = malloc(n1 * sizeof(int));
+    int *R = malloc(n2 * sizeof(int));
+    for (i = 0; i < n1; i++) L[i] = v[l + i];
+    for (j = 0; j < n2; j++) R[j] = v[m + 1 + j];
+    i = 0; j = 0; k = l;
+    while (i < n1 && j < n2) 
+	{
+        if (L[i] <= R[j]) v[k++] = L[i++];
+        else v[k++] = R[j++];
+    }
+    while (i < n1) v[k++] = L[i++];
+    while (j < n2) v[k++] = R[j++];
+    free(L); free(R);
+}
+static void mergeSortRecI(int *v, int l, int r) 
+{
+    if (l < r) 
+	{
+        int m = l + (r - l) / 2;
+        mergeSortRecI(v, l, m);
+        mergeSortRecI(v, m+1, r);
+        mergeI(v, l, m, r);
+    }
+}
+static void mergeF(float *v, int l, int m, int r) 
+{
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 = r - m;
+    float *L = malloc(n1 * sizeof(float));
+    float *R = malloc(n2 * sizeof(float));
+    for (i = 0; i < n1; i++) L[i] = v[l + i];
+    for (j = 0; j < n2; j++) R[j] = v[m + 1 + j];
+    i = 0; j = 0; k = l;
+    while (i < n1 && j < n2) 
+	{
+        if (L[i] <= R[j]) v[k++] = L[i++];
+        else v[k++] = R[j++];
+    }
+    while (i < n1) v[k++] = L[i++];
+    while (j < n2) v[k++] = R[j++];
+    free(L); free(R);
+}
+static void mergeSortRecF(float *v, int l, int r) 
+{
+    if (l < r) 
+	{
+        int m = l + (r - l) / 2;
+        mergeSortRecF(v, l, m);
+        mergeSortRecF(v, m+1, r);
+        mergeF(v, l, m, r);
+    }
+}
+/**
+ * Ordena un vector de enteros usando el algoritmo Merge Sort.
+ * @param v Vector de enteros
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int mergeSortI(int *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    mergeSortRecI(v, 0, n-1);
+    return EXITO;
+}
+/**
+ * Ordena un vector de floats usando el algoritmo Merge Sort.
+ * @param v Vector de floats
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int mergeSortF(float *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    mergeSortRecF(v, 0, n-1);
+    return EXITO;
+}
+
+// --- QUICK SORT AUXILIARES ---
+static int partitionI(int *v, int low, int high) 
+{
+    int pivot = v[high];
+    int i = (low - 1), tmp;
+    for (int j = low; j < high; j++) 
+	{
+        if (v[j] < pivot) 
+		{
+            i++;
+            tmp = v[i]; v[i] = v[j]; v[j] = tmp;
+        }
+    }
+    tmp = v[i+1]; v[i+1] = v[high]; v[high] = tmp;
+    return i+1;
+}
+static void quickSortRecI(int *v, int low, int high) 
+{
+    if (low < high) 
+	{
+        int pi = partitionI(v, low, high);
+        quickSortRecI(v, low, pi - 1);
+        quickSortRecI(v, pi + 1, high);
+    }
+}
+static int partitionF(float *v, int low, int high) 
+{
+    float pivot = v[high];
+    int i = (low - 1);
+    float tmp;
+    for (int j = low; j < high; j++) 
+	{
+        if (v[j] < pivot) 
+		{
+            i++;
+            tmp = v[i]; v[i] = v[j]; v[j] = tmp;
+        }
+    }
+    tmp = v[i+1]; v[i+1] = v[high]; v[high] = tmp;
+    return i+1;
+}
+static void quickSortRecF(float *v, int low, int high) 
+{
+    if (low < high) 
+	{
+        int pi = partitionF(v, low, high);
+        quickSortRecF(v, low, pi - 1);
+        quickSortRecF(v, pi + 1, high);
+    }
+}
+/**
+ * Ordena un vector de enteros usando el algoritmo Quick Sort.
+ * @param v Vector de enteros
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int quickSortI(int *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    quickSortRecI(v, 0, n-1);
+    return EXITO;
+}
+/**
+ * Ordena un vector de floats usando el algoritmo Quick Sort.
+ * @param v Vector de floats
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int quickSortF(float *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    quickSortRecF(v, 0, n-1);
+    return EXITO;
+}
+
+/**
+ * Ordena un vector de enteros usando el algoritmo Shell Sort.
+ * @param v Vector de enteros
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int shellSortI(int *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int gap, i, j, temp;
+    for (gap = n/2; gap > 0; gap /= 2) 
+	{
+        for (i = gap; i < n; i++) 
+		{
+            temp = v[i];
+            for (j = i; j >= gap && v[j-gap] > temp; j -= gap)  v[j] = v[j-gap];
+            v[j] = temp;
+        }
+    }
+    return EXITO;
+}
+/**
+ * Ordena un vector de floats usando el algoritmo Shell Sort.
+ * @param v Vector de floats
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int shellSortF(float *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int gap, i, j;
+    float temp;
+    for (gap = n/2; gap > 0; gap /= 2) 
+	{
+        for (i = gap; i < n; i++) 
+		{
+            temp = v[i];
+            for (j = i; j >= gap && v[j-gap] > temp; j -= gap) v[j] = v[j-gap];
+            v[j] = temp;
+        }
+    }
+    return EXITO;
+}
+
+/**
+ * Ordena un vector de enteros usando el algoritmo Gnome Sort.
+ * @param v Vector de enteros
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int gnomeSortI(int *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int i = 0, tmp;
+    while (i < n) 
+	{
+        if (i == 0 || v[i-1] <= v[i]) i++;
+        else { tmp = v[i]; v[i] = v[i-1]; v[i-1] = tmp; i--; }
+    }
+    return EXITO;
+}
+
+/**
+ * Ordena un vector de floats usando el algoritmo Gnome Sort.
+ * @param v Vector de floats
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int gnomeSortF(float *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int i = 0;
+    float tmp;
+    while (i < n) 
+	{
+        if (i == 0 || v[i-1] <= v[i]) i++;
+        else { tmp = v[i]; v[i] = v[i-1]; v[i-1] = tmp; i--; }
+    }
+    return EXITO;
+}
+
+/**
+ * Ordena un vector de enteros usando el algoritmo Comb Sort.
+ * @param v Vector de enteros
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int combSortI(int *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int gap = n, i, swapped = 1, tmp;
+    while (gap > 1 || swapped) 
+	{
+        if (gap > 1) gap = (gap * 10) / 13;
+        swapped = 0;
+        for (i = 0; i + gap < n; i++) 
+		{
+            if (v[i] > v[i+gap]) 
+			{
+                tmp = v[i]; v[i] = v[i+gap]; v[i+gap] = tmp;
+                swapped = 1;
+            }
+        }
+    }
+    return EXITO;
+}
+/**
+ * Ordena un vector de floats usando el algoritmo Comb Sort.
+ * @param v Vector de floats
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int combSortF(float *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int gap = n, i, swapped = 1;
+    float tmp;
+    while (gap > 1 || swapped) 
+	{
+        if (gap > 1) gap = (gap * 10) / 13;
+        swapped = 0;
+        for (i = 0; i + gap < n; i++) 
+		{
+            if (v[i] > v[i+gap]) 
+			{
+                tmp = v[i]; v[i] = v[i+gap]; v[i+gap] = tmp;
+                swapped = 1;
+            }
+        }
+    }
+    return EXITO;
+}
+
+/**
+ * Ordena un vector de enteros usando el algoritmo Odd-Even Sort.
+ * @param v Vector de enteros
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int oddEvenSortI(int *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int sorted = 0, i, tmp;
+    while (!sorted) 
+	{
+        sorted = 1;
+        for (i = 1; i < n-1; i += 2) 
+            if (v[i] > v[i+1]) 
+                tmp = v[i]; v[i] = v[i+1]; v[i+1] = tmp; sorted = 0;
+        for (i = 0; i < n-1; i += 2) 
+            if (v[i] > v[i+1]) 
+                tmp = v[i]; v[i] = v[i+1]; v[i+1] = tmp; sorted = 0;
+    }
+    return EXITO;
+}
+/**
+ * Ordena un vector de floats usando el algoritmo Odd-Even Sort.
+ * @param v Vector de floats
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int oddEvenSortF(float *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int sorted = 0, i;
+    float tmp;
+    while (!sorted) 
+	{
+        sorted = 1;
+        for (i = 1; i < n-1; i += 2) 
+            if (v[i] > v[i+1]) 
+                tmp = v[i]; v[i] = v[i+1]; v[i+1] = tmp; sorted = 0;
+        for (i = 0; i < n-1; i += 2) 
+            if (v[i] > v[i+1]) 
+                tmp = v[i]; v[i] = v[i+1]; v[i+1] = tmp; sorted = 0;
+    }
+    return EXITO;
+}
+
+// --- BITONIC SORT AUXILIARES ---
+static void bitonicMergeI(int *v, int low, int cnt, int dir) 
+{
+    if (cnt > 1) 
+	{
+        int k = cnt / 2, tmp;
+        for (int i = low; i < low + k; i++) 
+            if ((dir && v[i] > v[i+k]) || (!dir && v[i] < v[i+k]))
+			{
+				tmp = v[i]; 
+				v[i] = v[i+k]; v[i+k] = tmp;
+			}
+                
+        bitonicMergeI(v, low, k, dir);
+        bitonicMergeI(v, low + k, k, dir);
+    }
+}
+static void bitonicSortRecI(int *v, int low, int cnt, int dir) 
+{
+    if (cnt > 1) 
+	{
+        int k = cnt / 2;
+        bitonicSortRecI(v, low, k, 1);
+        bitonicSortRecI(v, low + k, k, 0);
+        bitonicMergeI(v, low, cnt, dir);
+    }
+}
+static void bitonicMergeF(float *v, int low, int cnt, int dir) 
+{
+    if (cnt > 1) 
+	{
+        int k = cnt / 2;
+        float tmp;
+        for (int i = low; i < low + k; i++) 
+            if ((dir && v[i] > v[i+k]) || (!dir && v[i] < v[i+k])) 
+			{
+				tmp = v[i]; 
+				v[i] = v[i+k]; v[i+k] = tmp;
+			}
+        bitonicMergeF(v, low, k, dir);
+        bitonicMergeF(v, low + k, k, dir);
+    }
+}
+static void bitonicSortRecF(float *v, int low, int cnt, int dir) 
+{
+    if (cnt > 1) 
+	{
+        int k = cnt / 2;
+        bitonicSortRecF(v, low, k, 1);
+        bitonicSortRecF(v, low + k, k, 0);
+        bitonicMergeF(v, low, cnt, dir);
+    }
+}
+/**
+ * Ordena un vector de enteros usando el algoritmo Bitonic Sort.
+ * @param v Vector de enteros
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int bitonicSortI(int *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    bitonicSortRecI(v, 0, n, 1);
+    return EXITO;
+}
+/**
+ * Ordena un vector de floats usando el algoritmo Bitonic Sort.
+ * @param v Vector de floats
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int bitonicSortF(float *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    bitonicSortRecF(v, 0, n, 1);
+    return EXITO;
+}
+
+// --- PANCAKE SORT AUXILIARES ---
+static void flipI(int *v, int i) 
+{
+    int start = 0, tmp;
+    while (start < i) 
+	{
+        tmp = v[start]; v[start] = v[i]; v[i] = tmp;
+        start++; i--;
+    }
+}
+static int findMaxI(int *v, int n) 
+{
+    int mi = 0;
+    for (int i = 1; i < n; i++) if (v[i] > v[mi]) mi = i;
+    return mi;
+}
+static void flipF(float *v, int i) 
+{
+    int start = 0;
+    float tmp;
+    while (start < i) 
+	{
+        tmp = v[start]; v[start] = v[i]; v[i] = tmp;
+        start++; i--;
+    }
+}
+static int findMaxF(float *v, int n) 
+{
+    int mi = 0;
+    for (int i = 1; i < n; i++) if (v[i] > v[mi]) mi = i;
+    return mi;
+}
+/**
+ * Ordena un vector de enteros usando el algoritmo Pancake Sort.
+ * @param v Vector de enteros
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int pancakeSortI(int *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    for (int curr = n; curr > 1; curr--) 
+	{
+        int mi = findMaxI(v, curr);
+        if (mi != curr-1) 
+		{
+            flipI(v, mi);
+            flipI(v, curr-1);
+        }
+    }
+    return EXITO;
+}
+/**
+ * Ordena un vector de floats usando el algoritmo Pancake Sort.
+ * @param v Vector de floats
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int pancakeSortF(float *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    for (int curr = n; curr > 1; curr--) 
+	{
+        int mi = findMaxF(v, curr);
+        if (mi != curr-1) 
+		{
+            flipF(v, mi);
+            flipF(v, curr-1);
+        }
+    }
+    return EXITO;
+}
+
+// --- STOOGE SORT AUXILIARES ---
+static void stoogeSortRecI(int *v, int l, int h) 
+{
+    if (l >= h) return;
+    int tmp;
+    if (v[l] > v[h]) { tmp = v[l]; v[l] = v[h]; v[h] = tmp; }
+    if (h - l + 1 > 2) 
+	{
+        int t = (h - l + 1) / 3;
+        stoogeSortRecI(v, l, h-t);
+        stoogeSortRecI(v, l+t, h);
+        stoogeSortRecI(v, l, h-t);
+    }
+}
+static void stoogeSortRecF(float *v, int l, int h) 
+{
+    if (l >= h) return;
+    float tmp;
+    if (v[l] > v[h]) { tmp = v[l]; v[l] = v[h]; v[h] = tmp; }
+    if (h - l + 1 > 2) 
+	{
+        int t = (h - l + 1) / 3;
+        stoogeSortRecF(v, l, h-t);
+        stoogeSortRecF(v, l+t, h);
+        stoogeSortRecF(v, l, h-t);
+    }
+}
+/**
+ * Ordena un vector de enteros usando el algoritmo Stooge Sort.
+ * @param v Vector de enteros
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int stoogeSortI(int *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    stoogeSortRecI(v, 0, n-1);
+    return EXITO;
+}
+/**
+ * Ordena un vector de floats usando el algoritmo Stooge Sort.
+ * @param v Vector de floats
+ * @param n Tamaño del vector
+ * @return EXITO, FALLO o SUPERFALLO
+ */
+int stoogeSortF(float *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    stoogeSortRecF(v, 0, n-1);
+    return EXITO;
+}
+
+/**
+ * Ordena un vector de enteros usando el algoritmo Bogo Sort.
+ */
+int bogoSortI(int *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int is_sorted = 0, i, tmp;
+    int intentos = 0, max_intentos = 1000000;
+    while (!is_sorted && intentos < max_intentos) 
+	{
+        is_sorted = 1;
+        for (i = 1; i < n; i++) if (v[i-1] > v[i]) { is_sorted = 0; break; }
+        if (is_sorted) break;
+        for (i = 0; i < n; i++) 
+		{
+            int j = rand() % n;
+            tmp = v[i]; v[i] = v[j]; v[j] = tmp;
+        }
+        intentos++;
+    }
+    return is_sorted ? EXITO : SUPERFALLO;
+}
+
+/**
+ * Ordena un vector de floats usando el algoritmo Bogo Sort.
+ */
+int bogoSortF(float *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int is_sorted = 0, i;
+    float tmp;
+    int intentos = 0, max_intentos = 1000000;
+    while (!is_sorted && intentos < max_intentos) 
+	{
+        is_sorted = 1;
+        for (i = 1; i < n; i++) if (v[i-1] > v[i]) { is_sorted = 0; break; }
+        if (is_sorted) break;
+        for (i = 0; i < n; i++) 
+		{
+            int j = rand() % n;
+            tmp = v[i]; v[i] = v[j]; v[j] = tmp;
+        }
+        intentos++;
+    }
+    return is_sorted ? EXITO : SUPERFALLO;
+}
+
+/**
+ * Ordena un vector de enteros usando el algoritmo Sleep Sort (simulado, no real).
+ */
+int sleepSortI(int *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int *out = malloc(n * sizeof(int));
+    if (!out) return SUPERFALLO;
+    int i, j, min, idx;
+    for (i = 0; i < n; i++) out[i] = v[i];
+    for (i = 0; i < n; i++) 
+	{
+        min = 0;
+        for (j = 1; j < n-i; j++) if (out[j] < out[min]) min = j;
+        v[i] = out[min];
+        for (idx = min; idx < n-i-1; idx++) out[idx] = out[idx+1];
+    }
+    free(out);
+    return EXITO;
+}
+
+/**
+ * Ordena un vector de floats usando el algoritmo Sleep Sort (simulado, no real).
+ */
+int sleepSortF(float *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    float *out = malloc(n * sizeof(float));
+    if (!out) return SUPERFALLO;
+    int i, j, min, idx;
+    for (i = 0; i < n; i++) out[i] = v[i];
+    for (i = 0; i < n; i++) 
+	{
+        min = 0;
+        for (j = 1; j < n-i; j++) if (out[j] < out[min]) min = j;
+        v[i] = out[min];
+        for (idx = min; idx < n-i-1; idx++) out[idx] = out[idx+1];
+    }
+    free(out);
+    return EXITO;
+}
+
+/**
+ * Ordena un vector de enteros usando el algoritmo Cycle Sort.
+ */
+int cycleSortI(int *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int writes = 0, i, item, pos, j, tmp;
+    for (i = 0; i < n - 1; i++) 
+	{
+        item = v[i];
+        pos = i;
+        for (j = i + 1; j < n; j++) if (v[j] < item) pos++;
+        if (pos == i) continue;
+        while (item == v[pos]) pos++;
+        if (pos != i) { tmp = v[pos]; v[pos] = item; item = tmp; writes++; }
+        while (pos != i) 
+		{
+            pos = i;
+            for (j = i + 1; j < n; j++) if (v[j] < item) pos++;
+            while (item == v[pos]) pos++;
+            if (item != v[pos]) { tmp = v[pos]; v[pos] = item; item = tmp; writes++; }
+        }
+    }
+    return EXITO;
+}
+
+/**
+ * Ordena un vector de floats usando el algoritmo Cycle Sort.
+ */
+int cycleSortF(float *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int writes = 0, i, pos, j;
+    float item, tmp;
+    for (i = 0; i < n - 1; i++) 
+	{
+        item = v[i];
+        pos = i;
+        for (j = i + 1; j < n; j++) if (v[j] < item) pos++;
+        if (pos == i) continue;
+        while (item == v[pos]) pos++;
+        if (pos != i) { tmp = v[pos]; v[pos] = item; item = tmp; writes++; }
+        while (pos != i) 
+		{
+            pos = i;
+            for (j = i + 1; j < n; j++) if (v[j] < item) pos++;
+            while (item == v[pos]) pos++;
+            if (item != v[pos]) { tmp = v[pos]; v[pos] = item; item = tmp; writes++; }
+        }
+    }
+    return EXITO;
+}
+
+/**
+ * Ordena un vector de enteros usando el algoritmo Counting Sort.
+ */
+int countingSort(int *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int i, max = v[0], min = v[0];
+    for (i = 1; i < n; i++) 
+	{
+        if (v[i] > max) max = v[i];
+        if (v[i] < min) min = v[i];
+    }
+    int rango = max - min + 1;
+    int *count = malloc(rango * sizeof(int));
+    if (!count) return SUPERFALLO;
+    for (i = 0; i < rango; i++) count[i] = 0;
+    for (i = 0; i < n; i++) count[v[i] - min]++;
+    int idx = 0;
+    for (i = 0; i < rango; i++) while (count[i]-- > 0) v[idx++] = i + min;
+    free(count);
+    return EXITO;
+}
+
+/**
+ * Ordena un vector de enteros usando el algoritmo Radix Sort.
+ */
+int radixSort(int *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int i, exp, max = v[0];
+    for (i = 1; i < n; i++) if (v[i] > max) max = v[i];
+    int *output = malloc(n * sizeof(int));
+    if (!output) return SUPERFALLO;
+    for (exp = 1; max / exp > 0; exp *= 10) 
+	{
+        int count[10] = {0};
+        for (i = 0; i < n; i++) count[(v[i] / exp) % 10]++;
+        for (i = 1; i < 10; i++) count[i] += count[i - 1];
+        for (i = n - 1; i >= 0; i--) 
+		{
+            output[count[(v[i] / exp) % 10] - 1] = v[i];
+            count[(v[i] / exp) % 10]--;
+        }
+        for (i = 0; i < n; i++) v[i] = output[i];
+    }
+    free(output);
+    return EXITO;
+}
+
+/**
+ * Ordena un vector de enteros usando el algoritmo Bucket Sort.
+ */
+int bucketSort(int *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int i, j, max = v[0], min = v[0];
+    for (i = 1; i < n; i++) 
+	{
+        if (v[i] > max) max = v[i];
+        if (v[i] < min) min = v[i];
+    }
+    int bucketCount = n;
+    int bucketRange = (max - min + 1) / bucketCount + 1;
+    int **buckets = malloc(bucketCount * sizeof(int*));
+    int *bucketSizes = calloc(bucketCount, sizeof(int));
+    if (!buckets || !bucketSizes) return SUPERFALLO;
+    for (i = 0; i < bucketCount; i++) buckets[i] = malloc(n * sizeof(int));
+    for (i = 0; i < n; i++) 
+	{
+        int idx = (v[i] - min) / bucketRange;
+        buckets[idx][bucketSizes[idx]++] = v[i];
+    }
+    int idx = 0;
+    for (i = 0; i < bucketCount; i++) 
+	{
+        if (bucketSizes[i] > 0) 
+		{
+            insertionSortI(buckets[i], bucketSizes[i]);
+            for (j = 0; j < bucketSizes[i]; j++) v[idx++] = buckets[i][j];
+        }
+        free(buckets[i]);
+    }
+    free(buckets);
+    free(bucketSizes);
+    return EXITO;
+}
+
+/**
+ * Ordena un vector de enteros usando el algoritmo Pigeonhole Sort.
+ */
+int pigeonholeSort(int *v, int n) 
+{
+    if (!v || n < 1) return FALLO;
+    int i, min = v[0], max = v[0];
+    for (i = 1; i < n; i++) 
+	{
+        if (v[i] > max) max = v[i];
+        if (v[i] < min) min = v[i];
+    }
+    int size = max - min + 1;
+    int *holes = calloc(size, sizeof(int));
+    if (!holes) return SUPERFALLO;
+    for (i = 0; i < n; i++) holes[v[i] - min]++;
+    int idx = 0;
+    for (i = 0; i < size; i++) while (holes[i]-- > 0) v[idx++] = i + min;
+    free(holes);
+    return EXITO;
+}
+
+/**
+ * @brief Búsqueda lineal en un vector de enteros.
+ * @param vector Vector de enteros donde buscar.
+ * @param n Número de elementos del vector.
+ * @param valorBuscado Valor a buscar.
+ * @return Posición del valor encontrado, o -1 si no está o hay error.
+ */
+int linearSearch(const int *vector, int n, int valorBuscado) 
+{
+    if (!vector || n <= 0) return -1;
+    for (int i = 0; i < n; i++) 
+        if (vector[i] == valorBuscado) return i;
+    return -1;
+}
+
+/**
+ * @brief Búsqueda lineal en un vector de floats.
+ * @param vector Vector de floats donde buscar.
+ * @param n Número de elementos del vector.
+ * @param valorBuscado Valor a buscar.
+ * @return Posición del valor encontrado, o -1 si no está o hay error.
+ */
+int linearSearchF(const float *vector, int n, float valorBuscado) 
+{
+    if (!vector || n <= 0) return -1;
+    for (int i = 0; i < n; i++)
+        if (vector[i] == valorBuscado) return i;
+    return -1;
+}
+
+// Función auxiliar para comprobar si un vector de enteros está ordenado ascendentemente
+static int estaOrdenadoAscI(const int *vector, int n) 
+{
+    for (int i = 1; i < n; i++)
+        if (vector[i] < vector[i-1]) return 0;
+    return 1;
+}
+
+// Función auxiliar para comprobar si un vector de floats está ordenado ascendentemente
+static int estaOrdenadoAscF(const float *vector, int n) 
+{
+    for (int i = 1; i < n; i++)
+        if (vector[i] < vector[i-1]) return 0;
+    return 1;
+}
+
+/**
+ * @brief Búsqueda binaria en un vector de enteros ordenado ascendentemente.
+ * @param vector Vector de enteros ordenado.
+ * @param n Número de elementos del vector.
+ * @param valorBuscado Valor a buscar.
+ * @return Posición del valor encontrado, o -1 si no está o hay error.
+ */
+int binarySearch(const int *vector, int n, int valorBuscado) 
+{
+    if (!vector || n <= 0 || !estaOrdenadoAscI(vector, n)) return -1;
+    int izq = 0, der = n - 1;
+    while (izq <= der) 
+	{
+        int mid = izq + (der - izq) / 2;
+        if (vector[mid] == valorBuscado) return mid;
+        if (vector[mid] < valorBuscado) izq = mid + 1;
+        else der = mid - 1;
+    }
+    return -1;
+}
+
+/**
+ * @brief Búsqueda binaria en un vector de floats ordenado ascendentemente.
+ * @param vector Vector de floats ordenado.
+ * @param n Número de elementos del vector.
+ * @param valorBuscado Valor a buscar.
+ * @return Posición del valor encontrado, o -1 si no está o hay error.
+ */
+int binarySearchF(const float *vector, int n, float valorBuscado) 
+{
+    if (!vector || n <= 0 || !estaOrdenadoAscF(vector, n)) return -1;
+    int izq = 0, der = n - 1;
+    while (izq <= der) 
+	{
+        int mid = izq + (der - izq) / 2;
+        if (vector[mid] == valorBuscado) return mid;
+        if (vector[mid] < valorBuscado) izq = mid + 1;
+        else der = mid - 1;
+    }
+    return -1;
+}
+
+/**
+ * @brief Búsqueda ternaria en un vector de enteros ordenado ascendentemente.
+ * @param vector Vector de enteros ordenado.
+ * @param n Número de elementos del vector.
+ * @param valorBuscado Valor a buscar.
+ * @return Posición del valor encontrado, o -1 si no está o hay error.
+ */
+int ternarySearch(const int *vector, int n, int valorBuscado) 
+{
+    if (!vector || n <= 0 || !estaOrdenadoAscI(vector, n)) return -1;
+    int izq = 0, der = n - 1;
+    while (izq <= der) 
+	{
+        int tercio1 = izq + (der - izq) / 3;
+        int tercio2 = der - (der - izq) / 3;
+        if (vector[tercio1] == valorBuscado) return tercio1;
+        if (vector[tercio2] == valorBuscado) return tercio2;
+        if (valorBuscado < vector[tercio1]) der = tercio1 - 1;
+        else if (valorBuscado > vector[tercio2]) izq = tercio2 + 1;
+        else 
+		{
+            izq = tercio1 + 1;
+            der = tercio2 - 1;
+        }
+    }
+    return -1;
+}
+
+/**
+ * @brief Búsqueda ternaria en un vector de floats ordenado ascendentemente.
+ * @param vector Vector de floats ordenado.
+ * @param n Número de elementos del vector.
+ * @param valorBuscado Valor a buscar.
+ * @return Posición del valor encontrado, o -1 si no está o hay error.
+ */
+int ternarySearchF(const float *vector, int n, float valorBuscado) 
+{
+    if (!vector || n <= 0 || !estaOrdenadoAscF(vector, n)) return -1;
+    int izq = 0, der = n - 1;
+    while (izq <= der) 
+	{
+        int tercio1 = izq + (der - izq) / 3;
+        int tercio2 = der - (der - izq) / 3;
+        if (vector[tercio1] == valorBuscado) return tercio1;
+        if (vector[tercio2] == valorBuscado) return tercio2;
+        if (valorBuscado < vector[tercio1]) der = tercio1 - 1;
+        else if (valorBuscado > vector[tercio2]) izq = tercio2 + 1;
+        else 
+		{
+            izq = tercio1 + 1;
+            der = tercio2 - 1;
+        }
+    }
+    return -1;
+}
+
+/**
+ * @brief Búsqueda exponencial en un vector de enteros ordenado ascendentemente.
+ * @param vector Vector de enteros ordenado.
+ * @param n Número de elementos del vector.
+ * @param valorBuscado Valor a buscar.
+ * @return Posición del valor encontrado, o -1 si no está o hay error.
+ */
+int exponentialSearch(const int *vector, int n, int valorBuscado) 
+{
+    if (!vector || n <= 0 || !estaOrdenadoAscI(vector, n)) return -1;
+    if (vector[0] == valorBuscado) return 0;
+    int i = 1;
+    while (i < n && vector[i] <= valorBuscado) i *= 2;
+    int izq = i / 2, der = (i < n) ? i : n - 1;
+    while (izq <= der) 
+	{
+        int mid = izq + (der - izq) / 2;
+        if (vector[mid] == valorBuscado) return mid;
+        if (vector[mid] < valorBuscado) izq = mid + 1;
+        else der = mid - 1;
+    }
+    return -1;
+}
+
+/**
+ * @brief Búsqueda exponencial en un vector de floats ordenado ascendentemente.
+ * @param vector Vector de floats ordenado.
+ * @param n Número de elementos del vector.
+ * @param valorBuscado Valor a buscar.
+ * @return Posición del valor encontrado, o -1 si no está o hay error.
+ */
+int exponentialSearchF(const float *vector, int n, float valorBuscado) 
+{
+    if (!vector || n <= 0 || !estaOrdenadoAscF(vector, n)) return -1;
+    if (vector[0] == valorBuscado) return 0;
+    int i = 1;
+    while (i < n && vector[i] <= valorBuscado) i *= 2;
+    int izq = i / 2, der = (i < n) ? i : n - 1;
+    while (izq <= der) 
+	{
+        int mid = izq + (der - izq) / 2;
+        if (vector[mid] == valorBuscado) return mid;
+        if (vector[mid] < valorBuscado) izq = mid + 1;
+        else der = mid - 1;
+    }
+    return -1;
+}
+
+/**
+ * @brief Búsqueda por saltos (Jump Search) en un vector de enteros ordenado ascendentemente.
+ * @param vector Vector de enteros ordenado.
+ * @param n Número de elementos del vector.
+ * @param valorBuscado Valor a buscar.
+ * @return Posición del valor encontrado, o -1 si no está o hay error.
+ */
+int jumpSearch(const int *vector, int n, int valorBuscado) 
+{
+    if (!vector || n <= 0 || !estaOrdenadoAscI(vector, n)) return -1;
+    int salto = (int)sqrt(n);
+    int prev = 0;
+    while (prev < n && vector[(salto < n ? salto : n) - 1] < valorBuscado) 
+	{
+        prev = salto;
+        salto += (int)sqrt(n);
+        if (prev >= n) return -1;
+    }
+    for (int i = prev; i < salto && i < n; i++) 
+        if (vector[i] == valorBuscado) return i;
+    return -1;
+}
+
+/**
+ * @brief Búsqueda por saltos (Jump Search) en un vector de floats ordenado ascendentemente.
+ * @param vector Vector de floats ordenado.
+ * @param n Número de elementos del vector.
+ * @param valorBuscado Valor a buscar.
+ * @return Posición del valor encontrado, o -1 si no está o hay error.
+ */
+int jumpSearchF(const float *vector, int n, float valorBuscado) 
+{
+    if (!vector || n <= 0 || !estaOrdenadoAscF(vector, n)) return -1;
+    int salto = (int)sqrt(n);
+    int prev = 0;
+    while (prev < n && vector[(salto < n ? salto : n) - 1] < valorBuscado) 
+	{
+        prev = salto;
+        salto += (int)sqrt(n);
+        if (prev >= n) return -1;
+    }
+    for (int i = prev; i < salto && i < n; i++)
+        if (vector[i] == valorBuscado) return i;
+    return -1;
+}
+
+/**
+ * @brief Búsqueda de Fibonacci en un vector de enteros ordenado ascendentemente.
+ * @param vector Vector de enteros ordenado.
+ * @param n Número de elementos del vector.
+ * @param valorBuscado Valor a buscar.
+ * @return Posición del valor encontrado, o -1 si no está o hay error.
+ */
+int fibonacciSearch(const int *vector, int n, int valorBuscado) 
+{
+    if (!vector || n <= 0 || !estaOrdenadoAscI(vector, n)) return -1;
+    int fibMMm2 = 0;
+    int fibMMm1 = 1;
+    int fibM = fibMMm2 + fibMMm1;
+    while (fibM < n) 
+	{
+        fibMMm2 = fibMMm1;
+        fibMMm1 = fibM;
+        fibM = fibMMm2 + fibMMm1;
+    }
+    int offset = -1;
+    while (fibM > 1) 
+	{
+        int i = (offset + fibMMm2 < n - 1) ? offset + fibMMm2 : n - 1;
+        if (vector[i] < valorBuscado) 
+		{
+            fibM = fibMMm1;
+            fibMMm1 = fibMMm2;
+            fibMMm2 = fibM - fibMMm1;
+            offset = i;
+        } else if (vector[i] > valorBuscado) 
+		{
+            fibM = fibMMm2;
+            fibMMm1 = fibMMm1 - fibMMm2;
+            fibMMm2 = fibM - fibMMm1;
+        } else return i;
+    }
+    if (fibMMm1 && offset + 1 < n && vector[offset + 1] == valorBuscado) return offset + 1;
+    return -1;
+}
+
+/**
+ * @brief Búsqueda de Fibonacci en un vector de floats ordenado ascendentemente.
+ * @param vector Vector de floats ordenado.
+ * @param n Número de elementos del vector.
+ * @param valorBuscado Valor a buscar.
+ * @return Posición del valor encontrado, o -1 si no está o hay error.
+ */
+int fibonacciSearchF(const float *vector, int n, float valorBuscado) 
+{
+    if (!vector || n <= 0 || !estaOrdenadoAscF(vector, n)) return -1;
+    int fibMMm2 = 0;
+    int fibMMm1 = 1;
+    int fibM = fibMMm2 + fibMMm1;
+    while (fibM < n) 
+	{
+        fibMMm2 = fibMMm1;
+        fibMMm1 = fibM;
+        fibM = fibMMm2 + fibMMm1;
+    }
+    int offset = -1;
+    while (fibM > 1) 
+	{
+        int i = (offset + fibMMm2 < n - 1) ? offset + fibMMm2 : n - 1;
+        if (vector[i] < valorBuscado) 
+		{
+            fibM = fibMMm1;
+            fibMMm1 = fibMMm2;
+            fibMMm2 = fibM - fibMMm1;
+            offset = i;
+        } else if (vector[i] > valorBuscado) 
+		{
+            fibM = fibMMm2;
+            fibMMm1 = fibMMm1 - fibMMm2;
+            fibMMm2 = fibM - fibMMm1;
+        } else
+            return i;
+    }
+    if (fibMMm1 && offset + 1 < n && vector[offset + 1] == valorBuscado) return offset + 1;
+    return -1;
+}
 
 
 

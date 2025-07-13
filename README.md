@@ -4,13 +4,13 @@ BIBLIOTECA DE FUNCIONES DE C
 
 AUTOR: SERGIO JUAN ROLLÁN MORALEJO
 
-VERSIÓN NO: 1.0
+VERSIÓN NO: 2.1
 
-FECHA DE FINALIZACIÓN: 03-07-2023
+FECHA DE FINALIZACIÓN: 13-07-2023
 
 Objetivo de la biblioteca: reducir lo máximo posible el número de ".h" que se incluyan en todos los proyectos de C del usuario. Se incluirá en los códigos fuente escribiendo al principio del documento '#include "sergioteca.h"'
 
-Importaciones que incluye: <stdio.h>, <stdlib.h>, <stdarg.h>, <string.h>, <unistd.h>, <ctype.h>, <math.h>, <time.h>, <limits.h>, <sys/file.h> y <sys/types.h>
+Importaciones que incluye: <stdio.h>, <stdlib.h>, <stdarg.h>, <string.h>, <unistd.h>, <ctype.h>, <math.h>, <time.h> y <limits.h>.
 
 Sus aportaciones a la abstracción, legibilidad, portabilidad y comodidad del lenguaje C son:
 
@@ -186,26 +186,227 @@ Sus aportaciones a la abstracción, legibilidad, portabilidad y comodidad del le
 
 ---
 
-## -------------- CAPÍTULO 13: LÍNEAS DE TRABAJO FUTURO --------------
+## -------------- CAPÍTULO 13: ALGORITMOS DE PLANIFICACIÓN DE PROCESOS --------------
 
-- Corregir errores menores y realizar más pruebas de depuración y de caminos.
-- Quedará pendiente documentar las funciones de las estructuras de datos del capítulo 12.
+En este capítulo se describen los principales algoritmos de planificación de procesos utilizados en sistemas operativos para gestionar la ejecución de tareas. Estos algoritmos determinan el orden en que los procesos acceden a la CPU, optimizando criterios como el tiempo de espera, el tiempo de respuesta o el uso de recursos. A continuación se explican los más relevantes:
+
+- **FCFS (First Come, First Served / Primero en llegar, primero en ser servido):**
+
+  - Los procesos se atienden en el orden en que llegan a la cola de listos.
+  - Es sencillo de implementar, pero puede provocar largos tiempos de espera para procesos cortos si llegan detrás de procesos largos (efecto convoy).
+
+- **SJF (Shortest Job First / El trabajo más corto primero):**
+
+  - Se selecciona el proceso con el menor tiempo de ejecución estimado.
+  - Minimiza el tiempo de espera promedio, pero requiere conocer o estimar la duración de los procesos.
+  - Puede provocar inanición de procesos largos.
+
+- **SRTF (Shortest Remaining Time First / Menor tiempo restante primero):**
+
+  - Variante de SJF, pero con desalojo: si llega un proceso con menor tiempo restante, se interrumpe el actual.
+  - Ofrece mejor tiempo de respuesta, pero es más complejo de implementar.
+
+- **Round Robin (RR):**
+
+  - Cada proceso recibe un intervalo de tiempo fijo (quantum) para ejecutarse.
+  - Si no termina en ese tiempo, pasa al final de la cola.
+  - Es justo y adecuado para sistemas interactivos, pero la elección del quantum es crítica.
+
+- **Prioridades:**
+
+  - Cada proceso tiene una prioridad; se atienden primero los de mayor prioridad.
+  - Puede ser con o sin desalojo.
+  - Riesgo de inanición para procesos de baja prioridad.
+
+- **Multinivel y Multinivel con retroalimentación:**
+
+  - Existen varias colas con diferentes prioridades o algoritmos.
+  - Los procesos pueden cambiar de cola según su comportamiento (retroalimentación).
+  - Permite adaptar el sistema a diferentes tipos de procesos (interactivos, por lotes, etc.).
+
+- **Planificación por lotes, planificación en tiempo real, planificación garantizada, etc.:**
+  - Existen otros algoritmos adaptados a necesidades específicas, como sistemas en tiempo real o sistemas con garantías de servicio.
+
+Cada algoritmo tiene ventajas e inconvenientes, y la elección depende del contexto y los objetivos del sistema.
+
+## -------------- CAPÍTULO 14: ALGORITMOS DE BÚSQUEDA --------------
+
+En este capítulo se describen los principales algoritmos de búsqueda implementados en la biblioteca, tanto para enteros como para números reales. Los algoritmos de búsqueda permiten localizar la posición de un elemento dentro de un vector, devolviendo la posición si se encuentra o -1 si no está o si ocurre algún error. A continuación se explican los algoritmos incluidos:
+
+- **Búsqueda lineal (Linear Search):**
+
+  - Recorre el vector elemento a elemento hasta encontrar el valor buscado.
+  - No requiere que el vector esté ordenado.
+  - Es sencilla pero poco eficiente para vectores grandes (O(n)).
+
+- **Búsqueda binaria (Binary Search):**
+
+  - Solo funciona en vectores ordenados ascendentemente.
+  - Divide el vector en mitades y compara el valor buscado con el elemento central, descartando la mitad que no puede contenerlo.
+  - Muy eficiente (O(log n)), pero requiere comprobación previa de orden.
+
+- **Búsqueda ternaria (Ternary Search):**
+
+  - Variante de la búsqueda binaria, pero divide el vector en tres partes en cada paso.
+  - También requiere que el vector esté ordenado.
+  - Eficiencia similar a la binaria, pero con más comparaciones por iteración.
+
+- **Búsqueda exponencial (Exponential Search):**
+
+  - Útil para vectores muy grandes y ordenados.
+  - Busca un rango exponencialmente creciente donde podría estar el valor y luego aplica búsqueda binaria en ese rango.
+  - Complejidad O(log i), donde i es la posición del elemento buscado.
+
+- **Búsqueda por saltos (Jump Search):**
+
+  - Solo para vectores ordenados.
+  - Salta bloques de tamaño fijo (raíz cuadrada del tamaño del vector) y luego realiza búsqueda lineal en el bloque donde podría estar el valor.
+  - Eficiencia O(√n).
+
+- **Búsqueda de Fibonacci (Fibonacci Search):**
+  - Variante de la búsqueda binaria que utiliza números de Fibonacci para determinar los rangos de búsqueda.
+  - Solo para vectores ordenados.
+  - Eficiencia O(log n), útil en ciertos contextos donde el acceso a memoria es costoso.
+
+Todas las funciones de búsqueda de la biblioteca devuelven la posición del elemento encontrado o -1 si no está o si ocurre algún fallo de programación defensiva (por ejemplo, vector no ordenado cuando es necesario).
+
+### Tabla de eficiencia de los algoritmos de búsqueda
+
+| Algoritmo             | Mejor caso | Peor caso | Caso promedio |
+| --------------------- | ---------- | --------- | ------------- |
+| Búsqueda lineal       | O(1)       | O(n)      | O(n)          |
+| Búsqueda binaria      | O(1)       | O(log n)  | O(log n)      |
+| Búsqueda ternaria     | O(1)       | O(log₃ n) | O(log₃ n)     |
+| Búsqueda exponencial  | O(1)       | O(log n)  | O(log n)      |
+| Búsqueda por saltos   | O(1)       | O(√n)     | O(√n)         |
+| Búsqueda de Fibonacci | O(1)       | O(log n)  | O(log n)      |
+
+- **Notas:**
+  - En la búsqueda lineal, el mejor caso es encontrar el elemento en la primera posición.
+  - En la binaria, ternaria, exponencial y Fibonacci, el mejor caso es encontrar el elemento en el primer intento (centro o primer salto).
+  - Todas las búsquedas, salvo la lineal, requieren el vector ordenado.
+
+## -------------- CAPÍTULO 15: ALGORITMOS DE ORDENACIÓN --------------
+
+En este capítulo se explican los algoritmos de ordenación implementados en la biblioteca, tanto clásicos como avanzados, para enteros y números reales. Los algoritmos de ordenación permiten reorganizar los elementos de un vector o lista según un criterio (habitualmente de menor a mayor). A continuación se describen los principales algoritmos incluidos:
+
+- **Bubble Sort (Ordenación de burbuja):**
+
+  - Compara elementos adyacentes y los intercambia si están desordenados.
+  - Repite el proceso hasta que no se realizan más intercambios.
+  - Es sencillo pero poco eficiente para grandes volúmenes de datos (O(n²)).
+
+- **Selection Sort (Ordenación por selección):**
+
+  - Busca el elemento más pequeño y lo coloca en la primera posición, luego repite con el resto.
+  - Realiza un número fijo de comparaciones, pero también es O(n²).
+
+- **Insertion Sort (Ordenación por inserción):**
+
+  - Inserta cada elemento en su posición correcta dentro de la parte ya ordenada del vector.
+  - Muy eficiente para vectores pequeños o casi ordenados.
+
+- **Merge Sort (Ordenación por mezcla):**
+
+  - Divide el vector en mitades, ordena cada mitad recursivamente y luego las fusiona.
+  - Complejidad O(n log n), estable y eficiente para grandes volúmenes.
+
+- **Quick Sort (Ordenación rápida):**
+
+  - Selecciona un pivote y divide el vector en elementos menores y mayores que el pivote, ordenando recursivamente.
+  - Muy eficiente en la práctica (O(n log n) promedio), pero puede ser O(n²) en el peor caso.
+
+- **Shell Sort:**
+
+  - Variante de insertion sort que compara elementos separados por un intervalo, reduciendo el intervalo progresivamente.
+  - Mejora el rendimiento respecto a insertion sort en vectores grandes.
+
+- **Gnome Sort:**
+
+  - Similar a insertion sort, pero se mueve hacia atrás intercambiando elementos desordenados.
+  - Sencillo de implementar, pero O(n²).
+
+- **Comb Sort:**
+
+  - Variante de bubble sort que compara elementos separados por una distancia que disminuye en cada pasada.
+  - Reduce el número de comparaciones respecto a bubble sort.
+
+- **Odd-Even Sort (Ordenación par-impar):**
+
+  - Realiza pasadas alternando comparaciones entre pares e impares de elementos adyacentes.
+  - Útil en entornos paralelos.
+
+- **Bitonic Sort:**
+
+  - Algoritmo paralelo que ordena secuencias bitónicas (primero crecientes, luego decrecientes).
+  - Eficiente en hardware especializado.
+
+- **Pancake Sort:**
+
+  - Ordena el vector mediante inversiones (flips) de los primeros k elementos.
+  - Inspirado en el problema de ordenar una pila de tortitas de diferentes tamaños.
+
+- **Stooge Sort:**
+
+  - Algoritmo recursivo poco eficiente (O(n^{2.709})), de interés principalmente académico.
+
+- **Counting Sort:**
+
+  - Cuenta las apariciones de cada valor y las utiliza para colocar los elementos en orden.
+  - Muy eficiente para enteros en un rango pequeño.
+
+- **Radix Sort:**
+
+  - Ordena los números procesando sus dígitos de menor a mayor (o viceversa).
+  - Eficiente para grandes volúmenes de enteros.
+
+- **Bucket Sort:**
+
+  - Distribuye los elementos en "cubos" según su valor, ordena cada cubo y los concatena.
+  - Muy eficiente para datos uniformemente distribuidos.
+
+- **Pigeonhole Sort:**
+
+  - Similar a counting sort, pero coloca los elementos directamente en "casillas" según su valor.
+  - Eficiente para rangos pequeños.
+
+Cada algoritmo tiene ventajas y desventajas según el tipo y tamaño de los datos. La biblioteca implementa versiones para enteros y floats, siguiendo el patrón de diseño de la librería.
+
+### Tabla de eficiencia de los algoritmos de ordenación
+
+| Algoritmo       | Mejor caso   | Peor caso    | Caso promedio |
+| --------------- | ------------ | ------------ | ------------- |
+| Bubble Sort     | O(n)         | O(n²)        | O(n²)         |
+| Selection Sort  | O(n²)        | O(n²)        | O(n²)         |
+| Insertion Sort  | O(n)         | O(n²)        | O(n²)         |
+| Merge Sort      | O(n log n)   | O(n log n)   | O(n log n)    |
+| Quick Sort      | O(n log n)   | O(n²)        | O(n log n)    |
+| Shell Sort      | O(n log n)   | O(n²)        | O(n^1.5)      |
+| Gnome Sort      | O(n)         | O(n²)        | O(n²)         |
+| Comb Sort       | O(n log n)   | O(n²)        | O(n²)         |
+| Odd-Even Sort   | O(n)         | O(n²)        | O(n²)         |
+| Bitonic Sort    | O(log² n)    | O(log² n)    | O(log² n)     |
+| Pancake Sort    | O(n)         | O(n²)        | O(n²)         |
+| Stooge Sort     | O(n^{2.709}) | O(n^{2.709}) | O(n^{2.709})  |
+| Counting Sort   | O(n + k)     | O(n + k)     | O(n + k)      |
+| Radix Sort      | O(nk)        | O(nk)        | O(nk)         |
+| Bucket Sort     | O(n + k)     | O(n²)        | O(n + k)      |
+| Pigeonhole Sort | O(n + r)     | O(n + r)     | O(n + r)      |
+
+- **Notas:**
+  - n: número de elementos a ordenar.
+  - k: rango de los datos (en Counting, Radix, Bucket, American Flag, Postman).
+  - r: rango de valores posibles (en Pigeonhole).
+  - En algunos algoritmos, el mejor caso ocurre cuando el vector ya está ordenado.
+  - Bitonic Sort es eficiente en hardware especializado.
+  - Stooge Sort es principalmente de interés académico por su ineficiencia.
+
+## -------------- CAPÍTULO 16: LÍNEAS DE TRABAJO FUTURO --------------
+
 - Han quedado definidas, pero sin implementar, las estructuras de datos 'hiperplano' y 'codigo'. En futuras versiones, podrán utilizarse para realizar operaciones geométricas con objetos de cualquier dimensión (pues los vectores se limitan a una y las matrices a dos) y operaciones de aplicación de la teoría de códigos correctores de errores.
-
----
-
-## -------------- CAPÍTULO 14: IDEAS PARA FUTURAS VERSIONES --------------
-
-- Una función que permita hacer una pausa, tipo 'pause("Pulsa intro para continuar...");', que no dependa del sistema operativo.
-- Añadir métodos de búsqueda general y específica de números enteros y de ordenación generales y específicos de números enteros, especificando para todos el orden de ejecución mejor, peor y medio
-- Añadir métodos de ordenación a las listas enlazadas.
+- Añadir los métodos de ordenación a las listas enlazadas.
 - Añadir a las opciones de lectura una que reciba un array de opciones (sirva de expansión al "Y/N" de la función yesOrNo).
 - También añadir versiones de contraseña 'leerPassword', también polimórfica para int, string, etc.
-- Ya de paso, también implementar algoritmos de ordenación de forma general.
 - Implementar otros interfaces, como Set, LinkedList, SortedLists, Maps, TreeMaps...
 - Funciones criptográficas.
-- Operaciones con ficheros de texto y ficheros binarios.
-- Importación de librerías multicomputador como MPI.
-- Permitir delegar la ejecución de una función en particular a otro proceso.
-- Funciones de exclusión mutua y acceso a recursos.
 - Acceso seguro a un array, que haga que si uno escribe "lista[10]" en una lista de tamaño 8, devuelva "lista[7]" e igual con el límite inferior, y funciones similares.
