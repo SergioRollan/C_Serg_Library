@@ -14,20 +14,23 @@ Importaciones que incluye: <stdio.h>, <stdlib.h>, <stdarg.h>, <string.h>, <unist
 
 Sus aportaciones a la abstracción, legibilidad, portabilidad y comodidad del lenguaje C son:
 
-- CAPÍTULO 1: CONSTANTES ÚTILES
-- CAPÍTULO 2: TIPO BOOLEANO
-- CAPÍTULO 3: FUNCIONES MISCELÁNEAS
+- CAPÍTULO 1: INTRODUCCIÓN
+- CAPÍTULO 2: ESTRUCTURAS DE DATOS BÁSICAS
+- CAPÍTULO 3: FUNCIONES AUXILIARES Y UTILIDADES
 - CAPÍTULO 4: LECTURA DE DATOS POR TECLADO
-- CAPÍTULO 5: IMPRIMIR DATOS POR CONSOLA
-- CAPÍTULO 6: OPERACIONES ÚTILES CON STRINGS
-- CAPÍTULO 7: OPERACIONES CON VECTORES Y MATRICES
-- CAPÍTULO 8: OPERACIONES CON LA ESTRUCTURA DE DATOS MATRIZ OBJETO
-- CAPÍTULO 9: OPERACIONES CON PILAS
-- CAPÍTULO 10: OPERACIONES CON COLAS
-- CAPÍTULO 11: OPERACIONES CON LISTAS ENLAZADAS CON ORIENTACION A OBJETOS
-- CAPÍTULO 12: OTRAS ESTRUCTURAS DE DATOS
-- CAPÍTULO 13: LÍNEAS DE TRABAJO FUTURO
-- CAPÍTULO 14: IDEAS PARA OTRAS VERSIONES
+- CAPÍTULO 5: OPERACIONES CON VECTORES Y MATRICES
+- CAPÍTULO 6: LISTAS ENLAZADAS
+- CAPÍTULO 7: PILAS
+- CAPÍTULO 8: COLAS
+- CAPÍTULO 9: ÁRBOLES BINARIOS
+- CAPÍTULO 10: MONTÍCULOS
+- CAPÍTULO 11: GRAFOS
+- CAPÍTULO 12: FUNCIONES MATEMÁTICAS Y COMBINATORIA
+- CAPÍTULO 13: PLANIFICACIÓN DE PROCESOS
+- CAPÍTULO 14: BÚSQUEDA EN VECTORES
+- CAPÍTULO 15: ORDENACIÓN DE VECTORES
+- CAPÍTULO 16: BARAJA DE CARTAS
+- CAPÍTULO 17: LÍNEAS DE TRABAJO FUTURO
 
 ---
 
@@ -68,12 +71,26 @@ Sus aportaciones a la abstracción, legibilidad, portabilidad y comodidad del le
 
 ## -------------- CAPÍTULO 4: LECTURA DE DATOS POR TECLADO --------------
 
+### Lectura normal
+
 - Podrá leerse cualquier tipo de dato entre 'int', 'float', 'double', 'long' y 'string' invocando a la función macro "leer".
 - " int num = leer(num, "Introduce un número entero: ");"
 - " float num = leer(num, "Introduce un número real de simple precisión: ");"
 - "double num = leer(num, "Introduce un número entero largo: ");"
 - " long num = leer(num, "Introduce un número real de doble precisión: ");"
 - "string nom = leer(nom, "Introduce tu nombre: ", 10);", es un caso especial, porque requiere al final el número máximo de caracteres que admitirá la lectura.
+
+### Lectura oculta (contraseñas)
+
+La biblioteca también proporciona funciones para leer datos de la entrada estándar **sin mostrar los caracteres tecleados** (ideal para contraseñas o datos sensibles). Se usan igual que las funciones normales, pero con el prefijo `leerPassword` o el macro genérico `leerPassword`:
+
+- `int secreto = leerPassword(0, "Introduce un número secreto: ");`
+- `long lsecreto = leerPassword(0L, "Introduce un long secreto: ");`
+- `float fsecreto = leerPassword(0.0f, "Introduce un float secreto: ");`
+- `double dsecreto = leerPassword(0.0, "Introduce un double secreto: ");`
+- `string pass = leerPassword(pass, "Introduce tu contraseña: ", 20);` (requiere el buffer y la longitud máxima, igual que leerString)
+
+En el caso de strings, mientras se escribe se muestran asteriscos (`*`). Para los tipos numéricos, la entrada permanece completamente oculta.
 
 ---
 
@@ -401,12 +418,45 @@ Cada algoritmo tiene ventajas y desventajas según el tipo y tamaño de los dato
   - Bitonic Sort es eficiente en hardware especializado.
   - Stooge Sort es principalmente de interés académico por su ineficiencia.
 
-## -------------- CAPÍTULO 16: LÍNEAS DE TRABAJO FUTURO --------------
+## ----------------- CAPÍTULO 16: BARAJA DE CARTAS -------------------
 
-- Han quedado definidas, pero sin implementar, las estructuras de datos 'hiperplano' y 'codigo'. En futuras versiones, podrán utilizarse para realizar operaciones geométricas con objetos de cualquier dimensión (pues los vectores se limitan a una y las matrices a dos) y operaciones de aplicación de la teoría de códigos correctores de errores.
-- Añadir los métodos de ordenación a las listas enlazadas.
-- Añadir a las opciones de lectura una que reciba un array de opciones (sirva de expansión al "Y/N" de la función yesOrNo).
-- También añadir versiones de contraseña 'leerPassword', también polimórfica para int, string, etc.
-- Implementar otros interfaces, como Set, LinkedList, SortedLists, Maps, TreeMaps...
+La biblioteca incluye un completo módulo para la gestión y manipulación de barajas de cartas, pensado tanto para juegos clásicos como para utilidades didácticas.
+
+### Funciones principales
+
+- **carta\* generarBaraja(void)**: Genera una baraja estándar de 52 cartas (1-13 de cada palo). Devuelve un puntero a un array dinámico que debe liberarse con `free`.
+- **int shuffle(carta \*mazo, int numCartas)**: Baraja aleatoriamente el mazo recibido. Devuelve `EXITO` o `FALLO`.
+- **juego* repartir(carta *mazo, jugador \*jugadores, int numJugadores, int cartasPorJugador)**: Reparte cartas del mazo entre los jugadores, asignando dinámicamente las manos. Devuelve un puntero a la estructura `juego`.
+- **carta robarCarta(mano \*mazo)**: Extrae la primera carta de la mano/mazo y la devuelve, reduciendo el número de cartas.
+- **carta sacarCarta(mano \*mazo, int valor, palo palo)**: Busca y extrae una carta concreta de la mano/mazo.
+- **int cogerCarta(mano \*mazo, carta c)**: Añade una carta a la mano/mazo, gestionando la memoria.
+- **void mostrarMazo(jugador j)**: Muestra por pantalla el nombre del jugador y todas sus cartas en formato textual (ejemplo: "rey de picas").
+- **void mostrarCarta(carta c)**: Muestra una carta individual en formato textual (ejemplo: "as de corazones").
+
+### Ejemplo de uso básico
+
+```c
+carta *mazo = generarBaraja();
+shuffle(mazo, 52);
+jugador jugadores[2];
+jugadores[0].nombre = "Ana";
+jugadores[1].nombre = "Luis";
+juego *j = repartir(mazo, jugadores, 2, 5);
+mostrarMazo(j->jugadores[0]);
+mostrarMazo(j->jugadores[1]);
+carta robada = robarCarta(&j->jugadores[0].mano);
+printf("Ana roba: "); mostrarCarta(robada); printf("\n");
+free(mazo);
+for (int i = 0; i < j->numJugadores; i++) free(j->jugadores[i].mano.cartas);
+free(j->jugadores); free(j);
+```
+
+## -------------- CAPÍTULO 17: LÍNEAS DE TRABAJO FUTURO --------------
+
+- Set y Dictionary.
 - Funciones criptográficas.
-- Acceso seguro a un array, que haga que si uno escribe "lista[10]" en una lista de tamaño 8, devuelva "lista[7]" e igual con el límite inferior, y funciones similares.
+- Quizá algo relacionado con diagramas de gantt y estimaciones de esfuerzo?
+- Máquinas de Turing.
+- Autómatas finitos, tanto deterministas como no deterministas.
+- Gramáticas
+- Han quedado definidas, pero sin implementar, las estructuras de datos 'hiperplano' y 'codigo'. En futuras versiones, podrán utilizarse para realizar operaciones geométricas con objetos de cualquier dimensión (pues los vectores se limitan a una y las matrices a dos) y operaciones de aplicación de la teoría de códigos correctores de errores.

@@ -8,6 +8,7 @@
 /*****************************************************************************************************************/
 /*****************************************************************************************************************/
 #include "sergioteca.h"
+#include <conio.h>
 
 
 
@@ -42,6 +43,49 @@ boolean yesOrNo(string s)
 	
 }
 
+/**
+ * Imprime el mensaje recibido y muestra una lista de opciones entre corchetes separadas por coma.
+ * Pide al usuario que escriba una de las opciones (ignorando mayúsculas/minúsculas) y la devuelve como string.
+ * Repite la pregunta hasta que se introduzca una opción válida.
+ * @param s (string): mensaje a mostrar al usuario.
+ * @param opciones (const char **): array de strings con las opciones válidas.
+ * @param numOpciones (int): número de opciones en el array.
+ * @return string igual al de la opción elegida (puntero a memoria estática interna, no liberar).
+ * @example string res = elegirOpcion("Elige color", (const char*[]){"rojo","azul","verde"}, 3);
+ */
+string elegirOpcion(string s, const char **opciones, int numOpciones) {
+    static char buffer[128];
+    int valido = 0;
+    do {
+        printf("%s [", s);
+        for (int i = 0; i < numOpciones; i++) {
+            printf("%s%s", opciones[i], (i < numOpciones-1) ? ", " : "]: ");
+        }
+        if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
+            buffer[0] = '\0';
+        } else {
+            size_t len = strlen(buffer);
+            if (len > 0 && buffer[len-1] == '\n') buffer[len-1] = '\0';
+        }
+        for (int i = 0; i < numOpciones; i++) {
+            if (strcasecmp(buffer, opciones[i]) == 0) {
+                valido = 1;
+                break;
+            }
+        }
+        if (!valido) printf("Opción no válida. Inténtalo de nuevo.\n");
+    } while (!valido);
+    return buffer;
+}
+
+/**
+ * Lee una cadena de la entrada estándar y la devuelve como string.
+ * @param u Puntero a string donde se almacenará la cadena (debe estar a NULL o memoria suficiente).
+ * @param s Mensaje a mostrar.
+ * @param i Longitud máxima de la cadena.
+ * @return El string leído (puntero a memoria interna, no liberar).
+ * @example string s = leerString(NULL, "Introduce un string: ", 10); // s = "Hola mundo"
+ */
 string leerString(string u, string s, int i)
 {
 	u=malloc(sizeof(char)*(i+1));
@@ -56,6 +100,13 @@ string leerString(string u, string s, int i)
 	return u;
 }
 
+/**
+ * Lee un entero de la entrada estándar y lo devuelve.
+ * @param a Valor inicial (no usado, solo por compatibilidad).
+ * @param s Mensaje a mostrar.
+ * @return El entero leído.
+ * @example int a = leerInt(0, "Introduce un entero: "); // a = 10
+ */
 int leerInt(int a, string s)
 {
 	printf("%s", s);
@@ -64,6 +115,13 @@ int leerInt(int a, string s)
 	return a;
 }
 
+/**
+ * Lee un long de la entrada estándar y lo devuelve.
+ * @param a Valor inicial (no usado, solo por compatibilidad).
+ * @param s Mensaje a mostrar.
+ * @return El long leído.
+ * @example long a = leerLong(0, "Introduce un long: "); // a = 1000000000
+ */
 long leerLong(long a, string s)
 {
 	printf("%s", s);
@@ -72,6 +130,13 @@ long leerLong(long a, string s)
 	return a;
 }
 
+/**
+ * Lee un float de la entrada estándar y lo devuelve.
+ * @param a Valor inicial (no usado, solo por compatibilidad).
+ * @param s Mensaje a mostrar.
+ * @return El float leído.
+ * @example float a = leerFloat(0.0f, "Introduce un float: "); // a = 3.14f
+ */
 float leerFloat(float a, string s)
 {
 	printf("%s", s);
@@ -80,12 +145,127 @@ float leerFloat(float a, string s)
 	return a;
 }
 
+/**
+ * Lee un double de la entrada estándar y lo devuelve.
+ * @param a Valor inicial (no usado, solo por compatibilidad).
+ * @param s Mensaje a mostrar.
+ * @return El double leído.
+ * @example double a = leerDouble(0.0, "Introduce un double: "); // a = 3.14
+ */
 double leerDouble(double a, string s)
 {
 	printf("%s", s);
 	NUEVA_LINEA;
 	scanf("%lf%*c", &a);
 	return a;
+}
+/**
+ * Lee un entero de la entrada estándar sin mostrar los caracteres tecleados.
+ * @param a Valor inicial (no usado, solo por compatibilidad).
+ * @param s Mensaje a mostrar.
+ * @return El entero leído.
+ * @example int a = leerPasswordInt(0, "Introduce un entero: "); // a = 10
+ */
+int leerPasswordInt(int a, string s) {
+    printf("%s", s);
+    NUEVA_LINEA;
+    char buf[32];
+    int idx = 0, c;
+    while ((c = getch()) != '\r' && c != '\n' && idx < 31) {
+        if (c == 8 || c == 127) { // retroceso
+            if (idx > 0) idx--;
+        } else if (c >= '0' && c <= '9' || (c == '-' && idx == 0)) {
+            buf[idx++] = (char)c;
+        }
+    }
+    buf[idx] = '\0';
+    return atoi(buf);
+}
+
+/**
+ * Lee un long de la entrada estándar sin mostrar los caracteres tecleados.
+ * @param a Valor inicial (no usado).
+ * @param s Mensaje a mostrar.
+ * @return El long leído.
+ * @example long a = leerPasswordLong(0, "Introduce un long: "); // a = 1000000000
+ */
+long leerPasswordLong(long a, string s) {
+    printf("%s", s);
+    NUEVA_LINEA;
+    char buf[32];
+    int idx = 0, c;
+    while ((c = getch()) != '\r' && c != '\n' && idx < 31) {
+        if (c == 8 || c == 127) { if (idx > 0) idx--; }
+        else if ((c >= '0' && c <= '9') || (c == '-' && idx == 0)) buf[idx++] = (char)c;
+    }
+    buf[idx] = '\0';
+    return atol(buf);
+}
+
+/**
+ * Lee un float de la entrada estándar sin mostrar los caracteres tecleados.
+ * @param a Valor inicial (no usado).
+ * @param s Mensaje a mostrar.
+ * @return El float leído.
+ * @example float a = leerPasswordFloat(0.0f, "Introduce un float: "); // a = 3.14f
+ */
+float leerPasswordFloat(float a, string s) {
+    printf("%s", s);
+    NUEVA_LINEA;
+    char buf[32];
+    int idx = 0, c, punto = 0;
+    while ((c = getch()) != '\r' && c != '\n' && idx < 31) {
+        if (c == 8 || c == 127) { if (idx > 0) { if (buf[idx-1] == '.') punto = 0; idx--; } }
+        else if ((c >= '0' && c <= '9') || (c == '-' && idx == 0)) buf[idx++] = (char)c;
+        else if (c == '.' && !punto) { buf[idx++] = '.'; punto = 1; }
+    }
+    buf[idx] = '\0';
+    return (float)atof(buf);
+}
+
+/**
+ * Lee un double de la entrada estándar sin mostrar los caracteres tecleados.
+ * @param a Valor inicial (no usado).
+ * @param s Mensaje a mostrar.
+ * @return El double leído. 
+ * @example double a = leerPasswordDouble(0.0, "Introduce un double: "); // a = 3.14
+ */
+double leerPasswordDouble(double a, string s) {
+    printf("%s", s);
+    NUEVA_LINEA;
+    char buf[64];
+    int idx = 0, c, punto = 0;
+    while ((c = getch()) != '\r' && c != '\n' && idx < 63) {
+        if (c == 8 || c == 127) { if (idx > 0) { if (buf[idx-1] == '.') punto = 0; idx--; } }
+        else if ((c >= '0' && c <= '9') || (c == '-' && idx == 0)) buf[idx++] = (char)c;
+        else if (c == '.' && !punto) { buf[idx++] = '.'; punto = 1; }
+    }
+    buf[idx] = '\0';
+    return atof(buf);
+}
+
+/**
+ * Lee una cadena de la entrada estándar sin mostrar los caracteres tecleados (muestra asteriscos si mostrarAsteriscos es true).
+ * @param u Puntero a string donde se almacenará la cadena (debe estar a NULL o memoria suficiente).
+ * @param s Mensaje a mostrar.
+ * @param i Longitud máxima de la cadena.
+ * @param mostrarAsteriscos true si el usuario desea que se muestren asteriscos al teclear, false para no mostrar nada.
+ * @return El string leído (puntero a memoria interna, no liberar).
+ * @example string s = leerPasswordString(NULL, "Introduce un string: ", 10, true); // s = "Hola mundo"
+ */
+string leerPasswordString(string u, string s, int i, boolean mostrarAsteriscos) {
+    printf("%s", s);
+    NUEVA_LINEA;
+    static char buf[256];
+    int idx = 0, c;
+    while ((c = getch()) != '\r' && c != '\n' && idx < i-1) {
+        if (c == 8 || c == 127) { if (idx > 0) { idx--; printf("\b \b"); fflush(stdout); } }
+        else if (c >= 32 && c <= 126) { buf[idx++] = (char)c; if (mostrarAsteriscos == TRUE) printf("*"); fflush(stdout); }
+    }
+    buf[idx] = '\0';
+    printf("\n");
+    if (u) strncpy(u, buf, i);
+    return buf;
 }
 
 void printInt(int a){fprintf(stdout,"%d",a);}
@@ -5984,6 +6164,183 @@ int fibonacciSearchF(const float *vector, int n, float valorBuscado)
 }
 
 
+/**
+ * Genera una baraja estándar de 52 cartas (1-13 de cada palo).
+ * @return Puntero a array de 52 cartas (debe liberarse con free).
+ */
+carta* generarBaraja(void) 
+{
+    carta *mazo = malloc(52 * sizeof(carta));
+    if (!mazo) return NULL;
+    int idx = 0;
+    for (int p = 0; p < 4; p++)
+    {
+        for (int v = 1; v <= 13; v++) 
+        {
+            mazo[idx].valor = v;
+            mazo[idx].palo = (palo)p;
+            idx++;
+        }
+    }
+    return mazo;
+}
 
+/**
+ * Baraja aleatoriamente un mazo de cartas.
+ * @param mazo Array de cartas.
+ * @param numCartas Número de cartas en el mazo.
+ * @return EXITO o FALLO.
+ */
+int shuffle(carta *mazo, int numCartas) 
+{
+    if (!mazo || numCartas <= 0) return FALLO;
+    srand((unsigned)time(NULL));
+    for (int i = numCartas-1; i > 0; i--) 
+    {
+        int j = rand() % (i+1);
+        carta tmp = mazo[i];
+        mazo[i] = mazo[j];
+        mazo[j] = tmp;
+    }
+    return EXITO;
+}
 
+/**
+ * Reparte cartas a jugadores desde un mazo barajado.
+ * @param mazo Array de cartas (se baraja dentro).
+ * @param jugadores Array de jugadores.
+ * @param numJugadores Número de jugadores.
+ * @param cartasPorJugador Número de cartas a repartir a cada jugador.
+ * @return Puntero a juego creado dinámicamente, o NULL si error.
+ */
+juego* repartir(carta *mazo, jugador *jugadores, int numJugadores, int cartasPorJugador) 
+{
+    if (!mazo || !jugadores || numJugadores <= 0 || cartasPorJugador <= 0) return NULL;
+    if (shuffle(mazo, 52) != EXITO) return NULL;
+    juego *j = malloc(sizeof(juego));
+    if (!j) return NULL;
+    j->jugadores = malloc(numJugadores * sizeof(jugador));
+    if (!j->jugadores) { free(j); return NULL; }
+    j->numJugadores = numJugadores;
+    int idx = 0;
+    for (int i = 0; i < numJugadores; i++) 
+    {
+        j->jugadores[i] = jugadores[i];
+        j->jugadores[i].mano.cartas = malloc(cartasPorJugador * sizeof(carta));
+        j->jugadores[i].mano.numCartas = cartasPorJugador;
+        for (int k = 0; k < cartasPorJugador; k++)
+            j->jugadores[i].mano.cartas[k] = mazo[idx++];
+    }
+    return j;
+}
 
+/**
+ * Roba una carta aleatoria de un mazo y la elimina del array.
+ * @param mazo Puntero a mano (mazo).
+ * @return Carta robada, o carta con valor 0 si error.
+ */
+carta robarCarta(mano *mazo) {
+    carta vacia = {0, desconocido};
+    if (!mazo || mazo->numCartas <= 0 || !mazo->cartas) return vacia;
+    srand((unsigned)time(NULL));
+    int idx = rand() % mazo->numCartas;
+    carta c = mazo->cartas[idx];
+    for (int i = idx; i < mazo->numCartas-1; i++) mazo->cartas[i] = mazo->cartas[i+1];
+    mazo->numCartas--;
+    return c;
+}
+
+/**
+ * Saca una carta concreta de un mazo.
+ * @param mazo Puntero a mano (mazo).
+ * @param valor Valor de la carta.
+ * @param palo Palo de la carta.
+ * @return Carta encontrada, o carta con valor 0 si error.
+ */
+carta sacarCarta(mano *mazo, int valor, palo palo) 
+{
+    carta vacia = {0, desconocido};
+    if (!mazo || mazo->numCartas <= 0 || !mazo->cartas) return vacia;
+    for (int i = 0; i < mazo->numCartas; i++) 
+    {
+        if (mazo->cartas[i].valor == valor && mazo->cartas[i].palo == palo) 
+        {
+            carta c = mazo->cartas[i];
+            for (int j = i; j < mazo->numCartas-1; j++)
+                mazo->cartas[j] = mazo->cartas[j+1];
+            mazo->numCartas--;
+            return c;
+        }
+    }
+    return vacia;
+}
+
+/**
+ * Añade una carta a un mazo.
+ * @param mazo Puntero a mano (mazo).
+ * @param c Carta a añadir.
+ * @return EXITO o FALLO.
+ */
+int cogerCarta(mano *mazo, carta c) 
+{
+    if (!mazo || !mazo->cartas || mazo->numCartas < 0) return FALLO;
+    carta *nuevo = realloc(mazo->cartas, (mazo->numCartas+1) * sizeof(carta));
+    if (!nuevo) return FALLO;
+    mazo->cartas = nuevo;
+    mazo->cartas[mazo->numCartas] = c;
+    mazo->numCartas++;
+    return EXITO;
+}
+
+static const char* nombreValorCarta(int valor) 
+{
+    switch (valor) 
+    {
+        case 1: return "as";
+        case 11: return "sota";
+        case 12: return "reina";
+        case 13: return "rey";
+        default: 
+        {
+            static char buf[3];
+            snprintf(buf, sizeof(buf), "%d", valor);
+            return buf;
+        }
+    }
+}
+
+static const char* nombrePaloCarta(palo p) 
+{
+    switch (p) 
+    {
+        case picas: return "picas";
+        case treboles: return "tréboles";
+        case corazones: return "corazones";
+        case diamantes: return "diamantes";
+        default: return "desconocido";
+    }
+}
+
+/**
+ * Muestra una carta en formato "valor de palo" (ej: "rey de picas").
+ * @param c Carta a mostrar.
+ */
+void mostrarCarta(carta c) {
+    printf("%s de %s", nombreValorCarta(c.valor), nombrePaloCarta(c.palo));
+}
+
+/**
+ * Muestra el nombre del jugador y sus cartas en formato "valor de palo".
+ * @param j Jugador.
+ */
+void mostrarMazo(jugador j) 
+{
+    printf("%s: ", j.nombre ? j.nombre : "Jugador");
+    for (int i = 0; i < j.mano.numCartas; i++) 
+    {
+        printf("[");
+        mostrarCarta(j.mano.cartas[i]);
+        printf("] ");
+    }
+    NUEVA_LINEA; NUEVA_LINEA;
+}

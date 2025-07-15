@@ -279,6 +279,33 @@ typedef struct{
 	unsigned short int d;
 }codigo;
 ////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////// cartas
+typedef enum{
+	desconocido = -1,
+	picas = 0,
+	diamantes = 1,
+	treboles = 2,
+	corazones = 3
+}palo;
+typedef struct{
+	int valor;
+	palo palo;
+}carta;
+typedef struct{
+	carta *cartas;
+	int numCartas;
+}mano;
+typedef struct{
+	mano mano;
+	string nombre;
+}jugador;
+typedef struct{
+	jugador *jugadores;
+	int numJugadores;
+}juego;
+////////////////////////////////////////////////
 	
 
 
@@ -318,14 +345,11 @@ typedef struct{
 /*****************************declaraciones******************************************/
 
 
-/*  pendientes las funciones de importar y exportar matrices y vectores y las de codigos,
-	y ojo por si se pueden meter maquinas de turing, grafos y automatas */
-
-
 //operaciones auxiliares
-int aproximar(float); //si recibe 5.63 devuelve 6, si recibe 5.48 devuelve 5
-void alwaysPause(void); //imprime "Pulsa intro para continuar..." y espera a que se pulse intro.
-boolean yesOrNo(string); //imprime el string, y pide un Y o un N, devolviendo true o false.
+int aproximar(float);
+void alwaysPause(void);
+boolean yesOrNo(string);
+string elegirOpcion(string s, const char **opciones, int numOpciones);
 
 // numeros aleatorios
 double aleatorioEntre2(double, double, int);
@@ -372,7 +396,20 @@ long leerLong(long, string);
 float leerFloat(float, string);
 double leerDouble(double,string);
 
-
+//operaciones de lectura de contraseñas
+#define PRIMERPW(_1, ...)  (_1)
+#define leerPassword(...)                \
+  _Generic(PRIMERPW(__VA_ARGS__),            \
+           int: leerPasswordInt,  \
+           long: leerPasswordLong,  \
+           string: leerPasswordString,  \
+           double: leerPasswordDouble,  \
+           float: leerPasswordFloat)(__VA_ARGS__)
+int leerPasswordInt(int, string);
+long leerPasswordLong(long, string);
+float leerPasswordFloat(float, string);
+double leerPasswordDouble(double, string);
+string leerPasswordString(string, string, int, boolean);
 
 
 
@@ -789,5 +826,16 @@ int ternarySearchF(const float *vector, int n, float valorBuscado);
 int exponentialSearchF(const float *vector, int n, float valorBuscado);
 int jumpSearchF(const float *vector, int n, float valorBuscado);
 int fibonacciSearchF(const float *vector, int n, float valorBuscado);
+
+
+// Cartas y mazos
+carta* generarBaraja(void);
+int shuffle(carta *mazo, int numCartas);
+juego* repartir(carta *mazo, jugador *jugadores, int numJugadores, int cartasPorJugador);
+carta robarCarta(mano *mazo);
+carta sacarCarta(mano *mazo, int valor, palo palo);
+int cogerCarta(mano *mazo, carta c);
+void mostrarMazo(jugador j);
+void mostrarCarta(carta c);
 
 
