@@ -34,6 +34,7 @@
 #define SUPERFALLO -2
 #define TRUE 1
 #define FALSE 0
+#define HORAS_POR_UCP 27.493
 #define NUEVA_LINEA puts("")
 #define RETORNO_DE_CARRO printf("\r")
 
@@ -863,7 +864,6 @@ ssoo proc_RA(ssoo sistema);
 
 
 
-//operaciones con codigos (no disponible en version 1.0)
 palabra encriptar(palabra,codigo);
 palabra desencriptar(palabra,codigo);
 palabra sindrome(palabra,codigo);
@@ -883,7 +883,6 @@ boolean bitEsDeInfo(bit_t**,int,int);
 
 
 
-//operaciones con hiperplanos (no disponible en version 1.0)
 hiperplano leerPlano(int dimension);
 void imprimirPlano(hiperplano);
 hiperplano hijo(hiperplano, int);
@@ -973,5 +972,7 @@ int annadirTarea(gantt *g, int id, string nombre, int duracion, int *dependencia
 void pintarDiagrama(gantt *g);
 
 
+// Estimación de esfuerzo
+void estimarEsfuerzo(void);
 
 #endif

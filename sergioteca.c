@@ -7048,21 +7048,16 @@ gantt* crearGantt(string nombreProyecto)
     return g;
 }
 
-// Función auxiliar para detectar ciclos en el grafo de dependencias
-static boolean detectarCiclo(int v, boolean **matriz, boolean *visitado, boolean *enPila, int numTareas) {
-    if (!visitado[v]) {
+static boolean detectarCiclo(int v, boolean **matriz, boolean *visitado, boolean *enPila, int numTareas) 
+{
+    if (!visitado[v]) 
+    {
         visitado[v] = TRUE;
         enPila[v] = TRUE;
-        
-        for (int i = 0; i < numTareas; i++) {
-            if (matriz[v][i]) {
-                if (!visitado[i] && detectarCiclo(i, matriz, visitado, enPila, numTareas)) {
-                    return TRUE;
-                } else if (enPila[i]) {
-                    return TRUE;
-                }
-            }
-        }
+        for (int i = 0; i < numTareas; i++)
+            if (matriz[v][i])
+                if (!visitado[i] && detectarCiclo(i, matriz, visitado, enPila, numTareas)) return TRUE;
+                else if (enPila[i]) return TRUE;
     }
     enPila[v] = FALSE;
     return FALSE;
@@ -7077,71 +7072,64 @@ boolean comprobarGanttValido(gantt *g)
 {
     if (!g || g->numTareas == 0) return TRUE;
     
-    // Matriz de adyacencia para representar el grafo de dependencias
     boolean **matriz = (boolean **)malloc(g->numTareas * sizeof(boolean *));
     if (!matriz) return FALSE;
     
-    for (int i = 0; i < g->numTareas; i++) {
+    for (int i = 0; i < g->numTareas; i++) 
+    {
         matriz[i] = (boolean *)calloc(g->numTareas, sizeof(boolean));
-        if (!matriz[i]) {
-            // Liberar memoria ya asignada
-            for (int j = 0; j < i; j++) {
-                free(matriz[j]);
-            }
+        if (!matriz[i]) 
+        {
+            for (int j = 0; j < i; j++) free(matriz[j]);
             free(matriz);
             return FALSE;
         }
     }
     
-    // Construir la matriz de adyacencia
-    for (int i = 0; i < g->numTareas; i++) {
+    for (int i = 0; i < g->numTareas; i++) 
+    {
         tarea *t = &g->tareas[i];
-        for (int j = 0; j < t->numDependencias; j++) {
+        for (int j = 0; j < t->numDependencias; j++) 
+        {
             int depId = t->dependencias[j];
             
-            // Buscar el índice de la tarea dependiente
             int depIndex = -1;
-            for (int k = 0; k < g->numTareas; k++) {
-                if (g->tareas[k].id == depId) {
+            for (int k = 0; k < g->numTareas; k++) 
+            {
+                if (g->tareas[k].id == depId) 
+                {
                     depIndex = k;
                     break;
                 }
             }
             
-            if (depIndex != -1) {
-                matriz[i][depIndex] = TRUE;
-            }
+            if (depIndex != -1) matriz[i][depIndex] = TRUE;
         }
     }
     
-    // Detectar ciclos usando el algoritmo DFS
     boolean *visitado = (boolean *)calloc(g->numTareas, sizeof(boolean));
     boolean *enPila = (boolean *)calloc(g->numTareas, sizeof(boolean));
     boolean tieneCiclo = FALSE;
     
-    if (!visitado || !enPila) {
-        // Liberar memoria
-        for (int i = 0; i < g->numTareas; i++) {
-            free(matriz[i]);
-        }
+    if (!visitado || !enPila) 
+    {
+        for (int i = 0; i < g->numTareas; i++) free(matriz[i]);
         free(matriz);
         if (visitado) free(visitado);
         if (enPila) free(enPila);
         return FALSE;
     }
     
-    // Comprobar ciclos desde cada nodo no visitado
-    for (int i = 0; i < g->numTareas; i++) {
-        if (!visitado[i] && detectarCiclo(i, matriz, visitado, enPila, g->numTareas)) {
+    for (int i = 0; i < g->numTareas; i++) 
+    {
+        if (!visitado[i] && detectarCiclo(i, matriz, visitado, enPila, g->numTareas)) 
+        {
             tieneCiclo = TRUE;
             break;
         }
     }
     
-    // Liberar memoria
-    for (int i = 0; i < g->numTareas; i++) {
-        free(matriz[i]);
-    }
+    for (int i = 0; i < g->numTareas; i++) free(matriz[i]);
     free(matriz);
     free(visitado);
     free(enPila);
@@ -7162,64 +7150,63 @@ int* calcularTiemposInicioTempranos(gantt *g)
     if (!tiemposInicio) return NULL;
     
     boolean *procesado = (boolean *)calloc(g->numTareas, sizeof(boolean));
-    if (!procesado) {
+    if (!procesado) 
+    {
         free(tiemposInicio);
         return NULL;
     }
     
     boolean todosCompletados = FALSE;
     
-    while (!todosCompletados) {
+    while (!todosCompletados) 
+    {
         todosCompletados = TRUE;
         
-        for (int i = 0; i < g->numTareas; i++) {
+        for (int i = 0; i < g->numTareas; i++) 
+        {
             if (procesado[i]) continue;
             
             tarea *t = &g->tareas[i];
             
-            // Si no tiene dependencias, su tiempo de inicio es 0 o el especificado
-            if (t->numDependencias == 0) {
+            if (t->numDependencias == 0) 
+            {
                 tiemposInicio[i] = t->tiempoInicio;
                 procesado[i] = TRUE;
                 continue;
             }
             
-            // Verificar si todas las dependencias han sido procesadas
             boolean todasDependenciasProcesadas = TRUE;
             int maxTiempoFin = 0;
             
-            for (int j = 0; j < t->numDependencias; j++) {
+            for (int j = 0; j < t->numDependencias; j++) 
+            {
                 int depId = t->dependencias[j];
                 int depIndex = -1;
                 
-                // Buscar el índice de la tarea dependiente
-                for (int k = 0; k < g->numTareas; k++) {
-                    if (g->tareas[k].id == depId) {
+                for (int k = 0; k < g->numTareas; k++) 
+                {
+                    if (g->tareas[k].id == depId) 
+                    {
                         depIndex = k;
                         break;
                     }
                 }
                 
-                if (depIndex == -1 || !procesado[depIndex]) {
+                if (depIndex == -1 || !procesado[depIndex]) 
+                {
                     todasDependenciasProcesadas = FALSE;
                     break;
                 }
                 
-                // Calcular el tiempo de finalización de la dependencia
                 int tiempoFin = tiemposInicio[depIndex] + g->tareas[depIndex].duracion;
-                if (tiempoFin > maxTiempoFin) {
-                    maxTiempoFin = tiempoFin;
-                }
+                if (tiempoFin > maxTiempoFin) maxTiempoFin = tiempoFin;
             }
             
-            if (todasDependenciasProcesadas) {
-                // El tiempo de inicio es el máximo de los tiempos de finalización de las dependencias
-                // o el tiempo de inicio especificado, el que sea mayor
+            if (todasDependenciasProcesadas) 
+            {
                 tiemposInicio[i] = (maxTiempoFin > t->tiempoInicio) ? maxTiempoFin : t->tiempoInicio;
                 procesado[i] = TRUE;
-            } else {
-                todosCompletados = FALSE;
-            }
+            } else todosCompletados = FALSE;
         }
     }
     
@@ -7236,39 +7223,29 @@ int elaborarCaminoCritico(gantt *g)
 {
     if (!g || g->numTareas == 0) return FALLO;
     
-    // Verificar que el diagrama no tenga ciclos
-    if (!comprobarGanttValido(g)) {
-        return SUPERFALLO;
-    }
+    if (!comprobarGanttValido(g)) return SUPERFALLO;
     
-    // Calcular los tiempos de inicio más tempranos
     int *tiemposInicio = calcularTiemposInicioTempranos(g);
     if (!tiemposInicio) return FALLO;
     
-    // Calcular los tiempos de finalización
     int *tiemposFin = (int *)malloc(g->numTareas * sizeof(int));
-    if (!tiemposFin) {
+    if (!tiemposFin) 
+    {
         free(tiemposInicio);
         return FALLO;
     }
     
-    for (int i = 0; i < g->numTareas; i++) {
-        tiemposFin[i] = tiemposInicio[i] + g->tareas[i].duracion;
-    }
+    for (int i = 0; i < g->numTareas; i++) tiemposFin[i] = tiemposInicio[i] + g->tareas[i].duracion;
     
-    // Encontrar el tiempo de finalización del proyecto
     int tiempoFinProyecto = 0;
-    for (int i = 0; i < g->numTareas; i++) {
-        if (tiemposFin[i] > tiempoFinProyecto) {
-            tiempoFinProyecto = tiemposFin[i];
-        }
-    }
+    for (int i = 0; i < g->numTareas; i++)
+        if (tiemposFin[i] > tiempoFinProyecto) tiempoFinProyecto = tiemposFin[i];
     
-    // Calcular los tiempos de inicio más tardíos y holguras
     int *tiemposInicioTardios = (int *)malloc(g->numTareas * sizeof(int));
     int *holguras = (int *)malloc(g->numTareas * sizeof(int));
     
-    if (!tiemposInicioTardios || !holguras) {
+    if (!tiemposInicioTardios || !holguras) 
+    {
         free(tiemposInicio);
         free(tiemposFin);
         if (tiemposInicioTardios) free(tiemposInicioTardios);
@@ -7276,14 +7253,11 @@ int elaborarCaminoCritico(gantt *g)
         return FALLO;
     }
     
-    // Inicializar tiempos tardíos al tiempo final del proyecto
-    for (int i = 0; i < g->numTareas; i++) {
-        tiemposInicioTardios[i] = tiempoFinProyecto;
-    }
+    for (int i = 0; i < g->numTareas; i++) tiemposInicioTardios[i] = tiempoFinProyecto;
     
-    // Construir matriz de adyacencia inversa (para recorrer el grafo hacia atrás)
     boolean **matrizInversa = (boolean **)malloc(g->numTareas * sizeof(boolean *));
-    if (!matrizInversa) {
+    if (!matrizInversa) 
+    {
         free(tiemposInicio);
         free(tiemposFin);
         free(tiemposInicioTardios);
@@ -7291,12 +7265,12 @@ int elaborarCaminoCritico(gantt *g)
         return FALLO;
     }
     
-    for (int i = 0; i < g->numTareas; i++) {
+    for (int i = 0; i < g->numTareas; i++) 
+    {
         matrizInversa[i] = (boolean *)calloc(g->numTareas, sizeof(boolean));
-        if (!matrizInversa[i]) {
-            for (int j = 0; j < i; j++) {
-                free(matrizInversa[j]);
-            }
+        if (!matrizInversa[i]) 
+        {
+            for (int j = 0; j < i; j++) free(matrizInversa[j]);
             free(matrizInversa);
             free(tiemposInicio);
             free(tiemposFin);
@@ -7306,33 +7280,31 @@ int elaborarCaminoCritico(gantt *g)
         }
     }
     
-    // Construir la matriz inversa
-    for (int i = 0; i < g->numTareas; i++) {
+    for (int i = 0; i < g->numTareas; i++) 
+    {
         tarea *t = &g->tareas[i];
-        for (int j = 0; j < t->numDependencias; j++) {
+        for (int j = 0; j < t->numDependencias; j++) 
+        {
             int depId = t->dependencias[j];
             
-            // Buscar el índice de la tarea dependiente
             int depIndex = -1;
-            for (int k = 0; k < g->numTareas; k++) {
-                if (g->tareas[k].id == depId) {
+            for (int k = 0; k < g->numTareas; k++) 
+            {
+                if (g->tareas[k].id == depId) 
+                {
                     depIndex = k;
                     break;
                 }
             }
             
-            if (depIndex != -1) {
-                matrizInversa[depIndex][i] = TRUE;  // Dependencia inversa
-            }
+            if (depIndex != -1) matrizInversa[depIndex][i] = TRUE;
         }
     }
     
-    // Calcular tiempos de inicio tardíos (de atrás hacia adelante)
     boolean *procesado = (boolean *)calloc(g->numTareas, sizeof(boolean));
-    if (!procesado) {
-        for (int i = 0; i < g->numTareas; i++) {
-            free(matrizInversa[i]);
-        }
+    if (!procesado) 
+    {
+        for (int i = 0; i < g->numTareas; i++) free(matrizInversa[i]);
         free(matrizInversa);
         free(tiemposInicio);
         free(tiemposFin);
@@ -7343,73 +7315,65 @@ int elaborarCaminoCritico(gantt *g)
     
     boolean todosCompletados = FALSE;
     
-    while (!todosCompletados) {
+    while (!todosCompletados) 
+    {
         todosCompletados = TRUE;
         
-        for (int i = 0; i < g->numTareas; i++) {
+        for (int i = 0; i < g->numTareas; i++) 
+        {
             if (procesado[i]) continue;
             
-            // Buscar tareas sin sucesores o con todos los sucesores procesados
             boolean todosSucesoresProcesados = TRUE;
             int minTiempoInicio = tiempoFinProyecto;
             boolean tieneSucesores = FALSE;
             
-            for (int j = 0; j < g->numTareas; j++) {
-                if (matrizInversa[i][j]) {  // i es predecesor de j
+            for (int j = 0; j < g->numTareas; j++)
+            {
+                if (matrizInversa[i][j])
+                {
                     tieneSucesores = TRUE;
-                    if (!procesado[j]) {
+                    if (!procesado[j]) 
+                    {
                         todosSucesoresProcesados = FALSE;
                         break;
                     }
                     
-                    // El tiempo de inicio tardío de j afecta al tiempo de i
                     int tiempoInicioTardio = tiemposInicioTardios[j] - g->tareas[i].duracion;
-                    if (tiempoInicioTardio < minTiempoInicio) {
-                        minTiempoInicio = tiempoInicioTardio;
-                    }
+                    if (tiempoInicioTardio < minTiempoInicio) minTiempoInicio = tiempoInicioTardio;
                 }
             }
             
-            if (!tieneSucesores) {
-                // Si no tiene sucesores, su tiempo tardío es el tiempo de fin del proyecto menos su duración
+            if (!tieneSucesores) 
+            {
                 tiemposInicioTardios[i] = tiempoFinProyecto - g->tareas[i].duracion;
                 procesado[i] = TRUE;
                 continue;
             }
             
-            if (todosSucesoresProcesados) {
+            if (todosSucesoresProcesados) 
+            {
                 tiemposInicioTardios[i] = minTiempoInicio;
                 procesado[i] = TRUE;
-            } else {
+            } else 
+            {
                 todosCompletados = FALSE;
             }
         }
     }
     
-    // Calcular holguras y determinar el camino crítico
-    for (int i = 0; i < g->numTareas; i++) {
+    for (int i = 0; i < g->numTareas; i++)
         holguras[i] = tiemposInicioTardios[i] - tiemposInicio[i];
-    }
     
-    // Contar tareas en el camino crítico (holgura = 0)
     int numTareasCriticas = 0;
-    for (int i = 0; i < g->numTareas; i++) {
-        if (holguras[i] == 0) {
-            numTareasCriticas++;
-        }
-    }
+    for (int i = 0; i < g->numTareas; i++)
+        if (holguras[i] == 0) numTareasCriticas++;
     
-    // Liberar el camino crítico anterior si existe
-    if (g->caminoCritico) {
-        free(g->caminoCritico);
-    }
+    if (g->caminoCritico) free(g->caminoCritico);
     
-    // Asignar memoria para el nuevo camino crítico
     g->caminoCritico = (int *)malloc(numTareasCriticas * sizeof(int));
-    if (!g->caminoCritico) {
-        for (int i = 0; i < g->numTareas; i++) {
-            free(matrizInversa[i]);
-        }
+    if (!g->caminoCritico) 
+    {
+        for (int i = 0; i < g->numTareas; i++) free(matrizInversa[i]);
         free(matrizInversa);
         free(tiemposInicio);
         free(tiemposFin);
@@ -7419,28 +7383,27 @@ int elaborarCaminoCritico(gantt *g)
         return FALLO;
     }
     
-    // Llenar el camino crítico con los IDs de las tareas críticas
     int index = 0;
-    for (int i = 0; i < g->numTareas; i++) {
-        if (holguras[i] == 0) {
-            g->caminoCritico[index++] = g->tareas[i].id;
-        }
-    }
+    for (int i = 0; i < g->numTareas; i++)
+        if (holguras[i] == 0) g->caminoCritico[index++] = g->tareas[i].id;
     g->numCaminoCritico = numTareasCriticas;
     
-    // Ordenar el camino crítico según los tiempos de inicio
-    for (int i = 0; i < numTareasCriticas - 1; i++) {
-        for (int j = 0; j < numTareasCriticas - i - 1; j++) {
+    for (int i = 0; i < numTareasCriticas - 1; i++) 
+    {
+        for (int j = 0; j < numTareasCriticas - i - 1; j++) 
+        {
             int idA = g->caminoCritico[j];
             int idB = g->caminoCritico[j+1];
             
             int indexA = -1, indexB = -1;
-            for (int k = 0; k < g->numTareas; k++) {
+            for (int k = 0; k < g->numTareas; k++) 
+            {
                 if (g->tareas[k].id == idA) indexA = k;
                 if (g->tareas[k].id == idB) indexB = k;
             }
             
-            if (indexA != -1 && indexB != -1 && tiemposInicio[indexA] > tiemposInicio[indexB]) {
+            if (indexA != -1 && indexB != -1 && tiemposInicio[indexA] > tiemposInicio[indexB]) 
+            {
                 int temp = g->caminoCritico[j];
                 g->caminoCritico[j] = g->caminoCritico[j+1];
                 g->caminoCritico[j+1] = temp;
@@ -7448,10 +7411,8 @@ int elaborarCaminoCritico(gantt *g)
         }
     }
     
-    // Liberar memoria
-    for (int i = 0; i < g->numTareas; i++) {
+    for (int i = 0; i < g->numTareas; i++)
         free(matrizInversa[i]);
-    }
     free(matrizInversa);
     free(tiemposInicio);
     free(tiemposFin);
@@ -7477,57 +7438,46 @@ int annadirTarea(gantt *g, int id, string nombre, int duracion, int *dependencia
 {
     if (!g) return SUPERFALLO;
     
-    // Verificar que no exista ya una tarea con el mismo ID
-    for (int i = 0; i < g->numTareas; i++) {
-        if (g->tareas[i].id == id) {
-            return FALLO;
-        }
-    }
+    for (int i = 0; i < g->numTareas; i++)
+        if (g->tareas[i].id == id) return FALLO;
     
-    // Crear la nueva tarea
     tarea *nuevasTareas = (tarea *)realloc(g->tareas, (g->numTareas + 1) * sizeof(tarea));
-    if (!nuevasTareas) {
-        return FALLO;
-    }
+    if (!nuevasTareas) return FALLO;
     
     g->tareas = nuevasTareas;
     tarea *nuevaTarea = &g->tareas[g->numTareas];
     
     nuevaTarea->id = id;
     nuevaTarea->nombre = strdup(nombre);
-    if (!nuevaTarea->nombre) {
-        return FALLO;
-    }
+    if (!nuevaTarea->nombre) return FALLO;
     
     nuevaTarea->duracion = duracion;
     nuevaTarea->tiempoInicio = tiempoInicio;
     
     // Copiar dependencias
-    if (numDependencias > 0) {
+    if (numDependencias > 0) 
+    {
         nuevaTarea->dependencias = (int *)malloc(numDependencias * sizeof(int));
-        if (!nuevaTarea->dependencias) {
+        if (!nuevaTarea->dependencias) 
+        {
             free(nuevaTarea->nombre);
             return FALLO;
         }
-        
         memcpy(nuevaTarea->dependencias, dependencias, numDependencias * sizeof(int));
         nuevaTarea->numDependencias = numDependencias;
-    } else {
+    } else 
+    {
         nuevaTarea->dependencias = NULL;
         nuevaTarea->numDependencias = 0;
     }
-    
-    // Incrementar el contador de tareas
     g->numTareas++;
     
-    // Verificar que el diagrama sigue siendo válido (sin ciclos)
-    if (!comprobarGanttValido(g)) {
-        // Si hay ciclos, eliminar la tarea añadida
+    if (!comprobarGanttValido(g)) 
+    {
         g->numTareas--;
         free(nuevaTarea->nombre);
-        if (nuevaTarea->dependencias) {
+        if (nuevaTarea->dependencias)
             free(nuevaTarea->dependencias);
-        }
         return SUPERFALLO;
     }
     
@@ -7542,47 +7492,99 @@ void pintarDiagrama(gantt *g)
 {
     if (!g || g->numTareas == 0) return;
     
-    // Calcular los tiempos de inicio más tempranos
     int *tiemposInicio = calcularTiemposInicioTempranos(g);
     if (!tiemposInicio) return;
     
-    // Encontrar la duración total del proyecto
     int tiempoFinProyecto = 0;
-    for (int i = 0; i < g->numTareas; i++) {
+    for (int i = 0; i < g->numTareas; i++) 
+    {
         int tiempoFin = tiemposInicio[i] + g->tareas[i].duracion;
-        if (tiempoFin > tiempoFinProyecto) {
-            tiempoFinProyecto = tiempoFin;
-        }
+        if (tiempoFin > tiempoFinProyecto) tiempoFinProyecto = tiempoFin;
     }
+    printf("\nDiagrama de Gantt de %s\n\n", g->nombreProyecto);
     
-    // Imprimir el título del proyecto
-    printf("\nDiagrama de Gantt: %s\n\n", g->nombreProyecto);
-    
-    // Imprimir cada tarea
-    for (int i = 0; i < g->numTareas; i++) {
+    for (int i = 0; i < g->numTareas; i++) 
+    {
         tarea *t = &g->tareas[i];
-        
-        // Imprimir el nombre de la tarea
         printf("%-10s: |", t->nombre);
-        
-        // Imprimir espacios hasta el tiempo de inicio
-        for (int j = 0; j < tiemposInicio[i]; j++) {
-            printf(" ");
-        }
-        
-        // Imprimir almohadillas para la duración de la tarea
-        for (int j = 0; j < t->duracion; j++) {
-            printf("#");
-        }
-        
-        // Imprimir espacios hasta el final del proyecto
-        for (int j = tiemposInicio[i] + t->duracion; j < tiempoFinProyecto; j++) {
-            printf(" ");
-        }
-        
+        for (int j = 0; j < tiemposInicio[i]; j++) printf(" ");
+        for (int j = 0; j < t->duracion; j++) printf("#");
+        for (int j = tiemposInicio[i] + t->duracion; j < tiempoFinProyecto; j++) printf(" ");
         printf("|\n");
     }
     
-    // Liberar memoria
     free(tiemposInicio);
+}
+/**
+ * @brief Estima el esfuerzo en horas para un proyecto software usando el modelo de puntos de caso de uso (UCP).
+ *
+ * El usuario debe responder a una serie de preguntas sobre casos de uso, actores y factores técnicos y de entorno.
+ * El resultado es una estimación de horas totales basada en la fórmula:
+ *   Horas = UCP * 27.493
+ * donde UCP es el total de puntos de caso de uso ajustados.
+ */
+void estimarEsfuerzo(void) 
+{
+    int casosSimples, casosMedios, casosComplejos;
+    int actoresSimples, actoresMedios, actoresComplejos;
+    int factoresTecnicos[13];
+    int factoresEntorno[8];
+    const char* nombresFactoresTecnicos[13] = 
+    {
+        "Sistemas distribuidos", "Rendimiento", "Eficiencia de usuario final", "Procesamiento interno complejo",
+        "Reusabilidad", "Facilidad de instalacion", "Facilidad de uso", "Portabilidad", "Facilidad de cambio",
+        "Concurrencia", "Seguridad", "Acceso directo a terceras partes", "Entrenamiento especial del usuario"
+    };
+    const char* nombresFactoresEntorno[8] = 
+    {
+        "Familiaridad con UML", "Trabajadores a tiempo parcial", "Capacidad de los analistas",
+        "Experiencia en los entornos de desarrollo", "Experiencia en orientación a objetos", "Motivación",
+        "Dificultad del lenguaje de programacion", "Estabilidad de los requisitos"
+    };
+    int i;
+    NUEVA_LINEA;
+    printString("--- Estimación de esfuerzo (UCP) ---\n\n");
+    NUEVA_LINEA;
+    casosSimples = leerInt(0, "Introduce el número de casos de uso simples: ");
+    casosMedios = leerInt(0, "Introduce el número de casos de uso medios: ");
+    casosComplejos = leerInt(0, "Introduce el número de casos de uso complejos: ");
+    NUEVA_LINEA;
+    actoresSimples = leerInt(0, "Introduce el número de actores simples: ");
+    actoresMedios = leerInt(0, "Introduce el número de actores medios: ");
+    actoresComplejos = leerInt(0, "Introduce el número de actores complejos: ");
+    NUEVA_LINEA;
+    printString("Puntúa de 0 a 5 los siguientes factores de complejidad técnica:\n");
+    for (i = 0; i < 13; i++) {
+        printf("%2d. %-40s: ", i+1, nombresFactoresTecnicos[i]);
+        factoresTecnicos[i] = leerInt(0, "");
+        if (factoresTecnicos[i] < 0) factoresTecnicos[i] = 0;
+        if (factoresTecnicos[i] > 5) factoresTecnicos[i] = 5;
+    }
+    NUEVA_LINEA;
+    printString("Puntúa de 0 a 5 los siguientes factores de complejidad del entorno:\n");
+    for (i = 0; i < 8; i++) {
+        printf("%2d. %-40s: ", i+1, nombresFactoresEntorno[i]);
+        factoresEntorno[i] = leerInt(0, "");
+        if (factoresEntorno[i] < 0) factoresEntorno[i] = 0;
+        if (factoresEntorno[i] > 5) factoresEntorno[i] = 5;
+    }
+    NUEVA_LINEA;
+    int UUCW = casosSimples*5 + casosMedios*10 + casosComplejos*15;
+    int UAW = actoresSimples*1 + actoresMedios*2 + actoresComplejos*3;
+    double TF = 0.0;
+    double pesosTecnicos[13] = {2, 1, 1, 1, 1, 0.5, 0.5, 2, 1, 1, 1, 1, 1};
+    for (i = 0; i < 13; i++)
+        TF += factoresTecnicos[i] * pesosTecnicos[i];
+    double TCF = 0.6 + (0.01 * TF);
+    double EF = 0.0;
+    double pesosEntorno[8] = {1.5, -1, 0.5, 1, 1, 2, -1, -1};
+    for (i = 0; i < 8; i++)
+        EF += factoresEntorno[i] * pesosEntorno[i];
+    double ECF = 1.4 + (-0.03 * EF);
+    double UCP = (UUCW + UAW) * TCF * ECF;
+    double horas = UCP * HORAS_POR_UCP;
+    NUEVA_LINEA;
+    printf("\nPuntos de caso de uso (UCP): %.2f\n", UCP);
+    printf("Horas estimadas totales: %.2f\n", horas);
+    NUEVA_LINEA;
 }

@@ -560,9 +560,53 @@ free(proyecto);
 
 Esta funcionalidad es especialmente útil para la gestión de proyectos, planificación de recursos y análisis de dependencias entre tareas.
 
-## -------------- CAPÍTULO 18: LÍNEAS DE TRABAJO FUTURO --------------
+## -------------- CAPÍTULO 18: ESTIMACIÓN DE ESFUERZO --------------
 
-- Quizá algo relacionado con estimaciones de esfuerzo?
+La biblioteca incluye una función para estimar el esfuerzo en horas de desarrollo de proyectos software utilizando el modelo de puntos de caso de uso (UCP - Use Case Points).
+
+### Funciones principales
+
+- **void estimarEsfuerzo(void)**: Realiza una estimación completa del esfuerzo mediante una secuencia de preguntas interactivas sobre el proyecto.
+
+### Proceso de estimación
+
+La función sigue el siguiente flujo de preguntas:
+
+1. **Casos de uso**: Número de casos de uso simples, medios y complejos
+2. **Actores**: Número de actores simples, medios y complejos
+3. **Factores técnicos**: Puntuación de 0 a 5 para 13 factores de complejidad técnica:
+
+   - Sistemas distribuidos, rendimiento, eficiencia de usuario final
+   - Procesamiento interno complejo, reusabilidad, facilidad de instalación
+   - Facilidad de uso, portabilidad, facilidad de cambio, concurrencia
+   - Seguridad, acceso directo a terceras partes, entrenamiento especial del usuario
+
+4. **Factores de entorno**: Puntuación de 0 a 5 para 8 factores del entorno de desarrollo:
+   - Familiaridad con UML, trabajadores a tiempo parcial, capacidad de los analistas
+   - Experiencia en entornos de desarrollo, experiencia en orientación a objetos
+   - Motivación, dificultad del lenguaje de programación, estabilidad de los requisitos
+
+### Cálculo del esfuerzo
+
+La estimación utiliza la fórmula estándar UCP:
+
+- **UUCW** (Unadjusted Use Case Weight): Casos simples×5 + medios×10 + complejos×15
+- **UAW** (Unadjusted Actor Weight): Actores simples×1 + medios×2 + complejos×3
+- **TCF** (Technical Complexity Factor): 0.6 + (0.01 × suma de factores técnicos ponderados)
+- **ECF** (Environmental Complexity Factor): 1.4 + (-0.03 × suma de factores de entorno ponderados)
+- **UCP** = (UUCW + UAW) × TCF × ECF
+- **Horas estimadas** = UCP × 27.493
+
+### Ejemplo de uso
+
+```c
+estimarEsfuerzo();  // Inicia el proceso interactivo de estimación
+```
+
+Esta funcionalidad es especialmente útil para la planificación de proyectos software, estimación de costes y asignación de recursos en el desarrollo de aplicaciones.
+
+## -------------- CAPÍTULO 19: LÍNEAS DE TRABAJO FUTURO --------------
+
 - Máquinas de Turing.
 - Autómatas finitos, tanto deterministas como no deterministas.
 - Gramáticas
