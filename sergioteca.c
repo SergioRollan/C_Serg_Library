@@ -172,11 +172,8 @@ int leerPasswordInt(int a, string s) {
     char buf[32];
     int idx = 0, c;
     while ((c = getch()) != '\r' && c != '\n' && idx < 31) {
-        if (c == 8 || c == 127) { // retroceso
-            if (idx > 0) idx--;
-        } else if (c >= '0' && c <= '9' || (c == '-' && idx == 0)) {
-            buf[idx++] = (char)c;
-        }
+        if (c == 8 || c == 127) { if (idx > 0) idx--; }
+        else if (c >= '0' && c <= '9' || (c == '-' && idx == 0)) buf[idx++] = (char)c;
     }
     buf[idx] = '\0';
     return atoi(buf);
@@ -1687,8 +1684,8 @@ vectorf productoVectorialF(vectorf a, vectorf b)
 
 /**
  * Calcula el determinante de una matriz cuadrada de enteros dada
- * @param m (matriz): matriz cuyo determinante se calculará
- * @param n (orden): número de filas y columnas de la matriz
+ * @param m (matriz): matriz cuadrada cuyo determinante se calculará
+ * @param orden (int): número de filas y columnas de la matriz
  * @return -INF si se da un error durante la operación, el resultado de la operación en caso contrario
  * @example int a = determinanteI(m, 8); // a = determinante de la matriz cuadrada de orden 8 'm'
  */
@@ -1723,7 +1720,7 @@ int determinanteI(matriz m, int orden)
 
 /**
  * Calcula el determinante de una matriz cuadrada de enteros dada
- * @param m (tipoMatriz): matriz cuyo determinante se calculará
+ * @param m (tipoMatriz): matriz cuadrada cuyo determinante se calculará
  * @return -INF si se da un error durante la operación o si la matriz no es cuadrada, y el resultado de la operación en caso contrario
  * @example int a = determinanteI_O(m); // a = determinante de la matriz cuadrada 'm'
  */
@@ -1735,8 +1732,8 @@ int determinanteI_O(tipoMatriz m)
 
 /**
  * Calcula el determinante de una matriz cuadrada de reales dada
- * @param m (matrizf): matriz cuyo determinante se calculará
- * @param n (orden): número de filas y columnas de la matriz
+ * @param m (matrizf): matriz cuadrada cuyo determinante se calculará
+ * @param orden (int): número de filas y columnas de la matriz
  * @return -INF si se da un error durante la operación, el resultado de la operación en caso contrario
  * @example float a = determinanteF(m, 8); // a = determinante de la matriz cuadrada de orden 8 'm'
  */
@@ -1773,7 +1770,7 @@ float determinanteF(matrizf m, int orden)
 
 /**
  * Calcula el determinante de una matriz cuadrada de reales dada
- * @param m (tipoMatrizf): matriz cuyo determinante se calculará
+ * @param m (tipoMatrizf): matriz cuadrada cuyo determinante se calculará
  * @return -INF si se da un error durante la operación o si la matriz no es cuadrada, y el resultado de la operación en caso contrario
  * @example float a = determinanteF_O(m); // a = determinante de la matriz cuadrada 'm'
  */
@@ -4836,7 +4833,9 @@ ssoo proc_RA(ssoo sistema)
 		{
             int idx = act->elemento;
             float resp = (float)(sistema.procesos[idx].tiempoEspera + sistema.procesos[idx].tiempoEjecucion) / sistema.procesos[idx].tiempoEjecucion;
-            if (mejorCelda == NULL || resp > mejorResp || (resp == mejorResp && (sistema.procesos[idx].turnoLlegada < sistema.procesos[mejorCelda->elemento].turnoLlegada || (sistema.procesos[idx].turnoLlegada == sistema.procesos[mejorCelda->elemento].turnoLlegada && idx < mejorCelda->elemento)))) 
+            if (mejorCelda == NULL || resp > mejorResp || (resp == mejorResp &&
+                    (sistema.procesos[idx].turnoLlegada < sistema.procesos[mejorCelda->elemento].turnoLlegada ||
+                     (sistema.procesos[idx].turnoLlegada == sistema.procesos[mejorCelda->elemento].turnoLlegada && idx < mejorCelda->elemento)))) 
 			{
                 mejorCelda = act;
                 mejorResp = resp;
@@ -6343,4 +6342,1247 @@ void mostrarMazo(jugador j)
         printf("] ");
     }
     NUEVA_LINEA; NUEVA_LINEA;
+}
+
+/**
+ * Inicializa el diccionario
+ * @param dict (tipoDiccionario*): puntero al diccionario a inicializar
+ */
+void initDictionary(tipoDiccionario* dict) 
+{
+    if (dict == NULL) return;
+    dict->size = 0;
+    dict->capacity = 10;
+    dict->entries = (tipoElementoDiccionario*) malloc(10 * sizeof(tipoElementoDiccionario));
+}
+
+/**
+ * Libera toda la memoria asociada al diccionario
+ * @param dict (tipoDiccionario*): puntero al diccionario a liberar
+ */
+void freeDictionary(tipoDiccionario* dict) 
+{
+    if (dict == NULL) return;
+    for (int i = 0; i < dict->size; i++) 
+    {
+        free(dict->entries[i].clave);
+        free(dict->entries[i].valor);
+    }
+    free(dict->entries);
+    dict->entries = NULL;
+    dict->size = 0;
+    dict->capacity = 0;
+}
+
+/**
+ * Aumenta la capacidad interna del diccionario dinámicamente
+ * @param dict (tipoDiccionario*): puntero al diccionario
+ * @return TRUE si se amplió, FALSE si hubo error
+ */
+static boolean resizeDictionary(tipoDiccionario* dict) 
+{
+    int newCapacity = dict->capacity * 2;
+    tipoElementoDiccionario* newEntries = (tipoElementoDiccionario*)realloc(dict->entries, newCapacity * sizeof(tipoElementoDiccionario));
+    if (newEntries == NULL) return FALSE;
+
+    dict->entries = newEntries;
+    dict->capacity = newCapacity;
+    return TRUE;
+}
+
+/**
+ * Añade o reemplaza una entrada
+ * @param dict (tipoDiccionario*): puntero al diccionario
+ * @param clave (tipoKey): clave
+ * @param valor (tipoValor): valor
+ * @return TRUE si se añadió o reemplazó correctamente, FALSE si error
+ */
+boolean addEntry(tipoDiccionario* dict, tipoKey clave, tipoValor valor)
+{
+    if (dict == NULL || clave == NULL || valor == NULL) return FALSE;
+
+    for (int i = 0; i < dict->size; i++) 
+    {
+        if (strcmp(dict->entries[i].clave, clave) == 0) 
+        {
+            free(dict->entries[i].valor);
+            dict->entries[i].valor = strdup(valor);
+            return TRUE;
+        }
+    }
+
+    if (dict->size >= dict->capacity && !resizeDictionary(dict))
+        return FALSE;
+
+    dict->entries[dict->size].clave = strdup(clave);
+    dict->entries[dict->size].valor = strdup(valor);
+    dict->size++;
+    return TRUE;
+}
+
+/**
+ * Añade una entrada solo si no existe la clave
+ * @param dict (tipoDiccionario*): puntero al diccionario
+ * @param clave (tipoKey): clave
+ * @param valor (tipoValor): valor
+ * @return TRUE si se añadió, FALSE si ya existía o error
+ */
+boolean addEntryIfNotExists(tipoDiccionario* dict, tipoKey clave, tipoValor valor) 
+{
+    if (dict == NULL || clave == NULL || valor == NULL) return FALSE;
+
+    for (int i = 0; i < dict->size; i++)
+        if (strcmp(dict->entries[i].clave, clave) == 0)
+            return FALSE;
+
+    return addEntry(dict, clave, valor);
+}
+
+/**
+ * Elimina una entrada por su clave
+ * @param dict (tipoDiccionario*): puntero al diccionario
+ * @param clave (tipoKey): clave a eliminar
+ * @return TRUE si se eliminó, FALSE si no se encontró
+ */
+boolean removeEntry(tipoDiccionario* dict, tipoKey clave) 
+{
+    if (dict == NULL || clave == NULL) return FALSE;
+
+    for (int i = 0; i < dict->size; i++) 
+    {
+        if (strcmp(dict->entries[i].clave, clave) == 0) 
+        {
+            free(dict->entries[i].clave);
+            free(dict->entries[i].valor);
+            dict->entries[i] = dict->entries[dict->size - 1];
+            dict->size--;
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+/**
+ * Obtiene el valor asociado a una clave
+ * @param dict (tipoDiccionario*): puntero al diccionario
+ * @param clave (tipoKey): clave buscada
+ * @return tipoValor si se encontró, NULL si no
+ */
+tipoValor getValue(tipoDiccionario* dict, tipoKey clave) 
+{
+    if (dict == NULL || clave == NULL) return NULL;
+
+    for (int i = 0; i < dict->size; i++)
+        if (strcmp(dict->entries[i].clave, clave) == 0)
+            return dict->entries[i].valor;
+    return NULL;
+}
+
+/**
+ * Devuelve un array con todos los valores (debe liberarse con free())
+ * @param dict (tipoDiccionario*): diccionario en uso
+ * @param count (int*): cantidad de valores devueltos
+ * @return array dinámico de tipoValor, o NULL si error
+ */
+tipoValor* getValues(tipoDiccionario* dict, int* count) 
+{
+    if (dict == NULL || count == NULL) return NULL;
+
+    tipoValor* values = (tipoValor*)malloc(dict->size * sizeof(tipoValor));
+    if (values == NULL) return NULL;
+
+    for (int i = 0; i < dict->size; i++)
+        values[i] = strdup(dict->entries[i].valor);
+
+    *count = dict->size;
+    return values;
+}
+
+/**
+ * Devuelve un array con todas las claves (debe liberarse con free())
+ * @param dict (tipoDiccionario*): diccionario en uso
+ * @param count (int*): cantidad de claves devueltas
+ * @return array dinámico de tipoKey, o NULL si error
+ */
+tipoKey* getKeys(tipoDiccionario* dict, int* count) 
+{
+    if (dict == NULL || count == NULL) return NULL;
+
+    tipoKey* keys = (tipoKey*)malloc(dict->size * sizeof(tipoKey));
+    if (keys == NULL) return NULL;
+
+    for (int i = 0; i < dict->size; i++)
+        keys[i] = strdup(dict->entries[i].clave);
+
+    *count = dict->size;
+    return keys;
+}
+
+
+
+/**
+ * @brief Inicializa una lista circular doblemente enlazada con saltos.
+ * @param lst Puntero a la lista a inicializar.
+ */
+void inicializarListaSalto(tipoListaSalto *lst) 
+{
+    lst->cabecera = (nodoSalto*)malloc(sizeof(nodoSalto));
+    lst->cabecera->info = 0; // nodo cabecera vacío
+    lst->cabecera->sig = lst->cabecera;
+    lst->cabecera->ant = lst->cabecera;
+    lst->cabecera->numSaltos = 0;
+    lst->cabecera->saltos = NULL;
+    lst->numElementos = 0;
+    lst->annadirPpio = annadirPpioSalto;
+    lst->annadirFin = annadirFinSalto;
+    lst->annadirEnLugar = annadirEnLugarSalto;
+    lst->borrarPpio = borrarPpioSalto;
+    lst->borrarFin = borrarFinSalto;
+    lst->borrarValor = borrarValorSalto;
+    lst->modificarValor = modificarValorSalto;
+    lst->vaciarLista = vaciarListaSalto;
+    lst->mostrarLista = mostrarListaSalto;
+}
+
+/**
+ * @brief Libera todos los saltos de un nodo.
+ * @param n Puntero al nodo.
+ */
+static void liberarSaltosNodo(nodoSalto *n) 
+{
+    if (n->saltos) free(n->saltos);
+    n->saltos = NULL;
+    n->numSaltos = 0;
+}
+
+/**
+ * @brief Recalcula los saltos de toda la lista.
+ * @param lst Puntero a la lista.
+ */
+static void recalcularSaltos(tipoListaSalto *lst) 
+{
+    if (lst->numElementos == 0) return;
+    int n = lst->numElementos;
+    nodoSalto *actual = lst->cabecera->sig;
+    for (int i = 0; i < n; ++i, actual = actual->sig) 
+    {
+        liberarSaltosNodo(actual);
+        int maxSaltos = 0, salto = 2;
+        while (salto < (n+1)/2) { maxSaltos++; salto *= 2; }
+        if (maxSaltos == 0) continue;
+        actual->saltos = (nodoSalto**)malloc(sizeof(nodoSalto*) * maxSaltos);
+        actual->numSaltos = maxSaltos;
+        salto = 2;
+        for (int j = 0; j < maxSaltos; ++j) 
+        {
+            nodoSalto *dest = actual;
+            for (int k = 0; k < salto; ++k) dest = dest->sig;
+            actual->saltos[j] = dest;
+            salto *= 2;
+        }
+    }
+}
+
+/**
+ * @brief Añade un nodo al principio de la lista.
+ * @param lst Puntero a la lista.
+ * @param valor Valor a insertar.
+ * @return 0 si éxito, -1 si error.
+ */
+int annadirPpioSalto(tipoListaSalto *lst, int valor) 
+{
+    nodoSalto *nuevo = (nodoSalto*)malloc(sizeof(nodoSalto));
+    if (!nuevo) return -1;
+    nuevo->info = valor;
+    nuevo->numSaltos = 0;
+    nuevo->saltos = NULL;
+    nodoSalto *primero = lst->cabecera->sig;
+    nuevo->sig = primero;
+    nuevo->ant = lst->cabecera;
+    lst->cabecera->sig = nuevo;
+    primero->ant = nuevo;
+    lst->numElementos++;
+    recalcularSaltos(lst);
+    return 0;
+}
+
+/**
+ * @brief Añade un nodo al final de la lista.
+ * @param lst Puntero a la lista.
+ * @param valor Valor a insertar.
+ * @return 0 si éxito, -1 si error.
+ */
+int annadirFinSalto(tipoListaSalto *lst, int valor) 
+{
+    nodoSalto *nuevo = (nodoSalto*)malloc(sizeof(nodoSalto));
+    if (!nuevo) return -1;
+    nuevo->info = valor;
+    nuevo->numSaltos = 0;
+    nuevo->saltos = NULL;
+    nodoSalto *ultimo = lst->cabecera->ant;
+    nuevo->sig = lst->cabecera;
+    nuevo->ant = ultimo;
+    ultimo->sig = nuevo;
+    lst->cabecera->ant = nuevo;
+    lst->numElementos++;
+    recalcularSaltos(lst);
+    return 0;
+}
+
+/**
+ * @brief Busca el nodo en la posición pos (1-indexado) usando saltos para la ruta más corta.
+ * @param lst Puntero a la lista.
+ * @param pos Posición destino (1-indexado).
+ * @return Puntero al nodo en la posición pos, o NULL si fuera de rango.
+ */
+static nodoSalto* buscarNodoPorSaltos(tipoListaSalto *lst, int pos) 
+{
+    if (pos < 1 || pos > lst->numElementos) return NULL;
+    nodoSalto *actual = lst->cabecera->sig;
+    int idx = 1;
+    while (idx < pos) 
+    {
+        int salto = 0, mejor = 1;
+        // Buscar el mayor salto que no se pase
+        for (int j = actual->numSaltos-1; j >= 0; --j) 
+        {
+            int destino = idx + (1 << (j+1));
+            if (destino <= pos) 
+            {
+                salto = 1 << (j+1);
+                actual = actual->saltos[j];
+                idx += salto;
+                mejor = 0;
+                break;
+            }
+        }
+        if (mejor) { actual = actual->sig; idx++; }
+    }
+    return actual;
+}
+
+/**
+ * @brief Añade un nodo en la posición pos (1-indexado) usando saltos para la ruta más corta.
+ * @param lst Puntero a la lista.
+ * @param pos Posición donde insertar (1-indexado).
+ * @param valor Valor a insertar.
+ * @return 0 si éxito, -1 si error.
+ */
+int annadirEnLugarSalto(tipoListaSalto *lst, int pos, int valor) 
+{
+    if (pos < 1 || pos > lst->numElementos+1) return -1;
+    if (pos == 1) return annadirPpioSalto(lst, valor);
+    if (pos == lst->numElementos+1) return annadirFinSalto(lst, valor);
+    nodoSalto *dest = buscarNodoPorSaltos(lst, pos);
+    if (!dest) return -1;
+    nodoSalto *nuevo = (nodoSalto*)malloc(sizeof(nodoSalto));
+    if (!nuevo) return -1;
+    nuevo->info = valor;
+    nuevo->numSaltos = 0;
+    nuevo->saltos = NULL;
+    nodoSalto *ant = dest->ant;
+    ant->sig = nuevo;
+    nuevo->ant = ant;
+    nuevo->sig = dest;
+    dest->ant = nuevo;
+    lst->numElementos++;
+    recalcularSaltos(lst);
+    return 0;
+}
+
+/**
+ * @brief Borra el primer nodo de la lista.
+ * @param lst Puntero a la lista.
+ * @return 0 si éxito, -1 si error.
+ */
+int borrarPpioSalto(tipoListaSalto *lst) 
+{
+    if (lst->numElementos == 0) return -1;
+    nodoSalto *primero = lst->cabecera->sig;
+    lst->cabecera->sig = primero->sig;
+    primero->sig->ant = lst->cabecera;
+    liberarSaltosNodo(primero);
+    free(primero);
+    lst->numElementos--;
+    recalcularSaltos(lst);
+    return 0;
+}
+
+/**
+ * @brief Borra el último nodo de la lista.
+ * @param lst Puntero a la lista.
+ * @return 0 si éxito, -1 si error.
+ */
+int borrarFinSalto(tipoListaSalto *lst) 
+{
+    if (lst->numElementos == 0) return -1;
+    nodoSalto *ultimo = lst->cabecera->ant;
+    ultimo->ant->sig = lst->cabecera;
+    lst->cabecera->ant = ultimo->ant;
+    liberarSaltosNodo(ultimo);
+    free(ultimo);
+    lst->numElementos--;
+    recalcularSaltos(lst);
+    return 0;
+}
+
+/**
+ * @brief Borra el primer nodo cuyo valor sea igual a 'valor'.
+ * @param lst Puntero a la lista.
+ * @param valor Valor a borrar.
+ * @return 0 si éxito, -1 si no encontrado.
+ */
+int borrarValorSalto(tipoListaSalto *lst, int valor) 
+{
+    if (lst->numElementos == 0) return -1;
+    nodoSalto *actual = lst->cabecera->sig;
+    for (int i = 0; i < lst->numElementos; ++i, actual = actual->sig) 
+    {
+        if (actual->info == valor) 
+        {
+            actual->ant->sig = actual->sig;
+            actual->sig->ant = actual->ant;
+            liberarSaltosNodo(actual);
+            free(actual);
+            lst->numElementos--;
+            recalcularSaltos(lst);
+            return 0;
+        }
+    }
+    return -1;
+}
+
+/**
+ * @brief Modifica el primer nodo cuyo valor sea igual a 'valorAnt' por 'valorNuevo'.
+ * @param lst Puntero a la lista.
+ * @param valorAnt Valor a buscar.
+ * @param valorNuevo Valor nuevo.
+ * @return 0 si éxito, -1 si no encontrado.
+ */
+int modificarValorSalto(tipoListaSalto *lst, int valorAnt, int valorNuevo) 
+{
+    if (lst->numElementos == 0) return -1;
+    nodoSalto *actual = lst->cabecera->sig;
+    for (int i = 0; i < lst->numElementos; ++i, actual = actual->sig) 
+    {
+        if (actual->info == valorAnt) 
+        {
+            actual->info = valorNuevo;
+            return 0;
+        }
+    }
+    return -1;
+}
+
+/**
+ * @brief Vacía la lista, liberando toda la memoria.
+ * @param lst Puntero a la lista.
+ * @return 0 si éxito, -1 si ya estaba vacía.
+ */
+int vaciarListaSalto(tipoListaSalto *lst) 
+{
+    if (lst->numElementos == 0) return -1;
+    nodoSalto *actual = lst->cabecera->sig;
+    for (int i = 0; i < lst->numElementos; ++i) 
+    {
+        nodoSalto *sig = actual->sig;
+        liberarSaltosNodo(actual);
+        free(actual);
+        actual = sig;
+    }
+    lst->cabecera->sig = lst->cabecera;
+    lst->cabecera->ant = lst->cabecera;
+    lst->numElementos = 0;
+    return 0;
+}
+
+/**
+ * @brief Muestra la lista por pantalla, indicando los saltos de cada nodo.
+ * @param lst Puntero a la lista.
+ */
+void mostrarListaSalto(tipoListaSalto *lst) 
+{
+    printf("[Lista circular doblemente enlazada con saltos] (%d elementos):\n", lst->numElementos);
+    if (lst->numElementos == 0) 
+    {
+        printf("(vacía)\n");
+        return;
+    }
+    nodoSalto *actual = lst->cabecera->sig;
+    for (int i = 1; i <= lst->numElementos; ++i, actual = actual->sig) 
+    {
+        printf("Nodo %d: %d | Saltos: ", i, actual->info);
+        for (int j = 0; j < actual->numSaltos; ++j) 
+        {
+            nodoSalto *dest = actual->saltos[j];
+            nodoSalto *tmp = lst->cabecera->sig;
+            int idx = 1;
+            while (tmp != dest && idx <= lst->numElementos) { tmp = tmp->sig; idx++; }
+            if (tmp == dest) printf("%d ", idx);
+        }
+        printf("\n");
+    }
+}
+
+
+
+/**
+ * @brief Inicializa una lista enlazada simple de enteros sin centinela y sin repetidos.
+ * @param lst Puntero a la lista a inicializar.
+ */
+void inicializarListaSet(tipoListaSet *lst) 
+{
+    lst->primero = NULL;
+    lst->numElementos = 0;
+    lst->annadirPpio = annadirPpioSet;
+    lst->annadirFin = annadirFinSet;
+    lst->annadirEnLugar = annadirEnLugarSet;
+    lst->borrarPpio = borrarPpioSet;
+    lst->borrarFin = borrarFinSet;
+    lst->borrarValor = borrarValorSet;
+    lst->vaciarLista = vaciarListaSet;
+    lst->mostrarLista = mostrarListaSet;
+}
+
+/**
+ * @brief Añade un valor al principio de la lista si no existe ya.
+ * @param lst Puntero a la lista.
+ * @param valor Valor a insertar.
+ * @return 0 si éxito, -1 si ya existe o error de memoria.
+ */
+int annadirPpioSet(tipoListaSet *lst, int valor) 
+{
+    nodoSet *actual = lst->primero;
+    while (actual) 
+    {
+        if (actual->info == valor) return -1;
+        actual = actual->sig;
+    }
+    nodoSet *nuevo = (nodoSet*)malloc(sizeof(nodoSet));
+    if (!nuevo) return -1;
+    nuevo->info = valor;
+    nuevo->sig = lst->primero;
+    lst->primero = nuevo;
+    lst->numElementos++;
+    return 0;
+}
+
+/**
+ * @brief Añade un valor al final de la lista si no existe ya.
+ * @param lst Puntero a la lista.
+ * @param valor Valor a insertar.
+ * @return 0 si éxito, -1 si ya existe o error de memoria.
+ */
+int annadirFinSet(tipoListaSet *lst, int valor) 
+{
+    nodoSet *actual = lst->primero;
+    while (actual) 
+    {
+        if (actual->info == valor) return -1;
+        if (!actual->sig) break;
+        actual = actual->sig;
+    }
+    nodoSet *nuevo = (nodoSet*)malloc(sizeof(nodoSet));
+    if (!nuevo) return -1;
+    nuevo->info = valor;
+    nuevo->sig = NULL;
+    if (!lst->primero) lst->primero = nuevo;
+    else actual->sig = nuevo;
+    lst->numElementos++;
+    return 0;
+}
+
+/**
+ * @brief Añade un valor en la posición pos (1-indexado) si no existe ya. Si pos > numElementos+1, lo añade al final.
+ * @param lst Puntero a la lista.
+ * @param pos Posición donde insertar (1-indexado).
+ * @param valor Valor a insertar.
+ * @return 0 si éxito, -1 si ya existe o error de memoria.
+ */
+int annadirEnLugarSet(tipoListaSet *lst, int pos, int valor) 
+{
+    if (pos <= 1) return annadirPpioSet(lst, valor);
+    nodoSet *actual = lst->primero;
+    int idx = 1;
+    while (actual) 
+    {
+        if (actual->info == valor) return -1;
+        if (idx == pos-1) break;
+        if (!actual->sig) break;
+        actual = actual->sig;
+        idx++;
+    }
+    nodoSet *nuevo = (nodoSet*)malloc(sizeof(nodoSet));
+    if (!nuevo) return -1;
+    nuevo->info = valor;
+    if (!actual)
+     {
+        nuevo->sig = NULL;
+        lst->primero = nuevo;
+    } else 
+    {
+        nuevo->sig = actual->sig;
+        actual->sig = nuevo;
+    }
+    lst->numElementos++;
+    return 0;
+}
+
+/**
+ * @brief Borra el primer nodo de la lista.
+ * @param lst Puntero a la lista.
+ * @return 0 si éxito, -1 si vacía.
+ */
+int borrarPpioSet(tipoListaSet *lst) 
+{
+    if (!lst->primero) return -1;
+    nodoSet *tmp = lst->primero;
+    lst->primero = tmp->sig;
+    free(tmp);
+    lst->numElementos--;
+    return 0;
+}
+
+/**
+ * @brief Borra el último nodo de la lista.
+ * @param lst Puntero a la lista.
+ * @return 0 si éxito, -1 si vacía.
+ */
+int borrarFinSet(tipoListaSet *lst) 
+{
+    if (!lst->primero) return -1;
+    if (!lst->primero->sig) 
+    {
+        free(lst->primero);
+        lst->primero = NULL;
+        lst->numElementos--;
+        return 0;
+    }
+    nodoSet *actual = lst->primero;
+    while (actual->sig && actual->sig->sig) actual = actual->sig;
+    free(actual->sig);
+    actual->sig = NULL;
+    lst->numElementos--;
+    return 0;
+}
+
+/**
+ * @brief Borra el primer nodo cuyo valor sea igual a 'valor'.
+ * @param lst Puntero a la lista.
+ * @param valor Valor a borrar.
+ * @return 0 si éxito, -1 si no encontrado.
+ */
+int borrarValorSet(tipoListaSet *lst, int valor) 
+{
+    nodoSet *actual = lst->primero, *ant = NULL;
+    while (actual) 
+    {
+        if (actual->info == valor) 
+        {
+            if (ant) ant->sig = actual->sig;
+            else lst->primero = actual->sig;
+            free(actual);
+            lst->numElementos--;
+            return 0;
+        }
+        ant = actual;
+        actual = actual->sig;
+    }
+    return -1;
+}
+
+/**
+ * @brief Vacía la lista, liberando toda la memoria.
+ * @param lst Puntero a la lista.
+ * @return 0 si éxito, -1 si ya estaba vacía.
+ */
+int vaciarListaSet(tipoListaSet *lst) 
+{
+    if (!lst->primero) return -1;
+    nodoSet *actual = lst->primero;
+    while (actual) 
+    {
+        nodoSet *sig = actual->sig;
+        free(actual);
+        actual = sig;
+    }
+    lst->primero = NULL;
+    lst->numElementos = 0;
+    return 0;
+}
+
+/**
+ * @brief Muestra la lista por pantalla.
+ * @param lst Puntero a la lista.
+ */
+void mostrarListaSet(tipoListaSet *lst) 
+{
+    printf("[Lista enlazada simple tipo set] (%d elementos): ", lst->numElementos);
+    nodoSet *actual = lst->primero;
+    while (actual) 
+    {
+        printf("%d ", actual->info);
+        actual = actual->sig;
+    }
+    printf("\n");
+}
+
+
+
+
+
+/**
+ * @brief Crea un nuevo objeto gantt vacío con el nombre dado.
+ * @param nombreProyecto Nombre del proyecto.
+ * @return Puntero al objeto gantt creado (debe liberarse manualmente).
+ */
+gantt* crearGantt(string nombreProyecto) 
+{
+    gantt *g = (gantt*)malloc(sizeof(gantt));
+    if (!g) return NULL;
+    g->tareas = NULL;
+    g->numTareas = 0;
+    g->caminoCritico = NULL;
+    g->numCaminoCritico = 0;
+    g->nombreProyecto = strdup(nombreProyecto);
+    return g;
+}
+
+// Función auxiliar para detectar ciclos en el grafo de dependencias
+static boolean detectarCiclo(int v, boolean **matriz, boolean *visitado, boolean *enPila, int numTareas) {
+    if (!visitado[v]) {
+        visitado[v] = TRUE;
+        enPila[v] = TRUE;
+        
+        for (int i = 0; i < numTareas; i++) {
+            if (matriz[v][i]) {
+                if (!visitado[i] && detectarCiclo(i, matriz, visitado, enPila, numTareas)) {
+                    return TRUE;
+                } else if (enPila[i]) {
+                    return TRUE;
+                }
+            }
+        }
+    }
+    enPila[v] = FALSE;
+    return FALSE;
+}
+
+/**
+ * @brief Verifica si un diagrama de Gantt no tiene ciclos en sus dependencias.
+ * @param g Puntero al objeto gantt a comprobar.
+ * @return TRUE si el diagrama es válido (sin ciclos), FALSE si tiene ciclos.
+ */
+boolean comprobarGanttValido(gantt *g) 
+{
+    if (!g || g->numTareas == 0) return TRUE;
+    
+    // Matriz de adyacencia para representar el grafo de dependencias
+    boolean **matriz = (boolean **)malloc(g->numTareas * sizeof(boolean *));
+    if (!matriz) return FALSE;
+    
+    for (int i = 0; i < g->numTareas; i++) {
+        matriz[i] = (boolean *)calloc(g->numTareas, sizeof(boolean));
+        if (!matriz[i]) {
+            // Liberar memoria ya asignada
+            for (int j = 0; j < i; j++) {
+                free(matriz[j]);
+            }
+            free(matriz);
+            return FALSE;
+        }
+    }
+    
+    // Construir la matriz de adyacencia
+    for (int i = 0; i < g->numTareas; i++) {
+        tarea *t = &g->tareas[i];
+        for (int j = 0; j < t->numDependencias; j++) {
+            int depId = t->dependencias[j];
+            
+            // Buscar el índice de la tarea dependiente
+            int depIndex = -1;
+            for (int k = 0; k < g->numTareas; k++) {
+                if (g->tareas[k].id == depId) {
+                    depIndex = k;
+                    break;
+                }
+            }
+            
+            if (depIndex != -1) {
+                matriz[i][depIndex] = TRUE;
+            }
+        }
+    }
+    
+    // Detectar ciclos usando el algoritmo DFS
+    boolean *visitado = (boolean *)calloc(g->numTareas, sizeof(boolean));
+    boolean *enPila = (boolean *)calloc(g->numTareas, sizeof(boolean));
+    boolean tieneCiclo = FALSE;
+    
+    if (!visitado || !enPila) {
+        // Liberar memoria
+        for (int i = 0; i < g->numTareas; i++) {
+            free(matriz[i]);
+        }
+        free(matriz);
+        if (visitado) free(visitado);
+        if (enPila) free(enPila);
+        return FALSE;
+    }
+    
+    // Comprobar ciclos desde cada nodo no visitado
+    for (int i = 0; i < g->numTareas; i++) {
+        if (!visitado[i] && detectarCiclo(i, matriz, visitado, enPila, g->numTareas)) {
+            tieneCiclo = TRUE;
+            break;
+        }
+    }
+    
+    // Liberar memoria
+    for (int i = 0; i < g->numTareas; i++) {
+        free(matriz[i]);
+    }
+    free(matriz);
+    free(visitado);
+    free(enPila);
+    
+    return !tieneCiclo;
+}
+
+/**
+ * @brief Calcula el tiempo de inicio más temprano para cada tarea.
+ * @param g Puntero al objeto gantt.
+ * @return Vector con los tiempos de inicio más tempranos para cada tarea.
+ */
+int* calcularTiemposInicioTempranos(gantt *g) 
+{
+    if (!g || g->numTareas == 0) return NULL;
+    
+    int *tiemposInicio = (int *)calloc(g->numTareas, sizeof(int));
+    if (!tiemposInicio) return NULL;
+    
+    boolean *procesado = (boolean *)calloc(g->numTareas, sizeof(boolean));
+    if (!procesado) {
+        free(tiemposInicio);
+        return NULL;
+    }
+    
+    boolean todosCompletados = FALSE;
+    
+    while (!todosCompletados) {
+        todosCompletados = TRUE;
+        
+        for (int i = 0; i < g->numTareas; i++) {
+            if (procesado[i]) continue;
+            
+            tarea *t = &g->tareas[i];
+            
+            // Si no tiene dependencias, su tiempo de inicio es 0 o el especificado
+            if (t->numDependencias == 0) {
+                tiemposInicio[i] = t->tiempoInicio;
+                procesado[i] = TRUE;
+                continue;
+            }
+            
+            // Verificar si todas las dependencias han sido procesadas
+            boolean todasDependenciasProcesadas = TRUE;
+            int maxTiempoFin = 0;
+            
+            for (int j = 0; j < t->numDependencias; j++) {
+                int depId = t->dependencias[j];
+                int depIndex = -1;
+                
+                // Buscar el índice de la tarea dependiente
+                for (int k = 0; k < g->numTareas; k++) {
+                    if (g->tareas[k].id == depId) {
+                        depIndex = k;
+                        break;
+                    }
+                }
+                
+                if (depIndex == -1 || !procesado[depIndex]) {
+                    todasDependenciasProcesadas = FALSE;
+                    break;
+                }
+                
+                // Calcular el tiempo de finalización de la dependencia
+                int tiempoFin = tiemposInicio[depIndex] + g->tareas[depIndex].duracion;
+                if (tiempoFin > maxTiempoFin) {
+                    maxTiempoFin = tiempoFin;
+                }
+            }
+            
+            if (todasDependenciasProcesadas) {
+                // El tiempo de inicio es el máximo de los tiempos de finalización de las dependencias
+                // o el tiempo de inicio especificado, el que sea mayor
+                tiemposInicio[i] = (maxTiempoFin > t->tiempoInicio) ? maxTiempoFin : t->tiempoInicio;
+                procesado[i] = TRUE;
+            } else {
+                todosCompletados = FALSE;
+            }
+        }
+    }
+    
+    free(procesado);
+    return tiemposInicio;
+}
+
+/**
+ * @brief Elabora el camino crítico del diagrama de Gantt.
+ * @param g Puntero al objeto gantt.
+ * @return EXITO si se pudo elaborar el camino crítico, FALLO o SUPERFALLO en caso contrario.
+ */
+int elaborarCaminoCritico(gantt *g) 
+{
+    if (!g || g->numTareas == 0) return FALLO;
+    
+    // Verificar que el diagrama no tenga ciclos
+    if (!comprobarGanttValido(g)) {
+        return SUPERFALLO;
+    }
+    
+    // Calcular los tiempos de inicio más tempranos
+    int *tiemposInicio = calcularTiemposInicioTempranos(g);
+    if (!tiemposInicio) return FALLO;
+    
+    // Calcular los tiempos de finalización
+    int *tiemposFin = (int *)malloc(g->numTareas * sizeof(int));
+    if (!tiemposFin) {
+        free(tiemposInicio);
+        return FALLO;
+    }
+    
+    for (int i = 0; i < g->numTareas; i++) {
+        tiemposFin[i] = tiemposInicio[i] + g->tareas[i].duracion;
+    }
+    
+    // Encontrar el tiempo de finalización del proyecto
+    int tiempoFinProyecto = 0;
+    for (int i = 0; i < g->numTareas; i++) {
+        if (tiemposFin[i] > tiempoFinProyecto) {
+            tiempoFinProyecto = tiemposFin[i];
+        }
+    }
+    
+    // Calcular los tiempos de inicio más tardíos y holguras
+    int *tiemposInicioTardios = (int *)malloc(g->numTareas * sizeof(int));
+    int *holguras = (int *)malloc(g->numTareas * sizeof(int));
+    
+    if (!tiemposInicioTardios || !holguras) {
+        free(tiemposInicio);
+        free(tiemposFin);
+        if (tiemposInicioTardios) free(tiemposInicioTardios);
+        if (holguras) free(holguras);
+        return FALLO;
+    }
+    
+    // Inicializar tiempos tardíos al tiempo final del proyecto
+    for (int i = 0; i < g->numTareas; i++) {
+        tiemposInicioTardios[i] = tiempoFinProyecto;
+    }
+    
+    // Construir matriz de adyacencia inversa (para recorrer el grafo hacia atrás)
+    boolean **matrizInversa = (boolean **)malloc(g->numTareas * sizeof(boolean *));
+    if (!matrizInversa) {
+        free(tiemposInicio);
+        free(tiemposFin);
+        free(tiemposInicioTardios);
+        free(holguras);
+        return FALLO;
+    }
+    
+    for (int i = 0; i < g->numTareas; i++) {
+        matrizInversa[i] = (boolean *)calloc(g->numTareas, sizeof(boolean));
+        if (!matrizInversa[i]) {
+            for (int j = 0; j < i; j++) {
+                free(matrizInversa[j]);
+            }
+            free(matrizInversa);
+            free(tiemposInicio);
+            free(tiemposFin);
+            free(tiemposInicioTardios);
+            free(holguras);
+            return FALLO;
+        }
+    }
+    
+    // Construir la matriz inversa
+    for (int i = 0; i < g->numTareas; i++) {
+        tarea *t = &g->tareas[i];
+        for (int j = 0; j < t->numDependencias; j++) {
+            int depId = t->dependencias[j];
+            
+            // Buscar el índice de la tarea dependiente
+            int depIndex = -1;
+            for (int k = 0; k < g->numTareas; k++) {
+                if (g->tareas[k].id == depId) {
+                    depIndex = k;
+                    break;
+                }
+            }
+            
+            if (depIndex != -1) {
+                matrizInversa[depIndex][i] = TRUE;  // Dependencia inversa
+            }
+        }
+    }
+    
+    // Calcular tiempos de inicio tardíos (de atrás hacia adelante)
+    boolean *procesado = (boolean *)calloc(g->numTareas, sizeof(boolean));
+    if (!procesado) {
+        for (int i = 0; i < g->numTareas; i++) {
+            free(matrizInversa[i]);
+        }
+        free(matrizInversa);
+        free(tiemposInicio);
+        free(tiemposFin);
+        free(tiemposInicioTardios);
+        free(holguras);
+        return FALLO;
+    }
+    
+    boolean todosCompletados = FALSE;
+    
+    while (!todosCompletados) {
+        todosCompletados = TRUE;
+        
+        for (int i = 0; i < g->numTareas; i++) {
+            if (procesado[i]) continue;
+            
+            // Buscar tareas sin sucesores o con todos los sucesores procesados
+            boolean todosSucesoresProcesados = TRUE;
+            int minTiempoInicio = tiempoFinProyecto;
+            boolean tieneSucesores = FALSE;
+            
+            for (int j = 0; j < g->numTareas; j++) {
+                if (matrizInversa[i][j]) {  // i es predecesor de j
+                    tieneSucesores = TRUE;
+                    if (!procesado[j]) {
+                        todosSucesoresProcesados = FALSE;
+                        break;
+                    }
+                    
+                    // El tiempo de inicio tardío de j afecta al tiempo de i
+                    int tiempoInicioTardio = tiemposInicioTardios[j] - g->tareas[i].duracion;
+                    if (tiempoInicioTardio < minTiempoInicio) {
+                        minTiempoInicio = tiempoInicioTardio;
+                    }
+                }
+            }
+            
+            if (!tieneSucesores) {
+                // Si no tiene sucesores, su tiempo tardío es el tiempo de fin del proyecto menos su duración
+                tiemposInicioTardios[i] = tiempoFinProyecto - g->tareas[i].duracion;
+                procesado[i] = TRUE;
+                continue;
+            }
+            
+            if (todosSucesoresProcesados) {
+                tiemposInicioTardios[i] = minTiempoInicio;
+                procesado[i] = TRUE;
+            } else {
+                todosCompletados = FALSE;
+            }
+        }
+    }
+    
+    // Calcular holguras y determinar el camino crítico
+    for (int i = 0; i < g->numTareas; i++) {
+        holguras[i] = tiemposInicioTardios[i] - tiemposInicio[i];
+    }
+    
+    // Contar tareas en el camino crítico (holgura = 0)
+    int numTareasCriticas = 0;
+    for (int i = 0; i < g->numTareas; i++) {
+        if (holguras[i] == 0) {
+            numTareasCriticas++;
+        }
+    }
+    
+    // Liberar el camino crítico anterior si existe
+    if (g->caminoCritico) {
+        free(g->caminoCritico);
+    }
+    
+    // Asignar memoria para el nuevo camino crítico
+    g->caminoCritico = (int *)malloc(numTareasCriticas * sizeof(int));
+    if (!g->caminoCritico) {
+        for (int i = 0; i < g->numTareas; i++) {
+            free(matrizInversa[i]);
+        }
+        free(matrizInversa);
+        free(tiemposInicio);
+        free(tiemposFin);
+        free(tiemposInicioTardios);
+        free(holguras);
+        free(procesado);
+        return FALLO;
+    }
+    
+    // Llenar el camino crítico con los IDs de las tareas críticas
+    int index = 0;
+    for (int i = 0; i < g->numTareas; i++) {
+        if (holguras[i] == 0) {
+            g->caminoCritico[index++] = g->tareas[i].id;
+        }
+    }
+    g->numCaminoCritico = numTareasCriticas;
+    
+    // Ordenar el camino crítico según los tiempos de inicio
+    for (int i = 0; i < numTareasCriticas - 1; i++) {
+        for (int j = 0; j < numTareasCriticas - i - 1; j++) {
+            int idA = g->caminoCritico[j];
+            int idB = g->caminoCritico[j+1];
+            
+            int indexA = -1, indexB = -1;
+            for (int k = 0; k < g->numTareas; k++) {
+                if (g->tareas[k].id == idA) indexA = k;
+                if (g->tareas[k].id == idB) indexB = k;
+            }
+            
+            if (indexA != -1 && indexB != -1 && tiemposInicio[indexA] > tiemposInicio[indexB]) {
+                int temp = g->caminoCritico[j];
+                g->caminoCritico[j] = g->caminoCritico[j+1];
+                g->caminoCritico[j+1] = temp;
+            }
+        }
+    }
+    
+    // Liberar memoria
+    for (int i = 0; i < g->numTareas; i++) {
+        free(matrizInversa[i]);
+    }
+    free(matrizInversa);
+    free(tiemposInicio);
+    free(tiemposFin);
+    free(tiemposInicioTardios);
+    free(holguras);
+    free(procesado);
+    
+    return EXITO;
+}
+
+/**
+ * @brief Añade una tarea al diagrama de Gantt si no crea ciclos.
+ * @param g Puntero al objeto gantt.
+ * @param id Identificador único de la tarea.
+ * @param nombre Nombre de la tarea.
+ * @param duracion Duración de la tarea en unidades de tiempo.
+ * @param dependencias Array con los IDs de las tareas de las que depende.
+ * @param numDependencias Número de dependencias.
+ * @param tiempoInicio Tiempo de inicio mínimo de la tarea.
+ * @return EXITO si se pudo añadir la tarea, FALLO o SUPERFALLO en caso contrario.
+ */
+int annadirTarea(gantt *g, int id, string nombre, int duracion, int *dependencias, int numDependencias, int tiempoInicio) 
+{
+    if (!g) return SUPERFALLO;
+    
+    // Verificar que no exista ya una tarea con el mismo ID
+    for (int i = 0; i < g->numTareas; i++) {
+        if (g->tareas[i].id == id) {
+            return FALLO;
+        }
+    }
+    
+    // Crear la nueva tarea
+    tarea *nuevasTareas = (tarea *)realloc(g->tareas, (g->numTareas + 1) * sizeof(tarea));
+    if (!nuevasTareas) {
+        return FALLO;
+    }
+    
+    g->tareas = nuevasTareas;
+    tarea *nuevaTarea = &g->tareas[g->numTareas];
+    
+    nuevaTarea->id = id;
+    nuevaTarea->nombre = strdup(nombre);
+    if (!nuevaTarea->nombre) {
+        return FALLO;
+    }
+    
+    nuevaTarea->duracion = duracion;
+    nuevaTarea->tiempoInicio = tiempoInicio;
+    
+    // Copiar dependencias
+    if (numDependencias > 0) {
+        nuevaTarea->dependencias = (int *)malloc(numDependencias * sizeof(int));
+        if (!nuevaTarea->dependencias) {
+            free(nuevaTarea->nombre);
+            return FALLO;
+        }
+        
+        memcpy(nuevaTarea->dependencias, dependencias, numDependencias * sizeof(int));
+        nuevaTarea->numDependencias = numDependencias;
+    } else {
+        nuevaTarea->dependencias = NULL;
+        nuevaTarea->numDependencias = 0;
+    }
+    
+    // Incrementar el contador de tareas
+    g->numTareas++;
+    
+    // Verificar que el diagrama sigue siendo válido (sin ciclos)
+    if (!comprobarGanttValido(g)) {
+        // Si hay ciclos, eliminar la tarea añadida
+        g->numTareas--;
+        free(nuevaTarea->nombre);
+        if (nuevaTarea->dependencias) {
+            free(nuevaTarea->dependencias);
+        }
+        return SUPERFALLO;
+    }
+    
+    return EXITO;
+}
+
+/**
+ * @brief Pinta el diagrama de Gantt en la consola.
+ * @param g Puntero al objeto gantt.
+ */
+void pintarDiagrama(gantt *g) 
+{
+    if (!g || g->numTareas == 0) return;
+    
+    // Calcular los tiempos de inicio más tempranos
+    int *tiemposInicio = calcularTiemposInicioTempranos(g);
+    if (!tiemposInicio) return;
+    
+    // Encontrar la duración total del proyecto
+    int tiempoFinProyecto = 0;
+    for (int i = 0; i < g->numTareas; i++) {
+        int tiempoFin = tiemposInicio[i] + g->tareas[i].duracion;
+        if (tiempoFin > tiempoFinProyecto) {
+            tiempoFinProyecto = tiempoFin;
+        }
+    }
+    
+    // Imprimir el título del proyecto
+    printf("\nDiagrama de Gantt: %s\n\n", g->nombreProyecto);
+    
+    // Imprimir cada tarea
+    for (int i = 0; i < g->numTareas; i++) {
+        tarea *t = &g->tareas[i];
+        
+        // Imprimir el nombre de la tarea
+        printf("%-10s: |", t->nombre);
+        
+        // Imprimir espacios hasta el tiempo de inicio
+        for (int j = 0; j < tiemposInicio[i]; j++) {
+            printf(" ");
+        }
+        
+        // Imprimir almohadillas para la duración de la tarea
+        for (int j = 0; j < t->duracion; j++) {
+            printf("#");
+        }
+        
+        // Imprimir espacios hasta el final del proyecto
+        for (int j = tiemposInicio[i] + t->duracion; j < tiempoFinProyecto; j++) {
+            printf(" ");
+        }
+        
+        printf("|\n");
+    }
+    
+    // Liberar memoria
+    free(tiemposInicio);
 }

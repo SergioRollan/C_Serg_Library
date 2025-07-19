@@ -187,6 +187,39 @@ En el caso de strings, mientras se escribe se muestran asteriscos (`*`). Para lo
   'modificarElValor' (ejemplo: "(lista.modificarElValor)(&lista, 9.5, 9.3)") sustituirá el primer 9.5 que encuentre por un 9.3 .
   'vaciarLaLista' (ejemplo: "(lista.vaciarLaLista)(&lista)") borrará todos los elementos de la lista de floats.
 
+- Se define una estructura de datos especial llamada 'tipoListaSalto'. Es una lista circular doblemente enlazada de enteros, donde cada nodo, además de los enlaces clásicos (siguiente y anterior), dispone de enlaces de salto a posiciones 2, 4, 8, 16... nodos adelante, hasta menos de la mitad de la lista. Esto permite acceder a cualquier posición de la forma más rápida posible.
+- Para declarar una lista de este tipo:
+  tipoListaSalto lista;
+  inicializarListaSalto(&lista);
+- Una vez inicializada, se puede utilizar con los siguientes métodos (todos accesibles como punteros a función, igual que en la lista orientada a objetos):
+  - 'annadirPpio' (ejemplo: "lista.annadirPpio(&lista, 5);") añade un 5 al principio de la lista.
+  - 'annadirFin' (ejemplo: "lista.annadirFin(&lista, 10);") añade un 10 al final de la lista.
+  - 'annadirEnLugar' (ejemplo: "lista.annadirEnLugar(&lista, 4, 99);") añade un 99 en la posición 4 (usando saltos para llegar más rápido).
+  - 'mostrarLista' (ejemplo: "lista.mostrarLista(&lista)") imprime la lista por pantalla, mostrando también los saltos de cada nodo.
+  - 'borrarPpio' (ejemplo: "lista.borrarPpio(&lista)") borra el primer nodo de la lista.
+  - 'borrarFin' (ejemplo: "lista.borrarFin(&lista)") borra el último nodo de la lista.
+  - 'borrarValor' (ejemplo: "lista.borrarValor(&lista, 99)") borra el primer nodo cuyo valor sea 99.
+  - 'modificarValor' (ejemplo: "lista.modificarValor(&lista, 99, 77)") sustituye el primer 99 que encuentre por un 77.
+  - 'vaciarLista' (ejemplo: "lista.vaciarLista(&lista)") borra todos los elementos de la lista.
+- Cada operación recalcula automáticamente los saltos para mantener la eficiencia.
+- Esta estructura es ideal para listas donde se requiera acceso rápido a posiciones arbitrarias, manteniendo la flexibilidad de una lista doblemente enlazada y la eficiencia de los saltos.
+
+- Se define una estructura de datos especial llamada 'tipoListaSet'. Es una lista enlazada simple de enteros, sin nodo centinela y que no permite valores repetidos.
+- Para declarar una lista de este tipo:
+  tipoListaSet set;
+  inicializarListaSet(&set);
+- Una vez inicializada, se puede utilizar con los siguientes métodos (todos accesibles como punteros a función, igual que en las otras listas):
+  - 'annadirPpio' (ejemplo: "set.annadirPpio(&set, 5);") añade un 5 al principio de la lista si no existe ya.
+  - 'annadirFin' (ejemplo: "set.annadirFin(&set, 10);") añade un 10 al final de la lista si no existe ya.
+  - 'annadirEnLugar' (ejemplo: "set.annadirEnLugar(&set, 3, 99);") añade un 99 en la posición 3 si no existe ya (si la posición es mayor que el tamaño, lo añade al final).
+  - 'mostrarLista' (ejemplo: "set.mostrarLista(&set)") imprime la lista por pantalla.
+  - 'borrarPpio' (ejemplo: "set.borrarPpio(&set)") borra el primer nodo de la lista.
+  - 'borrarFin' (ejemplo: "set.borrarFin(&set)") borra el último nodo de la lista.
+  - 'borrarValor' (ejemplo: "set.borrarValor(&set, 99)") borra el primer nodo cuyo valor sea 99.
+  - 'vaciarLista' (ejemplo: "set.vaciarLista(&set)") borra todos los elementos de la lista.
+- Cada operación garantiza que no se almacenan valores repetidos en la lista.
+- Esta estructura es ideal para representar conjuntos (sets) de enteros, donde no se permiten duplicados y se requiere una gestión sencilla y eficiente.
+
 ---
 
 ## -------------- CAPÍTULO 12: OTRAS ESTRUCTURAS DE DATOS --------------
@@ -451,11 +484,85 @@ for (int i = 0; i < j->numJugadores; i++) free(j->jugadores[i].mano.cartas);
 free(j->jugadores); free(j);
 ```
 
-## -------------- CAPÍTULO 17: LÍNEAS DE TRABAJO FUTURO --------------
+## -------------- CAPÍTULO 17: DIAGRAMAS DE GANTT --------------
 
-- Set y Dictionary.
-- Funciones criptográficas.
-- Quizá algo relacionado con diagramas de gantt y estimaciones de esfuerzo?
+La biblioteca incluye un módulo completo para la gestión y visualización de diagramas de Gantt, herramientas esenciales en la gestión de proyectos para planificar y programar tareas.
+
+### Estructuras de datos
+
+- **tarea**: Representa una tarea individual del proyecto con:
+
+  - `id`: Identificador único de la tarea
+  - `nombre`: Nombre descriptivo de la tarea
+  - `duracion`: Duración en unidades de tiempo
+  - `dependencias`: Array con los IDs de las tareas de las que depende
+  - `numDependencias`: Número de dependencias
+  - `tiempoInicio`: Tiempo de inicio mínimo de la tarea
+
+- **gantt**: Contiene toda la información del proyecto:
+  - `tareas`: Array de tareas del proyecto
+  - `numTareas`: Número total de tareas
+  - `caminoCritico`: Array con los IDs de las tareas del camino crítico
+  - `numCaminoCritico`: Número de tareas en el camino crítico
+  - `nombreProyecto`: Nombre del proyecto
+
+### Funciones principales
+
+- **gantt\* crearGantt(string nombreProyecto)**: Crea un nuevo diagrama de Gantt vacío con el nombre especificado. Devuelve un puntero que debe liberarse manualmente.
+
+- **boolean comprobarGanttValido(gantt \*g)**: Verifica que el diagrama no contenga ciclos en sus dependencias. Devuelve `TRUE` si es válido, `FALSE` si tiene ciclos.
+
+- **int elaborarCaminoCritico(gantt \*g)**: Calcula el camino crítico del proyecto identificando las tareas con holgura cero. Escribe en el array `caminoCritico` los IDs en orden de ejecución. Devuelve `EXITO`, `FALLO` o `SUPERFALLO`.
+
+- **int annadirTarea(gantt *g, int id, string nombre, int duracion, int *dependencias, int numDependencias, int tiempoInicio)**: Añade una nueva tarea al diagrama solo si no crea ciclos. Devuelve `EXITO`, `FALLO` o `SUPERFALLO`.
+
+- **void pintarDiagrama(gantt \*g)**: Visualiza el diagrama de Gantt en la consola usando caracteres ASCII, donde las almohadillas (`#`) representan los tiempos de ejecución de cada tarea.
+
+### Ejemplo de uso básico
+
+```c
+gantt *proyecto = crearGantt("Proyecto ejemplo");
+
+// Añadir tareas
+annadirTarea(proyecto, 1, "A", 3, NULL, 0, 0);
+annadirTarea(proyecto, 2, "B", 4, NULL, 0, 0);
+annadirTarea(proyecto, 3, "C", 2, (int[]){1}, 1, 0);
+annadirTarea(proyecto, 4, "D", 5, (int[]){2, 3}, 2, 0);
+
+// Verificar validez y calcular camino crítico
+if (comprobarGanttValido(proyecto)) {
+    elaborarCaminoCritico(proyecto);
+    pintarDiagrama(proyecto);
+}
+
+// Liberar memoria
+free(proyecto->nombreProyecto);
+for (int i = 0; i < proyecto->numTareas; i++) {
+    free(proyecto->tareas[i].nombre);
+    if (proyecto->tareas[i].dependencias) {
+        free(proyecto->tareas[i].dependencias);
+    }
+}
+free(proyecto->tareas);
+if (proyecto->caminoCritico) free(proyecto->caminoCritico);
+free(proyecto);
+```
+
+### Características técnicas
+
+- **Detección de ciclos**: Utiliza un algoritmo de búsqueda en profundidad (DFS) para detectar ciclos en las dependencias entre tareas.
+
+- **Cálculo de tiempos**: Determina automáticamente los tiempos de inicio más tempranos y tardíos de cada tarea, considerando las dependencias.
+
+- **Camino crítico**: Identifica las tareas que no pueden retrasarse sin afectar la duración total del proyecto (holgura = 0).
+
+- **Visualización**: Genera una representación gráfica en consola que muestra la programación temporal de todas las tareas.
+
+Esta funcionalidad es especialmente útil para la gestión de proyectos, planificación de recursos y análisis de dependencias entre tareas.
+
+## -------------- CAPÍTULO 18: LÍNEAS DE TRABAJO FUTURO --------------
+
+- Quizá algo relacionado con estimaciones de esfuerzo?
 - Máquinas de Turing.
 - Autómatas finitos, tanto deterministas como no deterministas.
 - Gramáticas

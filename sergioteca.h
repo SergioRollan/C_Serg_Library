@@ -13,6 +13,10 @@
 
 
 /*************************************preprocesador**************************************/
+
+#ifndef SERGIOTECA_H
+#define SERGIOTECA_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -166,6 +170,71 @@ typedef struct s
 	int (*modificarElValor)(struct s*, ...);
 	int (*vaciarLaLista)(struct s*);
 }tipoLista;
+////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////// lista circular doblemente enlazada con saltos
+typedef struct nodo_salto {
+    int info;
+    struct nodo_salto *sig;
+    struct nodo_salto *ant;
+    int numSaltos;
+    struct nodo_salto **saltos; // array de punteros a saltos
+} nodoSalto;
+typedef struct tipoListaSalto tipoListaSalto;
+struct tipoListaSalto {
+    nodoSalto *cabecera; // apunta al nodo 1 (vacío)
+    int numElementos;
+    int (*annadirPpio)(tipoListaSalto*, int);
+    int (*annadirFin)(tipoListaSalto*, int);
+    int (*annadirEnLugar)(tipoListaSalto*, int, int);
+    int (*borrarPpio)(tipoListaSalto*);
+    int (*borrarFin)(tipoListaSalto*);
+    int (*borrarValor)(tipoListaSalto*, int);
+    int (*modificarValor)(tipoListaSalto*, int, int);
+    int (*vaciarLista)(tipoListaSalto*);
+    void (*mostrarLista)(tipoListaSalto*);
+};
+////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////// Set
+typedef struct nodo_set 
+{
+    int info;
+    struct nodo_set *sig;
+} nodoSet;
+typedef struct tipoListaSet tipoListaSet;
+struct tipoListaSet 
+{
+    nodoSet *primero;
+    int numElementos;
+    int (*annadirPpio)(tipoListaSet*, int);
+    int (*annadirFin)(tipoListaSet*, int);
+    int (*annadirEnLugar)(tipoListaSet*, int, int);
+    int (*borrarPpio)(tipoListaSet*);
+    int (*borrarFin)(tipoListaSet*);
+    int (*borrarValor)(tipoListaSet*, int);
+    int (*vaciarLista)(tipoListaSet*);
+    void (*mostrarLista)(tipoListaSet*);
+};
+////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////// diccionario
+typedef char* tipoKey;
+typedef char* tipoValor;
+typedef struct
+{
+	tipoKey clave;
+	tipoValor valor;
+}tipoElementoDiccionario;
+typedef struct
+{
+    tipoElementoDiccionario* entries;
+    int size;
+    int capacity;
+} tipoDiccionario;
 ////////////////////////////////////////////////
 
 
@@ -329,6 +398,23 @@ typedef struct{
 ////////////////////////////////////////////////
 
 
+//////////////////////////////////////////////// Gantt
+typedef struct{
+	int id;
+	string nombre;
+	int duracion;
+	int *dependencias;
+	int numDependencias;
+	int tiempoInicio;
+}tarea;
+typedef struct{
+	tarea *tareas;
+	int numTareas;
+	int *caminoCritico;
+	int numCaminoCritico;
+	string nombreProyecto;
+}gantt;
+////////////////////////////////////////////////
 
 
 
@@ -547,6 +633,34 @@ void mostrarLista(struct s*);
 
 
 boolean estaVacia(lista);
+
+
+
+
+// Lista circular doblemente enlazada con saltos
+void inicializarListaSalto(tipoListaSalto *lst);
+int annadirPpioSalto(tipoListaSalto *lst, int valor);
+int annadirFinSalto(tipoListaSalto *lst, int valor);
+int annadirEnLugarSalto(tipoListaSalto *lst, int pos, int valor);
+int borrarPpioSalto(tipoListaSalto *lst);
+int borrarFinSalto(tipoListaSalto *lst);
+int borrarValorSalto(tipoListaSalto *lst, int valor);
+int modificarValorSalto(tipoListaSalto *lst, int valorAnt, int valorNuevo);
+int vaciarListaSalto(tipoListaSalto *lst);
+void mostrarListaSalto(tipoListaSalto *lst);
+
+
+
+
+// operaciones con diccionarios
+void initDictionary(tipoDiccionario* dict);
+void freeDictionary(tipoDiccionario* dict);
+boolean addEntry(tipoDiccionario* dict, tipoKey key, tipoValor value);
+boolean addEntryIfNotExists(tipoDiccionario* dict, tipoKey key, tipoValor value);
+boolean removeEntry(tipoDiccionario* dict, tipoKey key);
+tipoValor getValue(tipoDiccionario* dict, tipoKey key);
+tipoValor* getValues(tipoDiccionario* dict, int* count);
+tipoKey* getKeys(tipoDiccionario* dict, int* count);
 
 
 
@@ -839,3 +953,25 @@ void mostrarMazo(jugador j);
 void mostrarCarta(carta c);
 
 
+// Sets
+void inicializarListaSet(tipoListaSet *lst);
+int annadirPpioSet(tipoListaSet *lst, int valor);
+int annadirFinSet(tipoListaSet *lst, int valor);
+int annadirEnLugarSet(tipoListaSet *lst, int pos, int valor);
+int borrarPpioSet(tipoListaSet *lst);
+int borrarFinSet(tipoListaSet *lst);
+int borrarValorSet(tipoListaSet *lst, int valor);
+int vaciarListaSet(tipoListaSet *lst);
+void mostrarListaSet(tipoListaSet *lst);
+
+
+// Diagrama de Gantt
+gantt* crearGantt(string nombreProyecto);
+boolean comprobarGanttValido(gantt *g);
+int elaborarCaminoCritico(gantt *g);
+int annadirTarea(gantt *g, int id, string nombre, int duracion, int *dependencias, int numDependencias, int tiempoInicio);
+void pintarDiagrama(gantt *g);
+
+
+
+#endif
