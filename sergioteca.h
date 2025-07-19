@@ -319,15 +319,12 @@ typedef struct{
 
 
 //////////////////////////////////////////////// hiperplanos
-#ifndef TIPO_INFO_HIPERFLANOS
-  #define TIPO_INFO_HIPERFLANOS int
-#endif
-typedef TIPO_INFO_HIPERFLANOS tipoInfoHiperplano;
+typedef float tipoInfoHiperplano;
 typedef struct h{
 	int dimension;
-	int elementos;
-	tipoInfoHiperplano info;
-	struct h *hijo;
+	int ecuaciones;
+	char *nombresVariables;
+	tipoInfoHiperplano *info; // Solo almacena coeficientes, sin términos independientes
 }hiperplano;
 ////////////////////////////////////////////////
 
@@ -863,9 +860,10 @@ ssoo proc_RA(ssoo sistema);
 
 
 
-
+// Teoría de códigos
 palabra encriptar(palabra,codigo);
 palabra desencriptar(palabra,codigo);
+void cambiarBit(palabra,int);
 palabra sindrome(palabra,codigo);
 codigo generarG_estandar(int, int);
 int peso(palabra);
@@ -876,20 +874,20 @@ int calcularS(codigo*);
 int calcularT(codigo*);
 int calcularNyM(codigo*);
 int calcularD(codigo*);
-codigo generarCodigoInicializado(byte_t**);
+codigo generarCodigoInicializado(bit_t**);
 codigo generarHamming(int);
 bit_t sacarBit(short int);
 boolean bitEsDeInfo(bit_t**,int,int);
 
 
+// Hiperplanos
+hiperplano leerHiperplano(int dimension);
+void imprimirHiperplano(hiperplano);
+hiperplano hiperplanoOrtogonal(hiperplano, int);
+hiperplano hiperplanoInterseccion(hiperplano, hiperplano);
 
-hiperplano leerPlano(int dimension);
-void imprimirPlano(hiperplano);
-hiperplano hijo(hiperplano, int);
-hiperplano planoOrtogonal(hiperplano, int);
 
-
-
+// Algoritmos de ordenación
 int bubbleSortI(int *v, int n);
 int bubbleSortF(float *v, int n);
 int selectionSortI(int *v, int n);
@@ -923,16 +921,13 @@ int radixSort(int *v, int n);
 int bucketSort(int *v, int n);
 int pigeonholeSort(int *v, int n);
 
-
-// Algoritmos de búsqueda para enteros
+// Algoritmos de búsqueda
 int linearSearch(const int *vector, int n, int valorBuscado);
 int binarySearch(const int *vector, int n, int valorBuscado);
 int ternarySearch(const int *vector, int n, int valorBuscado);
 int exponentialSearch(const int *vector, int n, int valorBuscado);
 int jumpSearch(const int *vector, int n, int valorBuscado);
 int fibonacciSearch(const int *vector, int n, int valorBuscado);
-
-// Algoritmos de búsqueda para floats
 int linearSearchF(const float *vector, int n, float valorBuscado);
 int binarySearchF(const float *vector, int n, float valorBuscado);
 int ternarySearchF(const float *vector, int n, float valorBuscado);

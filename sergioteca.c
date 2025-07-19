@@ -4240,61 +4240,6 @@ float distanciaTecladoQWERTY(char a, char b) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-palabra encriptar(palabra p, codigo c){return NULL;} //throw new UnimplementedError();
-palabra desencriptar(palabra p, codigo c){return NULL;} //throw new UnimplementedError();
-palabra sindrome(palabra p, codigo c){return NULL;} //throw new UnimplementedError();
-codigo generarG_estandar(int a, int b){codigo c; return c;} //throw new UnimplementedError();
-int peso(palabra p){return 1;} //throw new UnimplementedError();
-void *normalizarG(codigo* c){return NULL;} //throw new UnimplementedError();
-int H2G_estandar(codigo* c){return 1;} //throw new UnimplementedError();
-int G2H_estandar(codigo* c){return 1;} //throw new UnimplementedError();
-int calcularS(codigo* c){return 1;} //throw new UnimplementedError();
-int calcularT(codigo* c){return 1;} //throw new UnimplementedError();
-int calcularNyM(codigo* c){return 1;} //throw new UnimplementedError();
-int calcularD(codigo* c){return 1;} //throw new UnimplementedError();
-codigo generarCodigoInicializado(byte_t** b){codigo c; return c;} //throw new UnimplementedError();
-codigo generarHamming(int n){codigo c; return c;} //throw new UnimplementedError();
-bit_t sacarBit(short int s){return __1;} //throw new UnimplementedError();
-boolean bitEsDeInfo(bit_t** b, int i, int j){return FALSE;} //throw new UnimplementedError();
-
-
-
-hiperplano leerPlano(int dimension) { hiperplano h; return h; }
-void imprimirPlano(hiperplano h) { (void)h; }
-hiperplano hijo(hiperplano h, int n) { (void)h; (void)n; hiperplano res; return res; }
-hiperplano planoOrtogonal(hiperplano h, int n) { (void)h; (void)n; hiperplano res; return res; }
-
-
-
-
-
-
-
-
-
-
-
 // --- Algoritmos de planificación de procesos ---
 
 /**
@@ -6523,7 +6468,7 @@ tipoKey* getKeys(tipoDiccionario* dict, int* count)
 /**
  * @brief Inicializa una lista circular doblemente enlazada con saltos.
  * @param lst Puntero a la lista a inicializar.
- */
+ */ 
 void inicializarListaSalto(tipoListaSalto *lst) 
 {
     lst->cabecera = (nodoSalto*)malloc(sizeof(nodoSalto));
@@ -6547,7 +6492,7 @@ void inicializarListaSalto(tipoListaSalto *lst)
 /**
  * @brief Libera todos los saltos de un nodo.
  * @param n Puntero al nodo.
- */
+ */ 
 static void liberarSaltosNodo(nodoSalto *n) 
 {
     if (n->saltos) free(n->saltos);
@@ -6558,7 +6503,7 @@ static void liberarSaltosNodo(nodoSalto *n)
 /**
  * @brief Recalcula los saltos de toda la lista.
  * @param lst Puntero a la lista.
- */
+ */ 
 static void recalcularSaltos(tipoListaSalto *lst) 
 {
     if (lst->numElementos == 0) return;
@@ -6588,7 +6533,7 @@ static void recalcularSaltos(tipoListaSalto *lst)
  * @param lst Puntero a la lista.
  * @param valor Valor a insertar.
  * @return 0 si éxito, -1 si error.
- */
+ */ 
 int annadirPpioSalto(tipoListaSalto *lst, int valor) 
 {
     nodoSalto *nuevo = (nodoSalto*)malloc(sizeof(nodoSalto));
@@ -6611,7 +6556,7 @@ int annadirPpioSalto(tipoListaSalto *lst, int valor)
  * @param lst Puntero a la lista.
  * @param valor Valor a insertar.
  * @return 0 si éxito, -1 si error.
- */
+ */ 
 int annadirFinSalto(tipoListaSalto *lst, int valor) 
 {
     nodoSalto *nuevo = (nodoSalto*)malloc(sizeof(nodoSalto));
@@ -6634,7 +6579,7 @@ int annadirFinSalto(tipoListaSalto *lst, int valor)
  * @param lst Puntero a la lista.
  * @param pos Posición destino (1-indexado).
  * @return Puntero al nodo en la posición pos, o NULL si fuera de rango.
- */
+ */ 
 static nodoSalto* buscarNodoPorSaltos(tipoListaSalto *lst, int pos) 
 {
     if (pos < 1 || pos > lst->numElementos) return NULL;
@@ -6667,7 +6612,7 @@ static nodoSalto* buscarNodoPorSaltos(tipoListaSalto *lst, int pos)
  * @param pos Posición donde insertar (1-indexado).
  * @param valor Valor a insertar.
  * @return 0 si éxito, -1 si error.
- */
+ */ 
 int annadirEnLugarSalto(tipoListaSalto *lst, int pos, int valor) 
 {
     if (pos < 1 || pos > lst->numElementos+1) return -1;
@@ -6694,7 +6639,7 @@ int annadirEnLugarSalto(tipoListaSalto *lst, int pos, int valor)
  * @brief Borra el primer nodo de la lista.
  * @param lst Puntero a la lista.
  * @return 0 si éxito, -1 si error.
- */
+ */ 
 int borrarPpioSalto(tipoListaSalto *lst) 
 {
     if (lst->numElementos == 0) return -1;
@@ -6712,7 +6657,7 @@ int borrarPpioSalto(tipoListaSalto *lst)
  * @brief Borra el último nodo de la lista.
  * @param lst Puntero a la lista.
  * @return 0 si éxito, -1 si error.
- */
+ */ 
 int borrarFinSalto(tipoListaSalto *lst) 
 {
     if (lst->numElementos == 0) return -1;
@@ -6731,7 +6676,7 @@ int borrarFinSalto(tipoListaSalto *lst)
  * @param lst Puntero a la lista.
  * @param valor Valor a borrar.
  * @return 0 si éxito, -1 si no encontrado.
- */
+ */ 
 int borrarValorSalto(tipoListaSalto *lst, int valor) 
 {
     if (lst->numElementos == 0) return -1;
@@ -6758,7 +6703,7 @@ int borrarValorSalto(tipoListaSalto *lst, int valor)
  * @param valorAnt Valor a buscar.
  * @param valorNuevo Valor nuevo.
  * @return 0 si éxito, -1 si no encontrado.
- */
+ */ 
 int modificarValorSalto(tipoListaSalto *lst, int valorAnt, int valorNuevo) 
 {
     if (lst->numElementos == 0) return -1;
@@ -6778,7 +6723,7 @@ int modificarValorSalto(tipoListaSalto *lst, int valorAnt, int valorNuevo)
  * @brief Vacía la lista, liberando toda la memoria.
  * @param lst Puntero a la lista.
  * @return 0 si éxito, -1 si ya estaba vacía.
- */
+ */ 
 int vaciarListaSalto(tipoListaSalto *lst) 
 {
     if (lst->numElementos == 0) return -1;
@@ -6799,7 +6744,7 @@ int vaciarListaSalto(tipoListaSalto *lst)
 /**
  * @brief Muestra la lista por pantalla, indicando los saltos de cada nodo.
  * @param lst Puntero a la lista.
- */
+ */ 
 void mostrarListaSalto(tipoListaSalto *lst) 
 {
     printf("[Lista circular doblemente enlazada con saltos] (%d elementos):\n", lst->numElementos);
@@ -6829,7 +6774,7 @@ void mostrarListaSalto(tipoListaSalto *lst)
 /**
  * @brief Inicializa una lista enlazada simple de enteros sin centinela y sin repetidos.
  * @param lst Puntero a la lista a inicializar.
- */
+ */ 
 void inicializarListaSet(tipoListaSet *lst) 
 {
     lst->primero = NULL;
@@ -6849,7 +6794,7 @@ void inicializarListaSet(tipoListaSet *lst)
  * @param lst Puntero a la lista.
  * @param valor Valor a insertar.
  * @return 0 si éxito, -1 si ya existe o error de memoria.
- */
+ */ 
 int annadirPpioSet(tipoListaSet *lst, int valor) 
 {
     nodoSet *actual = lst->primero;
@@ -6872,7 +6817,7 @@ int annadirPpioSet(tipoListaSet *lst, int valor)
  * @param lst Puntero a la lista.
  * @param valor Valor a insertar.
  * @return 0 si éxito, -1 si ya existe o error de memoria.
- */
+ */ 
 int annadirFinSet(tipoListaSet *lst, int valor) 
 {
     nodoSet *actual = lst->primero;
@@ -6898,7 +6843,7 @@ int annadirFinSet(tipoListaSet *lst, int valor)
  * @param pos Posición donde insertar (1-indexado).
  * @param valor Valor a insertar.
  * @return 0 si éxito, -1 si ya existe o error de memoria.
- */
+ */ 
 int annadirEnLugarSet(tipoListaSet *lst, int pos, int valor) 
 {
     if (pos <= 1) return annadirPpioSet(lst, valor);
@@ -6932,7 +6877,7 @@ int annadirEnLugarSet(tipoListaSet *lst, int pos, int valor)
  * @brief Borra el primer nodo de la lista.
  * @param lst Puntero a la lista.
  * @return 0 si éxito, -1 si vacía.
- */
+ */ 
 int borrarPpioSet(tipoListaSet *lst) 
 {
     if (!lst->primero) return -1;
@@ -6947,7 +6892,7 @@ int borrarPpioSet(tipoListaSet *lst)
  * @brief Borra el último nodo de la lista.
  * @param lst Puntero a la lista.
  * @return 0 si éxito, -1 si vacía.
- */
+ */ 
 int borrarFinSet(tipoListaSet *lst) 
 {
     if (!lst->primero) return -1;
@@ -6971,7 +6916,7 @@ int borrarFinSet(tipoListaSet *lst)
  * @param lst Puntero a la lista.
  * @param valor Valor a borrar.
  * @return 0 si éxito, -1 si no encontrado.
- */
+ */ 
 int borrarValorSet(tipoListaSet *lst, int valor) 
 {
     nodoSet *actual = lst->primero, *ant = NULL;
@@ -6995,7 +6940,7 @@ int borrarValorSet(tipoListaSet *lst, int valor)
  * @brief Vacía la lista, liberando toda la memoria.
  * @param lst Puntero a la lista.
  * @return 0 si éxito, -1 si ya estaba vacía.
- */
+ */ 
 int vaciarListaSet(tipoListaSet *lst) 
 {
     if (!lst->primero) return -1;
@@ -7014,7 +6959,7 @@ int vaciarListaSet(tipoListaSet *lst)
 /**
  * @brief Muestra la lista por pantalla.
  * @param lst Puntero a la lista.
- */
+ */ 
 void mostrarListaSet(tipoListaSet *lst) 
 {
     printf("[Lista enlazada simple tipo set] (%d elementos): ", lst->numElementos);
@@ -7035,7 +6980,7 @@ void mostrarListaSet(tipoListaSet *lst)
  * @brief Crea un nuevo objeto gantt vacío con el nombre dado.
  * @param nombreProyecto Nombre del proyecto.
  * @return Puntero al objeto gantt creado (debe liberarse manualmente).
- */
+ */ 
 gantt* crearGantt(string nombreProyecto) 
 {
     gantt *g = (gantt*)malloc(sizeof(gantt));
@@ -7067,7 +7012,7 @@ static boolean detectarCiclo(int v, boolean **matriz, boolean *visitado, boolean
  * @brief Verifica si un diagrama de Gantt no tiene ciclos en sus dependencias.
  * @param g Puntero al objeto gantt a comprobar.
  * @return TRUE si el diagrama es válido (sin ciclos), FALSE si tiene ciclos.
- */
+ */ 
 boolean comprobarGanttValido(gantt *g) 
 {
     if (!g || g->numTareas == 0) return TRUE;
@@ -7554,7 +7499,8 @@ void estimarEsfuerzo(void)
     actoresComplejos = leerInt(0, "Introduce el número de actores complejos: ");
     NUEVA_LINEA;
     printString("Puntúa de 0 a 5 los siguientes factores de complejidad técnica:\n");
-    for (i = 0; i < 13; i++) {
+    for (i = 0; i < 13; i++) 
+    {
         printf("%2d. %-40s: ", i+1, nombresFactoresTecnicos[i]);
         factoresTecnicos[i] = leerInt(0, "");
         if (factoresTecnicos[i] < 0) factoresTecnicos[i] = 0;
@@ -7562,7 +7508,8 @@ void estimarEsfuerzo(void)
     }
     NUEVA_LINEA;
     printString("Puntúa de 0 a 5 los siguientes factores de complejidad del entorno:\n");
-    for (i = 0; i < 8; i++) {
+    for (i = 0; i < 8; i++) 
+    {
         printf("%2d. %-40s: ", i+1, nombresFactoresEntorno[i]);
         factoresEntorno[i] = leerInt(0, "");
         if (factoresEntorno[i] < 0) factoresEntorno[i] = 0;
@@ -7587,4 +7534,1048 @@ void estimarEsfuerzo(void)
     printf("\nPuntos de caso de uso (UCP): %.2f\n", UCP);
     printf("Horas estimadas totales: %.2f\n", horas);
     NUEVA_LINEA;
+}
+
+
+
+/**
+ * @brief Encripta una palabra utilizando un código corrector de errores.
+ * 
+ * Multiplica la palabra por la matriz generadora G para obtener la palabra codificada.
+ * 
+ * @param p Palabra a encriptar (vector de bits)
+ * @param c Código corrector a utilizar
+ * @return Palabra encriptada (vector de bits)
+ */
+palabra encriptar(palabra p, codigo c) 
+{
+    if (!p || !c.G || c.n <= 0 || c.m <= 0) return NULL;
+    
+    palabra resultado = (bit_t*)malloc(c.n * sizeof(bit_t));
+    if (!resultado) return NULL;
+    
+    for (int i = 0; i < c.n; i++) resultado[i] = __0;
+    
+    for (int i = 0; i < c.n; i++) 
+        for (int j = 0; j < c.m; j++) 
+            if (p[j] == __1 && c.G[j][i] == __1) resultado[i] = resultado[i] == __1 ? __0 : __1;
+    
+    return resultado;
+}
+
+/**
+ * @brief Desencripta una palabra utilizando un código corrector de errores.
+ * 
+ * Utiliza la matriz de paridad H para detectar y corregir errores, y luego
+ * extrae los bits de información original.
+ * 
+ * @param p Palabra encriptada a desencriptar
+ * @param c Código corrector utilizado
+ * @return Palabra desencriptada (vector de bits de información)
+ */
+palabra desencriptar(palabra p, codigo c) 
+{
+    if (!p || !c.H || !c.G || c.n <= 0 || c.m <= 0) return NULL;
+    
+    palabra s = sindrome(p, c);
+    if (!s) return NULL;
+    
+    int hayError = 0;
+    for (int i = 0; i < c.n - c.m; i++)
+        if (s[i] == __1) hayError = 1;
+    
+    palabra corregido = (bit_t*)malloc(c.n * sizeof(bit_t));
+    if (!corregido) 
+    {
+        free(s);
+        return NULL;
+    }
+    
+    for (int i = 0; i < c.n; i++) corregido[i] = p[i];
+    
+    if (hayError) 
+    {
+        int posicionCorreccion = -1;
+        for (int j = 0; j < c.n; j++) 
+        {
+            boolean coincide = TRUE;
+            for (int i = 0; i < c.n - c.m; i++)
+                if (c.H[i][j] != s[i]) coincide = FALSE;
+            
+            if (coincide) 
+            {
+                posicionCorreccion = j;
+                break;
+            }
+        }
+        
+        if (posicionCorreccion >= 0 && posicionCorreccion < c.n)
+            corregido[posicionCorreccion] = corregido[posicionCorreccion] == __1 ? __0 : __1;
+        
+    }
+    
+    palabra resultado = (bit_t*)malloc(c.m * sizeof(bit_t));
+    if (!resultado) 
+    {
+        free(s);
+        free(corregido);
+        return NULL;
+    }
+    
+    int* posicionesInfo = (int*)malloc(c.m * sizeof(int));
+    int idxInfo = 0;
+    
+    for (int i = 1; i <= c.n; i++)
+        if ((i & (i - 1)) != 0) posicionesInfo[idxInfo++] = i - 1;
+    
+    for (int i = 0; i < c.m; i++) resultado[i] = corregido[posicionesInfo[i]];
+    
+    free(posicionesInfo);
+    
+    
+    free(s);
+    free(corregido);
+    return resultado;
+}
+
+/**
+ * @brief Calcula el síndrome de una palabra codificada.
+ * 
+ * El síndrome se calcula multiplicando la palabra por la matriz de paridad H transpuesta.
+ * Si el síndrome es cero, no hay errores. Si no, indica la posición del error.
+ * 
+ * @param p Palabra codificada
+ * @param c Código corrector utilizado
+ * @return Vector síndrome (NULL si hay error)
+ */
+palabra sindrome(palabra p, codigo c) 
+{
+    if (!p || !c.H || c.n <= 0) return NULL;
+    
+    int numFilasH = c.n - c.m;
+    palabra s = (bit_t*)malloc(numFilasH * sizeof(bit_t));
+    if (!s) return NULL;
+    
+    for (int i = 0; i < numFilasH; i++) s[i] = __0;
+    
+    for (int i = 0; i < numFilasH; i++) 
+    {
+        int producto = 0;
+        for (int j = 0; j < c.n; j++)
+            if (p[j] == __1 && c.H[i][j] == __1) producto ^= 1;
+        s[i] = producto;
+    }
+    return s;
+}
+
+/**
+ * @brief Genera una matriz generadora G en forma estándar [I|A].
+ * 
+ * @param k Número de filas (dimensión del espacio de mensajes)
+ * @param n Longitud del código (dimensión del espacio de palabras)
+ * @return Código con la matriz G generada
+ */
+codigo generarG_estandar(int k, int n) 
+{
+    codigo c;
+    c.m = k;
+    c.n = n;
+    c.s = 0;
+    c.t = 0;
+    c.d = 0;
+    
+    if (k <= 0 || n <= k) 
+    {
+        c.G = NULL;
+        c.H = NULL;
+        return c;
+    }
+    
+    c.G = (bit_t**)malloc(k * sizeof(bit_t*));
+    if (!c.G) 
+    {
+        c.H = NULL;
+        return c;
+    }
+    
+    for (int i = 0; i < k; i++) 
+    {
+        c.G[i] = (bit_t*)malloc(n * sizeof(bit_t));
+        if (!c.G[i]) 
+        {
+            for (int j = 0; j < i; j++) free(c.G[j]);
+            free(c.G);
+            c.G = NULL;
+            c.H = NULL;
+            return c;
+        }
+        
+        for (int j = 0; j < n; j++) c.G[i][j] = __0;
+        if (i < k) c.G[i][i] = __1;
+    }
+    
+    srand(time(NULL));
+    for (int i = 0; i < k; i++)
+        for (int j = k; j < n; j++)
+            c.G[i][j] = (rand() % 2) ? __1 : __0;
+    
+    G2H_estandar(&c);
+    
+    calcularD(&c);
+    
+    return c;
+}
+
+/**
+ * @brief Calcula el peso de una palabra (número de unos).
+ * 
+ * @param p Palabra a analizar
+ * @return Peso de la palabra (número de bits a 1)
+ */
+int peso(palabra p) 
+{
+    if (!p) return 0;
+    
+    int longitud = 0;
+    while (p[longitud] == __0 || p[longitud] == __1) longitud++;
+    
+    int contador = 0;
+    for (int i = 0; i < longitud; i++)
+        if (p[i] == __1) contador++;
+    
+    return contador;
+}
+
+/**
+ * @brief Normaliza la matriz generadora G a forma estándar [I|A].
+ * 
+ * Utiliza operaciones elementales de filas para transformar G.
+ * 
+ * @param c Puntero al código a normalizar
+ * @return Puntero al código normalizado o NULL si hay error
+ */
+void *normalizarG(codigo* c) 
+{
+    if (!c || !c->G || c->m <= 0 || c->n <= 0) return NULL;
+    
+    for (int i = 0; i < c->m; i++) 
+    {
+        if (c->G[i][i] != __1) 
+        {
+            int encontrado = 0;
+            for (int j = i + 1; j < c->m; j++) 
+            {
+                if (c->G[j][i] == __1) 
+                {
+                    bit_t* temp = c->G[i];
+                    c->G[i] = c->G[j];
+                    c->G[j] = temp;
+                    encontrado = 1;
+                    break;
+                }
+            }
+            
+            if (!encontrado) return NULL;
+        }
+        
+        for (int j = 0; j < c->m; j++)
+            if (j != i && c->G[j][i] == __1)
+                for (int k = i; k < c->n; k++)
+                    c->G[j][k] = (c->G[j][k] == c->G[i][k]) ? __0 : __1; 
+    }
+    
+    return c;
+}
+
+/**
+ * @brief Genera la matriz de paridad H a partir de G en forma estándar.
+ * 
+ * Si G = [I|A], entonces H = [A^T|I]
+ * 
+ * @param c Puntero al código con G ya definida
+ * @return EXITO o FALLO
+ */
+int H2G_estandar(codigo* c) 
+{
+    if (!c || !c->H || c->n <= 0 || c->m <= 0) return FALLO;
+    
+    if (c->G) 
+    {
+        for (int i = 0; i < c->m; i++) free(c->G[i]);
+        free(c->G);
+    }
+    
+    int n_menos_k = c->n - c->m;
+    
+    c->G = (bit_t**)malloc(c->m * sizeof(bit_t*));
+    if (!c->G) return FALLO;
+    
+    for (int i = 0; i < c->m; i++) 
+    {
+        c->G[i] = (bit_t*)malloc(c->n * sizeof(bit_t));
+        if (!c->G[i]) 
+        {
+            for (int j = 0; j < i; j++) free(c->G[j]);
+            free(c->G);
+            c->G = NULL;
+            return FALLO;
+        }
+        
+        for (int j = 0; j < c->m; j++) c->G[i][j] = (i == j) ? __1 : __0;
+        for (int j = c->m; j < c->n; j++) c->G[i][j] = c->H[j - c->m][i];
+    }
+    
+    return EXITO;
+}
+
+/**
+ * @brief Genera la matriz de paridad H a partir de G en forma estándar.
+ * 
+ * Si G = [I|A], entonces H = [A^T|I]
+ * 
+ * @param c Puntero al código con G ya definida
+ * @return EXITO o FALLO
+ */
+int G2H_estandar(codigo* c) 
+{
+    if (!c || !c->G || c->n <= 0 || c->m <= 0) return FALLO;
+    
+    for (int i = 0; i < c->m; i++) 
+    {
+        for (int j = 0; j < c->m; j++) 
+        {
+            if ((i == j && c->G[i][j] != __1) || (i != j && c->G[i][j] != __0)) 
+            {
+                if (!normalizarG(c)) return FALLO;
+                break;
+            }
+        }
+    }
+    
+    // Liberar H si existe
+    if (c->H) 
+    {
+        int n_menos_k = c->n - c->m;
+        for (int i = 0; i < n_menos_k; i++) free(c->H[i]);
+        free(c->H);
+    }
+    
+    int n_menos_k = c->n - c->m;
+    
+    c->H = (bit_t**)malloc(n_menos_k * sizeof(bit_t*));
+    if (!c->H) return FALLO;
+    
+    for (int i = 0; i < n_menos_k; i++) 
+    {
+        c->H[i] = (bit_t*)malloc(c->n * sizeof(bit_t));
+        if (!c->H[i]) 
+        {
+            for (int j = 0; j < i; j++) free(c->H[j]);
+            free(c->H);
+            c->H = NULL;
+            return FALLO;
+        }
+        
+        for (int j = 0; j < c->m; j++) c->H[i][j] = c->G[j][c->m + i];
+        for (int j = c->m; j < c->n; j++)
+            c->H[i][j] = (j - c->m == i) ? __1 : __0;
+    }
+    
+    return EXITO;
+}
+
+/**
+ * @brief Calcula el parámetro s (número de bits de información).
+ * 
+ * @param c Puntero al código
+ * @return EXITO o FALLO
+ */
+int calcularS(codigo* c) 
+{
+    if (!c) return FALLO;
+    c->s = c->m;
+    return EXITO;
+}
+
+/**
+ * @brief Calcula el parámetro t (número de errores corregibles).
+ * 
+ * t = ⌊(d-1)/2⌋ donde d es la distancia mínima del código.
+ * 
+ * @param c Puntero al código
+ * @return EXITO o FALLO
+ */
+int calcularT(codigo* c) 
+{
+    if (!c) return FALLO;
+    if (c->d == 0)
+        if (calcularD(c) == FALLO) return FALLO;
+    c->t = (c->d - 1) / 2;
+    return EXITO;
+}
+
+/**
+ * @brief Calcula los parámetros n y m del código.
+ * 
+ * n es la longitud de las palabras del código.
+ * m es la dimensión del espacio de mensajes.
+ * 
+ * @param c Puntero al código
+ * @return EXITO o FALLO
+ */
+int calcularNyM(codigo* c) 
+{
+    if (!c || !c->G) return FALLO;
+    
+    int filas = 0;
+    while (c->G[filas]) filas++;
+    
+    int columnas = 0;
+    if (filas > 0)
+        while (c->G[0][columnas] == __0 || c->G[0][columnas] == __1) columnas++;
+    
+    if (filas == 0 || columnas == 0) return FALLO;
+    
+    c->m = filas;
+    c->n = columnas;
+    
+    return EXITO;
+}
+
+/**
+ * @brief Calcula la distancia mínima del código.
+ * 
+ * La distancia mínima es el peso mínimo de cualquier palabra no nula del código.
+ * 
+ * @param c Puntero al código
+ * @return EXITO o FALLO
+ */
+int calcularD(codigo* c) 
+{
+    if (!c || !c->G || c->m <= 0 || c->n <= 0) return FALLO;
+    
+    int minPeso = c->n + 1;
+    
+    for (int i = 0; i < c->m; i++) 
+    {
+        int pesoFila = 0;
+        for (int j = 0; j < c->n; j++) if (c->G[i][j] == __1) pesoFila++;
+        if (pesoFila > 0 && pesoFila < minPeso) minPeso = pesoFila;
+    }
+    
+    for (int i = 0; i < c->m - 1; i++) 
+    {
+        for (int j = i + 1; j < c->m; j++) 
+        {
+            int pesoSuma = 0;
+            for (int k = 0; k < c->n; k++) 
+            {
+                if ((c->G[i][k] == __1 && c->G[j][k] == __0) || 
+                    (c->G[i][k] == __0 && c->G[j][k] == __1))
+                        pesoSuma++;
+            }
+            if (pesoSuma > 0 && pesoSuma < minPeso) minPeso = pesoSuma;
+        }
+    }
+    
+    c->d = minPeso;
+    return EXITO;
+}
+
+/**
+ * @brief Genera un código a partir de una matriz generadora inicializada.
+ * 
+ * @param b Matriz generadora inicial
+ * @return Código generado
+ */
+codigo generarCodigoInicializado(bit_t** b) 
+{
+    codigo c;
+    c.G = NULL;
+    c.H = NULL;
+    c.s = 0;
+    c.t = 0;
+    c.n = 0;
+    c.m = 0;
+    c.d = 0;
+    
+    if (!b) return c;
+    
+    int filas = 0;
+    while (b[filas] != NULL) filas++;
+    
+    int columnas = 0;
+    if (filas > 0) 
+        while (columnas < 8 && (b[0][columnas] == __0 || b[0][columnas] == __1)) columnas++;
+    
+    if (filas == 0 || columnas == 0) return c;
+    
+    c.G = (bit_t**)malloc(filas * sizeof(bit_t*));
+    if (!c.G) return c;
+    
+    for (int i = 0; i < filas; i++) 
+    {
+        c.G[i] = (bit_t*)malloc(columnas * sizeof(bit_t));
+        if (!c.G[i]) 
+        {
+            for (int j = 0; j < i; j++) free(c.G[j]);
+            free(c.G);
+            c.G = NULL;
+            return c;
+        }
+        
+        for (int j = 0; j < columnas; j++) c.G[i][j] = b[i][j];
+    }
+    
+    c.m = filas;
+    c.n = columnas;
+    
+    int n_menos_k = c.n - c.m;
+    
+    c.H = (bit_t**)malloc(n_menos_k * sizeof(bit_t*));
+    if (c.H) 
+    {
+        for (int i = 0; i < n_menos_k; i++) 
+        {
+            c.H[i] = (bit_t*)malloc(c.n * sizeof(bit_t));
+            if (!c.H[i]) 
+            {
+                for (int j = 0; j < i; j++) free(c.H[j]);
+                free(c.H);
+                c.H = NULL;
+                break;
+            }
+            for (int j = 0; j < c.n; j++) c.H[i][j] = __0;
+        }
+        
+        if (c.H) 
+        {
+            int esSistematica = 1;
+            for (int i = 0; i < c.m; i++) 
+            {
+                for (int j = 0; j < c.m; j++) 
+                {
+                    if ((i == j && c.G[i][j] != __1) || (i != j && c.G[i][j] != __0)) 
+                    {
+                        esSistematica = 0;
+                        break;
+                    }
+                }
+                if (!esSistematica) break;
+            }
+            
+            if (esSistematica) {
+                for (int i = 0; i < c.m; i++) 
+                    for (int j = 0; j < n_menos_k; j++) c.H[j][i] = c.G[i][c.m + j];
+                
+                for (int i = 0; i < n_menos_k; i++) c.H[i][c.m + i] = __1;
+            } else 
+            {
+                srand(time(NULL));
+                for (int i = 0; i < n_menos_k; i++) 
+                    for (int j = 0; j < c.n; j++) c.H[i][j] = (rand() % 2) ? __1 : __0;
+                
+                for (int iter = 0; iter < 10; iter++) 
+                {
+                    for (int i = 0; i < c.m; i++) 
+                    {
+                        for (int j = 0; j < n_menos_k; j++) 
+                        {
+                            int producto = 0;
+                            for (int k = 0; k < c.n; k++) 
+                            {
+                                if (c.G[i][k] == __1 && c.H[j][k] == __1)
+                                    producto = producto == 1 ? 0 : 1;
+                            }
+                            if (producto == 1) c.H[j][i] = c.H[j][i] == __1 ? __0 : __1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    calcularS(&c);
+    calcularD(&c);
+    calcularT(&c);
+    
+    return c;
+}
+/**
+ * @brief Genera un código de Hamming de parámetro r.
+ * 
+ * Un código de Hamming tiene n = 2^r - 1, k = 2^r - r - 1, d = 3.
+ * 
+ * @param r Parámetro del código de Hamming
+ * @return Código de Hamming generado
+ */
+codigo generarHamming(int r) 
+{
+    codigo c;
+    c.G = NULL;
+    c.H = NULL;
+    c.s = 0;
+    c.t = 0;
+    c.n = 0;
+    c.m = 0;
+    c.d = 0;
+    
+    if (r <= 0) return c;
+    
+    int n = (1 << r) - 1;
+    int k = n - r;
+    
+    c.H = (bit_t**)malloc(r * sizeof(bit_t*));
+    if (!c.H) return c;
+    
+    for (int i = 0; i < r; i++) 
+    {
+        c.H[i] = (bit_t*)malloc(n * sizeof(bit_t));
+        if (!c.H[i]) 
+        {
+            for (int j = 0; j < i; j++) free(c.H[j]);
+            free(c.H);
+            c.H = NULL;
+            return c;
+        }
+        
+        for (int j = 0; j < n; j++) c.H[i][j] = __0;
+    }
+    
+    for (int i = 0; i < r; i++)
+        for (int j = 0; j < n; j++) c.H[i][j] = __0;
+    
+    for (int j = 0; j < n; j++) 
+    {
+        int posicion = j + 1;
+        for (int i = 0; i < r; i++)
+            c.H[i][j] = (posicion & (1 << i)) ? __1 : __0;
+    }
+    
+    c.n = n;
+    c.m = k;
+    
+    c.G = (bit_t**)malloc(k * sizeof(bit_t*));
+    if (!c.G) 
+    {
+        for (int i = 0; i < r; i++) free(c.H[i]);
+        free(c.H);
+        c.H = NULL;
+        return c;
+    }
+    
+    for (int i = 0; i < k; i++) 
+    {
+        c.G[i] = (bit_t*)malloc(n * sizeof(bit_t));
+        if (!c.G[i]) 
+        {
+            for (int j = 0; j < i; j++) free(c.G[j]);
+            free(c.G);
+            c.G = NULL;
+            for (int j = 0; j < r; j++) free(c.H[j]);
+            free(c.H);
+            c.H = NULL;
+            return c;
+        }
+        
+        for (int j = 0; j < n; j++) c.G[i][j] = __0;
+    }
+    
+    int* posicionesParidad = (int*)malloc(r * sizeof(int));
+    int* posicionesInfo = (int*)malloc(k * sizeof(int));
+    
+    int idxParidad = 0;
+    int idxInfo = 0;
+    
+    for (int i = 1; i <= n; i++)
+        if ((i & (i - 1)) == 0)
+            posicionesParidad[idxParidad++] = i - 1;
+        else
+            posicionesInfo[idxInfo++] = i - 1;
+    
+    for (int i = 0; i < k; i++) 
+    {
+        c.G[i][posicionesInfo[i]] = __1;
+        for (int j = 0; j < r; j++) 
+        {
+            int suma = 0;
+            for (int l = 0; l < k; l++) 
+                if (c.G[i][posicionesInfo[l]] == __1 && c.H[j][posicionesInfo[l]] == __1) suma ^= 1;
+            c.G[i][posicionesParidad[j]] = suma ? __1 : __0;
+        }
+    }
+    
+    free(posicionesParidad);
+    free(posicionesInfo);
+    
+    c.d = 3;
+    c.t = 1;
+    c.s = k;
+    
+    return c;
+}
+
+/**
+ * @brief Extrae un bit de un entero corto.
+ * 
+ * @param s Entero corto
+ * @return Bit extraído (__0 o __1)
+ */
+bit_t sacarBit(short int s) 
+{
+    return (s & 1) ? __1 : __0;
+}
+
+/**
+ * @brief Determina si un bit en una posición dada es un bit de información.
+ * 
+ * En un código sistemático [I|A], los primeros k bits son de información.
+ * 
+ * @param b Matriz generadora
+ * @param i Índice del bit de información (0 a m-1)
+ * @param j Posición en la palabra codificada (0 a n-1)
+ * @return TRUE si es bit de información, FALSE en caso contrario
+ */
+boolean bitEsDeInfo(bit_t** b, int i, int j) 
+{
+    if (!b || i < 0 || j < 0) return FALSE;
+    return (j == i) ? TRUE : FALSE;
+}
+
+/**
+ * @brief Cambia el valor de un bit en una palabra.
+ * 
+ * @param p Palabra
+ * @param posicion Posición del bit a cambiar
+ */
+void cambiarBit(palabra p, int posicion) 
+{
+    p[posicion] = p[posicion] == __1 ? __0 : __1;
+}
+
+/**
+ * @brief Lee un hiperplano desde teclado.
+ * 
+ * Solicita al usuario el nombre de las variables (un carácter cada una), el número de ecuaciones (entre 1 y 4),
+ * y los coeficientes de cada variable y el término independiente para cada ecuación.
+ * Comprueba que en cada ecuación haya al menos un coeficiente distinto de cero.
+ * 
+ * @param dimension Número de variables del hiperplano.
+ * @return Estructura hiperplano leída.
+ */
+hiperplano leerHiperplano(int dimension)
+{
+    hiperplano h;
+    h.dimension = dimension;
+    h.nombresVariables = (char*)malloc((dimension + 1) * sizeof(char));
+    
+    printf("Introduce el nombre de las %d variables (un solo carácter cada una, sin espacios):\n", dimension);
+    for (int i = 0; i < dimension; i++) 
+    {
+        printf("Variable %d: ", i + 1);
+        char nombre;
+        do
+            nombre = getchar();
+        while (nombre == '\n' || nombre == ' ');
+        h.nombresVariables[i] = nombre;
+    }
+    h.nombresVariables[dimension] = '\0';
+
+    do 
+    {
+        printf("Introduce el número de ecuaciones (entre 1 y %d): ", dimension - 1);
+        scanf("%d", &h.ecuaciones);
+    } while (h.ecuaciones < 1 || h.ecuaciones > dimension - 1);
+
+    int total = dimension * h.ecuaciones;
+    h.info = (tipoInfoHiperplano*)malloc(total * sizeof(tipoInfoHiperplano));
+
+    for (int eq = 0; eq < h.ecuaciones; eq++) 
+    {
+        printf("Ecuación %d:\n", eq + 1);
+        int algunoNoCero = 0;
+        for (int var = 0; var < dimension; var++) 
+        {
+            printf("  Coeficiente de %c: ", h.nombresVariables[var]);
+            scanf("%f", &h.info[eq * dimension + var]);
+            if (h.info[eq * dimension + var] != 0.0f) algunoNoCero = 1;
+        }
+        if (!algunoNoCero) 
+        {
+            printf("  Error: la ecuación debe tener al menos un coeficiente distinto de cero.\n");
+            eq--;
+        }
+    }
+    while (getchar() != '\n'); // Limpiar buffer
+    return h;
+}
+
+/**
+ * @brief Imprime un hiperplano por pantalla en forma de ecuaciones.
+ * 
+ * Omite los monomios cuyo coeficiente es 0. Muestra cada ecuación en la forma ax+by+cz+...=0.
+ * 
+ * @param h Hiperplano a imprimir.
+ */
+void imprimirHiperplano(hiperplano h) 
+{
+    for (int eq = 0; eq < h.ecuaciones; eq++) 
+    {
+        int primero = 1;
+        for (int var = 0; var < h.dimension; var++) 
+        {
+            float coef = h.info[eq * h.dimension + var];
+            if (coef != 0.0f) 
+            {
+                if (!primero && coef > 0) printf("+");
+                if (coef == 1.0f) printf("%c", h.nombresVariables[var]);
+                else if (coef == -1.0f) printf("-%c", h.nombresVariables[var]);
+                else 
+                {
+                    if (coef == (int)coef)
+                        printf("%d%c", (int)coef, h.nombresVariables[var]);
+                    else
+                        printf("%.2f%c", coef, h.nombresVariables[var]);
+                }
+                primero = 0;
+            }
+        }
+        printf("=0\n");
+    }
+}
+
+/**
+ * @brief Calcula el subespacio ortogonal al definido por el hiperplano.
+ * 
+ * Para un hiperplano definido por ecuaciones Ax=b, el subespacio ortogonal
+ * contiene los vectores ortogonales a las filas de A.
+ * 
+ * @param h Hiperplano original.
+ * @return Hiperplano ortogonal (subespacio ortogonal).
+ */
+hiperplano hiperplanoOrtogonal(hiperplano h, int ecuacion) 
+{
+    hiperplano ort;
+    ort.dimension = h.dimension;
+    ort.ecuaciones = h.dimension - h.ecuaciones;
+    if (ort.ecuaciones <= 0) 
+    {
+        ort.ecuaciones = 0;
+        ort.nombresVariables = NULL;
+        ort.info = NULL;
+        return ort;
+    }
+    
+    ort.nombresVariables = (char*)malloc((h.dimension + 1) * sizeof(char));
+    strcpy(ort.nombresVariables, h.nombresVariables);
+    
+    int totalOrt = ort.ecuaciones * h.dimension;
+    ort.info = (tipoInfoHiperplano*)calloc(totalOrt, sizeof(tipoInfoHiperplano));
+    
+    tipoInfoHiperplano** matriz = (tipoInfoHiperplano**)malloc(h.ecuaciones * sizeof(tipoInfoHiperplano*));
+    for (int i = 0; i < h.ecuaciones; i++) 
+    {
+        matriz[i] = (tipoInfoHiperplano*)malloc(h.dimension * sizeof(tipoInfoHiperplano));
+        for (int j = 0; j < h.dimension; j++)
+            matriz[i][j] = h.info[i * h.dimension + j];
+    }
+    
+    int* filaPivote = (int*)malloc(h.dimension * sizeof(int));
+    int* colPivote = (int*)malloc(h.ecuaciones * sizeof(int));
+    for (int i = 0; i < h.dimension; i++) filaPivote[i] = -1;
+    for (int i = 0; i < h.ecuaciones; i++) colPivote[i] = -1;
+    
+    int fila = 0;
+    for (int col = 0; col < h.dimension && fila < h.ecuaciones; col++) 
+    {
+        int pivotRow = -1;
+        for (int i = fila; i < h.ecuaciones; i++) 
+        {
+            if (matriz[i][col] != 0.0f) 
+            {
+                pivotRow = i;
+                break;
+            }
+        }
+        
+        if (pivotRow != -1) 
+        {
+            if (pivotRow != fila) 
+            {
+                for (int j = 0; j < h.dimension; j++) 
+                {
+                    tipoInfoHiperplano temp = matriz[fila][j];
+                    matriz[fila][j] = matriz[pivotRow][j];
+                    matriz[pivotRow][j] = temp;
+                }
+            }
+            
+            tipoInfoHiperplano pivote = matriz[fila][col];
+            for (int j = 0; j < h.dimension; j++) matriz[fila][j] /= pivote;
+            
+            // Eliminar esta variable de las otras filas
+            for (int i = 0; i < h.ecuaciones; i++) 
+            {
+                if (i != fila && matriz[i][col] != 0.0f) 
+                {
+                    tipoInfoHiperplano factor = matriz[i][col];
+                    for (int j = 0; j < h.dimension; j++)
+                        matriz[i][j] -= factor * matriz[fila][j];
+                }
+            }
+            
+            // Registrar pivote
+            filaPivote[col] = fila;
+            colPivote[fila] = col;
+            fila++;
+        }
+    }
+    
+    int* esLibre = (int*)malloc(h.dimension * sizeof(int));
+    for (int i = 0; i < h.dimension; i++)
+        esLibre[i] = (filaPivote[i] == -1) ? 1 : 0;
+    
+    int ecuacionActual = 0;
+    for (int i = 0; i < h.dimension; i++) 
+    {
+        if (esLibre[i]) 
+        {
+            for (int j = 0; j < h.dimension; j++) 
+            {
+                if (j == i)
+                    ort.info[ecuacionActual * h.dimension + j] = 1.0f;
+                else if (!esLibre[j]) 
+                {
+                    // Variable básica: usar coeficiente de la matriz escalonada
+                    int filaPiv = filaPivote[j];
+                    ort.info[ecuacionActual * h.dimension + j] = -matriz[filaPiv][i];
+                } else
+                    ort.info[ecuacionActual * h.dimension + j] = 0.0f;
+            }
+            ecuacionActual++;
+        }
+    }
+    
+    while (ecuacionActual < ort.ecuaciones)
+    {
+        for (int j = 0; j < h.dimension; j++)
+            ort.info[ecuacionActual * h.dimension + j] = (j == ecuacionActual) ? 1.0f : 0.0f;
+        ecuacionActual++;
+    }
+    
+    for (int i = 0; i < h.ecuaciones; i++) free(matriz[i]);
+    free(matriz);
+    free(filaPivote);
+    free(colPivote);
+    free(esLibre);
+    
+    return ort;
+}
+
+/**
+ * @brief Calcula el hiperplano producto de dos hiperplanos de la misma dimensión.
+ * 
+ * El hiperplano producto se obtiene sumando los coeficientes de las variables y los términos independientes
+ * de la ecuación 0 de ambos hiperplanos. Ambos deben tener la misma dimensión.
+ * 
+ * @param h1 Primer hiperplano.
+ * @param h2 Segundo hiperplano.
+ * @return Hiperplano producto.
+ */
+hiperplano hiperplanoInterseccion(hiperplano h1, hiperplano h2) 
+{
+    if (h1.dimension != h2.dimension) 
+    {
+        printf("Error: los hiperplanos deben tener la misma dimensión.\n");
+        hiperplano vacio = {0, 0, NULL, NULL};
+        return vacio;
+    }
+    
+    hiperplano resultado;
+    resultado.dimension = h1.dimension;
+    
+    int maxEcuaciones = h1.ecuaciones + h2.ecuaciones;
+    
+    tipoInfoHiperplano** matrizTemp = (tipoInfoHiperplano**)malloc(maxEcuaciones * sizeof(tipoInfoHiperplano*));
+    for (int i = 0; i < maxEcuaciones; i++)
+        matrizTemp[i] = (tipoInfoHiperplano*)malloc(resultado.dimension * sizeof(tipoInfoHiperplano));
+    
+    for (int i = 0; i < h1.ecuaciones; i++)
+        for (int j = 0; j < resultado.dimension; j++)
+            matrizTemp[i][j] = h1.info[i * h1.dimension + j];
+    
+    for (int i = 0; i < h2.ecuaciones; i++)
+        for (int j = 0; j < resultado.dimension; j++)
+            matrizTemp[h1.ecuaciones + i][j] = h2.info[i * h2.dimension + j];
+    
+    int filaActual = 0;
+    int* filasIndependientes = (int*)calloc(maxEcuaciones, sizeof(int));
+    
+    for (int col = 0; col < resultado.dimension && filaActual < maxEcuaciones; col++) 
+    {
+        int filaPivote = -1;
+        for (int i = filaActual; i < maxEcuaciones; i++) 
+        {
+            if (matrizTemp[i][col] != 0.0f) 
+            {
+                filaPivote = i;
+                break;
+            }
+        }
+        
+        if (filaPivote != -1) 
+        {
+            filasIndependientes[filaActual] = 1;
+            
+            if (filaPivote != filaActual) 
+            {
+                for (int j = 0; j < resultado.dimension; j++) 
+                {
+                    tipoInfoHiperplano temp = matrizTemp[filaActual][j];
+                    matrizTemp[filaActual][j] = matrizTemp[filaPivote][j];
+                    matrizTemp[filaPivote][j] = temp;
+                }
+            }
+            
+            tipoInfoHiperplano pivote = matrizTemp[filaActual][col];
+            for (int j = 0; j < resultado.dimension; j++)
+                matrizTemp[filaActual][j] /= pivote;
+            
+            for (int i = 0; i < maxEcuaciones; i++) 
+            {
+                if (i != filaActual && matrizTemp[i][col] != 0.0f) 
+                {
+                    tipoInfoHiperplano factor = matrizTemp[i][col];
+                    for (int j = 0; j < resultado.dimension; j++)
+                        matrizTemp[i][j] -= factor * matrizTemp[filaActual][j];
+                }
+            }
+            
+            filaActual++;
+        }
+    }
+    
+    resultado.ecuaciones = 0;
+    for (int i = 0; i < maxEcuaciones; i++) if (filasIndependientes[i]) resultado.ecuaciones++;
+    
+    resultado.nombresVariables = (char*)malloc((resultado.dimension + 1) * sizeof(char));
+    strcpy(resultado.nombresVariables, h1.nombresVariables);
+    resultado.info = (tipoInfoHiperplano*)malloc(resultado.ecuaciones * resultado.dimension * sizeof(tipoInfoHiperplano));
+    
+    int ecuacionResultado = 0;
+    for (int i = 0; i < maxEcuaciones; i++) 
+    {
+        if (filasIndependientes[i]) 
+        {
+            for (int j = 0; j < resultado.dimension; j++)
+                resultado.info[ecuacionResultado * resultado.dimension + j] = matrizTemp[i][j];
+            ecuacionResultado++;
+        }
+    }
+    
+    for (int i = 0; i < maxEcuaciones; i++) free(matrizTemp[i]);
+    free(matrizTemp);
+    free(filasIndependientes);
+    
+    return resultado;
 }

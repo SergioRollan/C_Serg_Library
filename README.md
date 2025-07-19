@@ -605,9 +605,164 @@ estimarEsfuerzo();  // Inicia el proceso interactivo de estimación
 
 Esta funcionalidad es especialmente útil para la planificación de proyectos software, estimación de costes y asignación de recursos en el desarrollo de aplicaciones.
 
-## -------------- CAPÍTULO 19: LÍNEAS DE TRABAJO FUTURO --------------
+## -------------- CAPÍTULO 19: CÓDIGOS CORRECTORES DE ERRORES --------------
+
+La biblioteca incluye un módulo completo para la implementación y gestión de códigos correctores de errores, específicamente códigos de Hamming y códigos lineales generales. Estos códigos son fundamentales en la teoría de la información para detectar y corregir errores en la transmisión de datos.
+
+### Estructuras de datos
+
+- **bit_t**: Tipo de dato que representa un bit (**0 o **1)
+- **palabra**: Puntero a un array de bits (bit_t\*)
+- **codigo**: Estructura que contiene:
+  - `G`: Matriz generadora (bit_t\*\*)
+  - `H`: Matriz de paridad (bit_t\*\*)
+  - `n`: Longitud del código
+  - `m`: Dimensión del espacio de mensajes
+  - `s`: Número de bits de información
+  - `t`: Capacidad de corrección
+  - `d`: Distancia mínima
+
+### Funciones principales
+
+- **palabra encriptar(palabra p, codigo c)**: Codifica un mensaje multiplicándolo por la matriz generadora G. Devuelve la palabra codificada.
+
+- **palabra desencriptar(palabra p, codigo c)**: Decodifica una palabra recibida, detecta y corrige errores usando la matriz de paridad H, y extrae los bits de información original.
+
+- **palabra sindrome(palabra p, codigo c)**: Calcula el síndrome de una palabra multiplicándola por la matriz de paridad H transpuesta. El síndrome indica si hay errores y su posición.
+
+- **codigo generarHamming(int r)**: Genera un código de Hamming estándar con parámetro r. El código tendrá n = 2^r - 1, m = 2^r - r - 1, y distancia mínima 3.
+
+- **codigo generarG_estandar(int k, int n)**: Genera una matriz generadora G en forma estándar [I|A] para un código (n,k).
+
+- **void cambiarBit(palabra p, int posicion)**: Cambia el valor de un bit en una posición específica de una palabra.
+
+- **int peso(palabra p)**: Calcula el peso de una palabra (número de bits a 1).
+
+- **void _normalizarG(codigo_ c)**: Normaliza la matriz generadora G a forma estándar [I|A] usando operaciones elementales de filas.
+
+- **int H2G_estandar(codigo\* c)**: Calcula la matriz generadora G a partir de la matriz de paridad H, asumiendo forma estándar.
+
+- **int G2H_estandar(codigo\* c)**: Calcula la matriz de paridad H a partir de la matriz generadora G, asumiendo forma estándar.
+
+- **int calcularS(codigo\* c)**: Calcula el número de bits de información del código.
+
+- **int calcularT(codigo\* c)**: Calcula la capacidad de corrección del código.
+
+- **int calcularNyM(codigo\* c)**: Calcula los parámetros n y m del código.
+
+- **int calcularD(codigo\* c)**: Calcula la distancia mínima del código.
+
+- **codigo generarCodigoInicializado(bit_t** b)\*\*: Genera un código a partir de una matriz de bits dada.
+
+- **bit_t sacarBit(short int s)**: Extrae un bit de un entero corto.
+
+- **boolean bitEsDeInfo(bit_t** b, int i, int j)\*\*: Determina si un bit en la posición (i,j) es un bit de información.
+
+### Ejemplo de uso básico
+
+```c
+// Generar un código Hamming(7,4)
+codigo c = generarHamming(3);
+
+// Mensaje original de 4 bits
+palabra mensaje = (bit_t[]){__1, __0, __1, __0};
+
+// Codificar
+palabra codificado = encriptar(mensaje, c);
+
+// Introducir un error
+cambiarBit(codificado, 2);
+
+// Decodificar y corregir
+palabra decodificado = desencriptar(codificado, c);
+
+// Liberar memoria
+free(codificado);
+free(decodificado);
+for (int i = 0; i < c.m; i++) free(c.G[i]);
+free(c.G);
+for (int i = 0; i < c.n - c.m; i++) free(c.H[i]);
+free(c.H);
+```
+
+### Características técnicas
+
+- **Códigos de Hamming**: Implementación completa de códigos Hamming estándar para cualquier parámetro r.
+- **Detección y corrección**: Capacidad de detectar y corregir errores de 1 bit en códigos de Hamming.
+- **Matrices sistemáticas**: Generación automática de matrices G y H en forma sistemática.
+- **Verificación**: Funciones para verificar la consistencia entre matrices G y H (G\*H^T = 0).
+- **Flexibilidad**: Soporte para códigos lineales generales además de códigos de Hamming.
+
+Esta funcionalidad es esencial para aplicaciones de comunicaciones digitales, almacenamiento de datos y cualquier sistema que requiera transmisión confiable de información.
+
+## -------------- CAPÍTULO 20: HIPERPLANOS --------------
+
+La biblioteca incluye un módulo completo para el manejo de hiperplanos en espacios vectoriales de cualquier dimensión. Un hiperplano es una generalización de planos y rectas a espacios de dimensión arbitraria, representado como un sistema de ecuaciones lineales homogéneas.
+
+### Estructuras de datos
+
+- **hiperplano**: Estructura que representa un hiperplano con:
+  - `dimension`: Número de variables del espacio
+  - `ecuaciones`: Número de ecuaciones que definen el hiperplano
+  - `nombresVariables`: Array de caracteres con los nombres de las variables
+  - `info`: Array con los coeficientes de las ecuaciones (sin términos independientes)
+
+### Funciones principales
+
+- **hiperplano leerHiperplano(int dimension)**: Lee un hiperplano desde teclado, solicitando los nombres de las variables y los coeficientes de cada ecuación. Las ecuaciones se almacenan en forma homogénea (término independiente = 0).
+
+- **void imprimirHiperplano(hiperplano h)**: Imprime el hiperplano en forma de ecuaciones, mostrando cada ecuación como una combinación lineal de variables igualada a cero.
+
+- **hiperplano hiperplanoOrtogonal(hiperplano h, int ecuacion)**: Calcula el subespacio ortogonal al hiperplano dado. Utiliza eliminación gaussiana para encontrar una base del espacio nulo (kernel) de la matriz de coeficientes.
+
+- **hiperplano hiperplanoInterseccion(hiperplano h1, hiperplano h2)**: Calcula la intersección de dos hiperplanos de la misma dimensión. Combina las ecuaciones de ambos hiperplanos y las reduce a un conjunto mínimo de ecuaciones linealmente independientes mediante eliminación gaussiana.
+
+### Ejemplo de uso básico
+
+```c
+// Leer un hiperplano de 3 dimensiones
+hiperplano h1 = leerHiperplano(3);
+
+// Imprimir el hiperplano
+printf("Hiperplano leído:\n");
+imprimirHiperplano(h1);
+
+// Calcular el subespacio ortogonal
+hiperplano ort = hiperplanoOrtogonal(h1, 0);
+printf("Subespacio ortogonal:\n");
+imprimirHiperplano(ort);
+
+// Leer un segundo hiperplano para calcular intersección
+hiperplano h2 = leerHiperplano(3);
+hiperplano interseccion = hiperplanoInterseccion(h1, h2);
+printf("Intersección de hiperplanos:\n");
+imprimirHiperplano(interseccion);
+
+// Liberar memoria
+free(h1.nombresVariables);
+free(h1.info);
+free(h2.nombresVariables);
+free(h2.info);
+free(ort.nombresVariables);
+free(ort.info);
+free(interseccion.nombresVariables);
+free(interseccion.info);
+```
+
+### Características técnicas
+
+- **Ecuaciones homogéneas**: Todas las ecuaciones se representan en forma homogénea (Ax = 0), eliminando la necesidad de manejar términos independientes.
+
+- **Eliminación gaussiana**: Utiliza eliminación gaussiana para calcular bases de subespacios ortogonales y reducir sistemas de ecuaciones a forma escalonada.
+
+- **Validación de dimensiones**: Verifica que los hiperplanos tengan la misma dimensión antes de realizar operaciones de intersección.
+
+- **Gestión de memoria**: Manejo automático de la memoria dinámica para los arrays de coeficientes y nombres de variables.
+
+Esta funcionalidad es fundamental para aplicaciones de geometría computacional, álgebra lineal, optimización y análisis de sistemas de ecuaciones lineales en espacios de dimensión arbitraria.
+
+## -------------- CAPÍTULO 21: LÍNEAS DE TRABAJO FUTURO --------------
 
 - Máquinas de Turing.
 - Autómatas finitos, tanto deterministas como no deterministas.
 - Gramáticas
-- Han quedado definidas, pero sin implementar, las estructuras de datos 'hiperplano' y 'codigo'. En futuras versiones, podrán utilizarse para realizar operaciones geométricas con objetos de cualquier dimensión (pues los vectores se limitan a una y las matrices a dos) y operaciones de aplicación de la teoría de códigos correctores de errores.
