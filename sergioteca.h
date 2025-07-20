@@ -654,7 +654,7 @@ boolean estaVacia(lista);
 
 
 
-// Lista circular doblemente enlazada con saltos
+// lista circular doblemente enlazada con saltos
 void inicializarListaSalto(tipoListaSalto *lst);
 int annadirPpioSalto(tipoListaSalto *lst, int valor);
 int annadirFinSalto(tipoListaSalto *lst, int valor);
@@ -686,7 +686,7 @@ tipoKey* getKeys(tipoDiccionario* dict, int* count);
 
 
 
-// operaciones con arboles
+// operaciones con árboles
 Arbol creaArbol(tipoInfoArbol info);
 void preOrden(Arbol raiz);
 void enOrden(Arbol raiz);
@@ -713,7 +713,6 @@ Arbol especular(Arbol raiz);
 
 
 // operaciones con monticulos
-
 void crearMonticulo(Monticulo *m);
 void heapsort(Monticulo *m);
 void iniciaMonticulo(Monticulo *m);
@@ -734,8 +733,7 @@ int esMonticulo(Monticulo m);
 
 
 
-//operaciones con grafos
-
+// operaciones con grafos
 tipoGrafo* creaGrafo();
 void verGrafo(tipoGrafo *g);
 void iniciarGrafo(tipoGrafo *g);
@@ -766,7 +764,7 @@ void construirMonticuloDeAristas(tipoGrafo *grafo, Monticulo *m);
 
 
 
-//operaciones con strings
+// operaciones con strings
 string todoMayusculas(string);
 string todoMinusculas(string);
 int meterLetraEnCadena(string*, char);
@@ -780,8 +778,7 @@ int numaparicionessub(string, string);
 
 
 
-//operaciones con matrices y vectores
-
+// operaciones con matrices y vectores
  matriz leerMatrizI(int, int, string);
 tipoMatriz leerMatrizI_O(int, int, string);
 matrizf leerMatrizF(int, int, string);
@@ -838,13 +835,13 @@ vectorf  concatenarVectoresF(vectorf, vectorf, int,int);
 
 
 
-//operaciones con ficheros
+// operaciones con ficheros
 FILE *abrirFpBloq(string, string);
 void cerrarFpBloq(FILE *);
 
 
 
-//operaciones con pilas
+// operaciones con pilas
 int pilaCreaVacia(Pila *);
 boolean pilaVacia(Pila *);
 int pilaInserta(tipoElementoP, Pila *);
@@ -853,7 +850,7 @@ void pilaImprime(Pila);
 
 
 
-//operaciones con colas
+// operaciones con colas
 int colaCreaVacia(Cola *);
 boolean colaVacia(Cola *);
 int colaInserta(tipoElementoC, Cola *);
@@ -862,13 +859,13 @@ void colaImprime(Cola);
 
 
 
-//operaciones con colas de arbol
+// operaciones con colas de arbol
 int colaArbolCreaVacia(ColaArbol *);
 boolean colaArbolVacia(ColaArbol *);
 int colaArbolInserta(tipoElementoCDA, ColaArbol *);
 tipoElementoCDA colaArbolSuprime(ColaArbol *);
 
-// Planificación de procesos en sistemas operativos
+// planificación de procesos en sistemas operativos
 int inicializarProcesoPid(proceso *p, int pid, int turnoLlegada, int tiempoEjecucion);
 ssoo proc_FCFS(ssoo sistema);
 ssoo proc_RR(ssoo sistema);
@@ -879,7 +876,7 @@ ssoo proc_RA(ssoo sistema);
 
 
 
-// Teoría de códigos
+// operaciones de teoría de códigos
 palabra encriptar(palabra,codigo);
 palabra desencriptar(palabra,codigo);
 void cambiarBit(palabra,int);
@@ -899,14 +896,14 @@ bit_t sacarBit(short int);
 boolean bitEsDeInfo(bit_t**,int,int);
 
 
-// Hiperplanos
+// operaicones de hiperplanos
 hiperplano leerHiperplano(int dimension);
 void imprimirHiperplano(hiperplano);
 hiperplano hiperplanoOrtogonal(hiperplano);
 hiperplano hiperplanoInterseccion(hiperplano, hiperplano);
 
 
-// Autómatas
+// operaciones de autómatas
 tipoAutomata* crearAutomata(string simbolos, int numSimbolos, string* estados, int numEstados, string **transiciones, string estadoInicial, string *estadosFinales, int numEstadosFinales);
 void destruirAutomata(tipoAutomata* automata);
 int evaluarCadena(tipoAutomata* automata, string cadena);
@@ -914,7 +911,7 @@ hiperplano hiperplanoOrtogonal(hiperplano);
 hiperplano hiperplanoInterseccion(hiperplano, hiperplano);
 
 
-// Algoritmos de ordenación
+// algoritmos de ordenación
 int bubbleSortI(int *v, int n);
 int bubbleSortF(float *v, int n);
 int selectionSortI(int *v, int n);
@@ -948,7 +945,7 @@ int radixSort(int *v, int n);
 int bucketSort(int *v, int n);
 int pigeonholeSort(int *v, int n);
 
-// Algoritmos de búsqueda
+// algoritmos de búsqueda
 int linearSearch(const int *vector, int n, int valorBuscado);
 int binarySearch(const int *vector, int n, int valorBuscado);
 int ternarySearch(const int *vector, int n, int valorBuscado);
@@ -963,7 +960,7 @@ int jumpSearchF(const float *vector, int n, float valorBuscado);
 int fibonacciSearchF(const float *vector, int n, float valorBuscado);
 
 
-// Cartas y mazos
+// acciones de cartas y mazos
 carta* generarBaraja(void);
 int shuffle(carta *mazo, int numCartas);
 juego* repartir(carta *mazo, jugador *jugadores, int numJugadores, int cartasPorJugador);
@@ -974,7 +971,7 @@ void mostrarMazo(jugador j);
 void mostrarCarta(carta c);
 
 
-// Sets
+// operaciones de sets
 void inicializarListaSet(tipoListaSet *lst);
 int annadirPpioSet(tipoListaSet *lst, int valor);
 int annadirFinSet(tipoListaSet *lst, int valor);
@@ -986,7 +983,7 @@ int vaciarListaSet(tipoListaSet *lst);
 void mostrarListaSet(tipoListaSet *lst);
 
 
-// Diagrama de Gantt
+// operaciones de diagramas de Gantt
 gantt* crearGantt(string nombreProyecto);
 boolean comprobarGanttValido(gantt *g);
 int elaborarCaminoCritico(gantt *g);
@@ -994,7 +991,7 @@ int annadirTarea(gantt *g, int id, string nombre, int duracion, int *dependencia
 void pintarDiagrama(gantt *g);
 
 
-// Estimación de esfuerzo
+// estimación de esfuerzo
 void estimarEsfuerzo(void);
 
 #endif

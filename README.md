@@ -44,14 +44,14 @@ La biblioteca proporciona un conjunto de constantes y tipos de datos que simplif
 
 ### Constantes de control de flujo
 
-- **NUEVA_LINEA**: Constante que representa el carácter de nueva línea (`\n`). Permite cambiar de línea sin recordar la secuencia específica de printf.
-- **RETORNO_DE_CARRO**: Constante que representa el retorno de carro (`\r`). Útil para operaciones de control de cursor.
+- **NUEVA_LINEA**: Constante que representa un print con solo el carácter de nueva línea (`\n`). Permite cambiar de línea sin recordar la secuencia específica de printf.
+- **RETORNO_DE_CARRO**: Constante que representa un print con solo el carácter del retorno de carro (`\r`). Útil para operaciones de control de cursor.
 
 ### Constantes de estado
 
-- **EXITO**: Constante que representa el éxito en la ejecución de una función (valor 1).
-- **FALLO**: Constante que representa el fallo en la ejecución de una función (valor 0).
-- **SUPERFALLO**: Constante que representa un fallo crítico en la ejecución de una función (valor -1).
+- **EXITO**: Constante que representa el éxito en la ejecución de una función (valor 0).
+- **FALLO**: Constante que representa el fallo en la ejecución de una función (valor -1).
+- **SUPERFALLO**: Constante que representa un fallo crítico en la ejecución de una función (valor -2).
 
 ### Tipos de datos simplificados
 
@@ -66,8 +66,8 @@ La biblioteca proporciona un conjunto de constantes y tipos de datos que simplif
 
 ```c
 // Uso de constantes de control de flujo
-printf("Primera línea" NUEVA_LINEA);
-printf("Segunda línea" NUEVA_LINEA);
+printf("Primera línea"); NUEVA_LINEA;
+printf("Segunda línea"); NUEVA_LINEA;
 
 // Uso de constantes de estado
 int resultado = algunaFuncion();
@@ -93,7 +93,7 @@ La biblioteca incluye un tipo de dato booleano que mejora la legibilidad del có
 
 ### Definición del tipo booleano
 
-- **boolean**: Tipo de dato que representa valores lógicos (equivalente a `int`).
+- **boolean**: Tipo de dato que representa valores lógicos.
 - **TRUE**: Constante que representa el valor verdadero (valor 1).
 - **FALSE**: Constante que representa el valor falso (valor 0).
 
@@ -125,7 +125,7 @@ if (esValido == TRUE && encontrado == FALSE) {
 }
 
 // Comparación de valores booleanos
-boolean resultado = (esPar(5) == FALSE);
+boolean resultado = (esPar(5) == FALSE) ? TRUE : FALSE;
 ```
 
 ---
@@ -146,7 +146,16 @@ La biblioteca incluye un conjunto de funciones utilitarias que proporcionan func
 
 - **int aleatorioBinomial(int n, double p)**: Genera un valor aleatorio según una distribución binomial B(n, p).
 
-- **double aleatorioNormal(double mu, double sigma)**: Genera un valor aleatorio según una distribución normal N(μ, σ²).
+- **double aleatorioNormal(double mu, double sigma)**: Genera un valor aleatorio según una distribución normal N(μ, σ).
+
+### Funciones matemáticas combinatorias
+
+- **long combinaciones(int n, int m)**: Calcula combinaciones sin repetición C(n, m).
+- **long combinacionesConRepeticion(int n, int m)**: Calcula combinaciones con repetición C'(n, m).
+- **long variaciones(int n, int m)**: Calcula variaciones sin repetición V(n, m).
+- **long variacionesConRepeticion(int n, int m)**: Calcula variaciones con repetición V'(n, m).
+- **long permutaciones(int n)**: Calcula permutaciones sin repetición P(n).
+- **long permutacionesConRepeticion(int n, const int\* ms, int k)**: Calcula permutaciones con repetición P(n; m1, m2, ..., mk).
 
 ### Funciones de interacción con el usuario
 
@@ -163,7 +172,7 @@ Estas funciones también sirven como método de sincronización debido a las res
 
 - **int descomponerFactoresPrimos(int n, int\* factores)**: Descompone un número en factores primos y los almacena en el array proporcionado.
 
-- **int descomponerPolinomioRuffini(const int* coef, int grado, int* raices)**: Descompone un polinomio en raíces enteras usando el método de Ruffini.
+- **int descomponerPolinomioRuffini(const int\* coef, int grado, int\* raices)**: Descompone un polinomio en raíces enteras usando el método de Ruffini.
 
 - **int mcd(int a, int b)**: Calcula el máximo común divisor usando el algoritmo de Euclides.
 
@@ -201,6 +210,15 @@ int minimo = mcm(12, 18);  // Resultado: 36
 
 // Distancia en teclado
 float distancia = distanciaTecladoQWERTY('a', 's');  // Resultado: 1.0
+
+// Cálculos combinatorios
+long comb = combinaciones(5, 3);      // C(5,3) = 10
+long var = variaciones(5, 3);         // V(5,3) = 60
+long perm = permutaciones(4);         // P(4) = 24
+
+// Permutaciones con repetición
+int ms[] = {2, 1, 1};  // 2 elementos iguales, 1 diferente, 1 diferente
+long permRep = permutacionesConRepeticion(4, ms, 3);  // P(4;2,1,1) = 12
 ```
 
 ---
@@ -225,7 +243,7 @@ La biblioteca permite leer cualquier tipo de dato básico (`int`, `float`, `doub
 
 ### Funciones de lectura oculta (contraseñas)
 
-La biblioteca también proporciona funciones para leer datos de la entrada estándar **sin mostrar los caracteres tecleados**, ideal para contraseñas o datos sensibles. Se usan igual que las funciones normales, pero con el prefijo `leerPassword`:
+La biblioteca también proporciona funciones para leer datos de la entrada estándar **sin mostrar los caracteres tecleados**, ideal para contraseñas o datos sensibles. Se usan igual que las funciones normales, pero con el prefijo `leerPassword`. En el caso de contraseña string, el último argumento será true para mostrar asteriscos al teclear y false para que no escriba nada ni se mueva el cursor.
 
 #### Sintaxis de uso
 
@@ -233,7 +251,7 @@ La biblioteca también proporciona funciones para leer datos de la entrada está
 - **long**: `long lsecreto = leerPassword(0L, "Introduce un long secreto: ");`
 - **float**: `float fsecreto = leerPassword(0.0f, "Introduce un float secreto: ");`
 - **double**: `double dsecreto = leerPassword(0.0, "Introduce un double secreto: ");`
-- **string**: `string pass = leerPassword(pass, "Introduce tu contraseña: ", 20);`
+- **string**: `string pass = leerPassword(pass, "Introduce tu contraseña: ", 20, TRUE);`
 
 #### Características de la lectura oculta
 
@@ -252,7 +270,7 @@ string nombre = leer(nombre, "Introduce tu nombre: ", 50);
 
 // Lectura oculta para datos sensibles
 int pin = leerPassword(0, "Introduce tu PIN: ");
-string password = leerPassword(password, "Introduce tu contraseña: ", 20);
+string password = leerPassword(password, "Introduce tu contraseña: ", 20, FALSE);
 
 // Verificación de datos leídos
 printf("Hola %s, tienes %d años\n", nombre, edad);
@@ -351,15 +369,6 @@ La biblioteca incluye un conjunto completo de funciones para el manejo y manipul
 
 - **int numaparicionessub(string cadenaParaRecorrer, string cadenaParaBuscar)**: Cuenta el número de veces que aparece una subcadena dentro de otra cadena.
 
-### Funciones matemáticas combinatorias
-
-- **long combinaciones(int n, int m)**: Calcula combinaciones sin repetición C(n, m).
-- **long combinacionesConRepeticion(int n, int m)**: Calcula combinaciones con repetición C'(n, m).
-- **long variaciones(int n, int m)**: Calcula variaciones sin repetición V(n, m).
-- **long variacionesConRepeticion(int n, int m)**: Calcula variaciones con repetición V'(n, m).
-- **long permutaciones(int n)**: Calcula permutaciones sin repetición P(n).
-- **long permutacionesConRepeticion(int n, const int\* ms, int k)**: Calcula permutaciones con repetición P(n; m1, m2, ..., mk).
-
 ### Ejemplo de uso
 
 ```c
@@ -383,20 +392,11 @@ c = siguienteChar(NULL);         // '\0'
 // Búsqueda en strings
 int apariciones = numaparicioneschar("hola mundo", 'o');  // 2
 int subcadenas = numaparicionessub("hola hola mundo", "hola");  // 2
-
-// Cálculos combinatorios
-long comb = combinaciones(5, 3);      // C(5,3) = 10
-long var = variaciones(5, 3);         // V(5,3) = 60
-long perm = permutaciones(4);         // P(4) = 24
-
-// Permutaciones con repetición
-int ms[] = {2, 1, 1};  // 2 elementos iguales, 1 diferente, 1 diferente
-long permRep = permutacionesConRepeticion(4, ms, 3);  // P(4;2,1,1) = 12
 ```
 
 ---
 
-## -------------- CAPÍTULO 7: OPERACIONES CON VECTORES Y MATRICES --------------
+## ---------- CAPÍTULO 7: OPERACIONES CON VECTORES Y MATRICES ----------
 
 La biblioteca proporciona un conjunto completo de funciones para el manejo de vectores y matrices, tanto de enteros como de números reales, simplificando las operaciones matemáticas más comunes en programación científica y de ingeniería.
 
@@ -491,7 +491,7 @@ imprimirMatrizF(aleatoria, 3, 3);
 
 ---
 
-## -------------- CAPÍTULO 8: OPERACIONES CON MATRICES OBJETO --------------
+## ------------ CAPÍTULO 8: OPERACIONES CON MATRICES OBJETO ------------
 
 La biblioteca incluye estructuras de datos especializadas para matrices que encapsulan tanto los datos como las dimensiones, eliminando la necesidad de manejar manualmente los tamaños y proporcionando una interfaz más intuitiva y segura.
 
@@ -579,7 +579,7 @@ La biblioteca incluye una implementación completa de la estructura de datos pil
 
 ### Configuración del tipo de datos
 
-El tipo de dato que almacenará la pila se define mediante la macro `TIPO_INFO_PILAS`:
+El tipo de dato que almacenará la pila se define mediante la macro `TIPO_INFO_PILAS` pero se utilizará con tipoElementoP:
 
 - **Por defecto**: Si no se define la macro, la pila almacenará enteros (`int`).
 - **Configuración personalizada**: `#define TIPO_INFO_PILAS float` hará que la estructura almacene números reales.
@@ -592,9 +592,9 @@ El tipo de dato que almacenará la pila se define mediante la macro `TIPO_INFO_P
 
 - **boolean pilaVacia(Pila \*pilaParaVerificar)**: Verifica si la pila está vacía. Devuelve `TRUE` si la pila no contiene elementos, `FALSE` en caso contrario.
 
-- **int pilaInserta(tipoElementoDeLaPila valorParaInsertar, Pila \*pilaDondeSeInsertara)**: Inserta un nuevo elemento en la cima de la pila. Devuelve un código de estado indicando el éxito o fracaso de la operación.
+- **int pilaInserta(tipoElementoP valorParaInsertar, Pila \*pilaDondeSeInsertara)**: Inserta un nuevo elemento en la cima de la pila. Devuelve un código de estado indicando el éxito o fracaso de la operación.
 
-- **tipoElementoDeLaPila pilaSuprime(Pila \*pilaDeLaQueSeExtraera)**: Extrae y devuelve el elemento que está en la cima de la pila. Si la pila está vacía, el comportamiento depende de la implementación.
+- **tipoElementoP pilaSuprime(Pila \*pilaDeLaQueSeExtraera)**: Extrae y devuelve el elemento que está en la cima de la pila. Si la pila está vacía, el comportamiento depende de la implementación.
 
 - **void pilaImprime(Pila pilaParaImprimir)**: Imprime todos los elementos de la pila en la consola, mostrando su estructura LIFO.
 
@@ -630,9 +630,9 @@ printf("Contenido de la pila:\n");
 pilaImprime(miPila);
 
 // Extraer elementos (LIFO: 30, 20, 10)
-int elemento1 = pilaSuprime(&miPila);  // 30
-int elemento2 = pilaSuprime(&miPila);  // 20
-int elemento3 = pilaSuprime(&miPila);  // 10
+tipoElementoP elemento1 = pilaSuprime(&miPila);  // 30
+tipoElementoP elemento2 = pilaSuprime(&miPila);  // 20
+tipoElementoP elemento3 = pilaSuprime(&miPila);  // 10
 
 printf("Elementos extraídos: %d, %d, %d\n", elemento1, elemento2, elemento3);
 
@@ -654,7 +654,7 @@ La biblioteca incluye una implementación completa de la estructura de datos col
 
 ### Configuración del tipo de datos
 
-El tipo de dato que almacenará la cola se define mediante la macro `TIPO_INFO_COLAS`:
+El tipo de dato que almacenará la cola se define mediante la macro `TIPO_INFO_COLAS` pero se utilizará con tipoElementoC:
 
 - **Por defecto**: Si no se define la macro, la cola almacenará enteros (`int`).
 - **Configuración personalizada**: `#define TIPO_INFO_COLAS float` hará que la estructura almacene números reales.
@@ -667,9 +667,9 @@ El tipo de dato que almacenará la cola se define mediante la macro `TIPO_INFO_C
 
 - **boolean colaVacia(Cola \*colaParaVerificar)**: Verifica si la cola está vacía. Devuelve `TRUE` si la cola no contiene elementos, `FALSE` en caso contrario.
 
-- **int colaInserta(tipoElementoDeLaCola valorParaInsertar, Cola \*colaDondeSeInsertara)**: Inserta un nuevo elemento al final de la cola. Devuelve un código de estado indicando el éxito o fracaso de la operación.
+- **int colaInserta(tipoElementoC valorParaInsertar, Cola \*colaDondeSeInsertara)**: Inserta un nuevo elemento al final de la cola. Devuelve un código de estado indicando el éxito o fracaso de la operación.
 
-- **tipoElementoDeLaCola colaSuprime(Cola \*colaDeLaQueSeExtraera)**: Extrae y devuelve el elemento que está al frente de la cola. Si la cola está vacía, el comportamiento depende de la implementación.
+- **tipoElementoC colaSuprime(Cola \*colaDeLaQueSeExtraera)**: Extrae y devuelve el elemento que está al frente de la cola. Si la cola está vacía, el comportamiento depende de la implementación.
 
 - **void colaImprime(Cola colaParaImprimir)**: Imprime todos los elementos de la cola en la consola, mostrando su estructura FIFO.
 
@@ -705,9 +705,9 @@ printf("Contenido de la cola:\n");
 colaImprime(miCola);
 
 // Extraer elementos (FIFO: 10, 20, 30)
-int elemento1 = colaSuprime(&miCola);  // 10
-int elemento2 = colaSuprime(&miCola);  // 20
-int elemento3 = colaSuprime(&miCola);  // 30
+tipoElementoC elemento1 = colaSuprime(&miCola);  // 10
+tipoElementoC elemento2 = colaSuprime(&miCola);  // 20
+tipoElementoC elemento3 = colaSuprime(&miCola);  // 30
 
 printf("Elementos extraídos: %d, %d, %d\n", elemento1, elemento2, elemento3);
 
@@ -719,7 +719,7 @@ if (colaVacia(&miCola) == TRUE) {
 
 ---
 
-## -------------- CAPÍTULO 11: LISTAS ENLAZADAS CON ORIENTACIÓN A OBJETOS --------------
+## --- CAPÍTULO 11: LISTAS ENLAZADAS CON ORIENTACIÓN A OBJETOS ---
 
 La biblioteca incluye implementaciones avanzadas de listas enlazadas que siguen paradigmas de programación orientada a objetos, proporcionando estructuras de datos flexibles y eficientes para diferentes necesidades.
 
@@ -967,7 +967,7 @@ amplitud(&grafo, 0);
 
 ---
 
-## -------------- CAPÍTULO 13: ALGORITMOS DE PLANIFICACIÓN DE PROCESOS --------------
+## ------- CAPÍTULO 13: ALGORITMOS DE PLANIFICACIÓN DE PROCESOS -------
 
 En este capítulo se describen los principales algoritmos de planificación de procesos utilizados en sistemas operativos para gestionar la ejecución de tareas. Estos algoritmos determinan el orden en que los procesos acceden a la CPU, optimizando criterios como el tiempo de espera, el tiempo de respuesta o el uso de recursos. A continuación se explican los más relevantes:
 
@@ -993,20 +993,11 @@ En este capítulo se describen los principales algoritmos de planificación de p
   - Si no termina en ese tiempo, pasa al final de la cola.
   - Es justo y adecuado para sistemas interactivos, pero la elección del quantum es crítica.
 
-- **Prioridades:**
-
-  - Cada proceso tiene una prioridad; se atienden primero los de mayor prioridad.
-  - Puede ser con o sin desalojo.
-  - Riesgo de inanición para procesos de baja prioridad.
-
-- **Multinivel y Multinivel con retroalimentación:**
+- **Multinivel con retroalimentación:**
 
   - Existen varias colas con diferentes prioridades o algoritmos.
   - Los procesos pueden cambiar de cola según su comportamiento (retroalimentación).
   - Permite adaptar el sistema a diferentes tipos de procesos (interactivos, por lotes, etc.).
-
-- **Planificación por lotes, planificación en tiempo real, planificación garantizada, etc.:**
-  - Existen otros algoritmos adaptados a necesidades específicas, como sistemas en tiempo real o sistemas con garantías de servicio.
 
 Cada algoritmo tiene ventajas e inconvenientes, y la elección depende del contexto y los objetivos del sistema.
 
@@ -1049,7 +1040,7 @@ En este capítulo se describen los principales algoritmos de búsqueda implement
   - Solo para vectores ordenados.
   - Eficiencia O(log n), útil en ciertos contextos donde el acceso a memoria es costoso.
 
-Todas las funciones de búsqueda de la biblioteca devuelven la posición del elemento encontrado o -1 si no está o si ocurre algún fallo de programación defensiva (por ejemplo, vector no ordenado cuando es necesario).
+Todas las funciones de búsqueda de la biblioteca devuelven la posición del elemento encontrado o FALLO o SUPERFALLO si no está o si ocurre algún fallo de programación defensiva (por ejemplo, vector no ordenado cuando es necesario o recibir valores nulos).
 
 ### Tabla de eficiencia de los algoritmos de búsqueda
 
@@ -1336,7 +1327,7 @@ estimarEsfuerzo();  // Inicia el proceso interactivo de estimación
 
 Esta funcionalidad es especialmente útil para la planificación de proyectos software, estimación de costes y asignación de recursos en el desarrollo de aplicaciones.
 
-## -------------- CAPÍTULO 19: CÓDIGOS CORRECTORES DE ERRORES --------------
+## ------------ CAPÍTULO 19: CÓDIGOS CORRECTORES DE ERRORES -------------
 
 La biblioteca incluye un módulo completo para la implementación y gestión de códigos correctores de errores, específicamente códigos de Hamming y códigos lineales generales. Estos códigos son fundamentales en la teoría de la información para detectar y corregir errores en la transmisión de datos.
 
