@@ -4,13 +4,13 @@ BIBLIOTECA DE FUNCIONES DE C
 
 AUTOR: SERGIO JUAN ROLLÁN MORALEJO
 
-VERSIÓN NO: 2.1
+VERSIÓN NO: 3.0
 
-FECHA DE FINALIZACIÓN: 13-07-2023
+FECHA DE FINALIZACIÓN: 20-07-2023
 
 Objetivo de la biblioteca: reducir lo máximo posible el número de ".h" que se incluyan en todos los proyectos de C del usuario. Se incluirá en los códigos fuente escribiendo al principio del documento '#include "sergioteca.h"'
 
-Importaciones que incluye: <stdio.h>, <stdlib.h>, <stdarg.h>, <string.h>, <unistd.h>, <ctype.h>, <math.h>, <time.h> y <limits.h>.
+Importaciones que incluye: <stdio.h>, <stdlib.h>, <stdarg.h>, <string.h>, <unistd.h>, <ctype.h>, <math.h>, <time.h>, <conio.h> y <limits.h>.
 
 Sus aportaciones a la abstracción, legibilidad, portabilidad y comodidad del lenguaje C son:
 
@@ -34,205 +34,932 @@ Sus aportaciones a la abstracción, legibilidad, portabilidad y comodidad del le
 
 ---
 
-## ---------------- CAPÍTULO 1: CONSTANTES ÚTILES ----------------
+## -------------- CAPÍTULO 1: CONSTANTES ÚTILES --------------
 
-- Para cambiar de línea o realizar un retorno de carro, el programador podrá despreocuparse de la secuencia de la función printf y de sus caracteres especiales y teclear "NUEVA_LINEA;" o "RETORNO_DE_CARRO;"
-- Para reflejar éxito o fallo en la ejecución de una función computacionalmente costosa, el programador podrá utilizar las constantes "EXITO", "FALLO" y "SUPERFALLO".
-- Para operar con cadenas de caracteres, el programador podrá dejar de necesitar el recuerdo de los punteros a char terminados en el carácter nullo y las operaciones de arimética que eso conlleva, utilizando el tipo "string" definido en esta biblioteca, acompañado de las operaciones de <string.h> que ya vienen incluidas, más las implementadas en ella que se mencionarán más adelante.
-- Para declarar un vector o una matriz, podrá usarse "vector v" para un vector de enteros, "vectorf v" para un vector de variables de tipo float, "matriz m" para matrices de enteros y "matrizf m" para matrices de tipo float. También se verá una definición más ténica y útil para cálculos con matrices más adelante.
+La biblioteca proporciona un conjunto de constantes y tipos de datos que simplifican la programación en C, eliminando la necesidad de recordar detalles técnicos específicos del lenguaje y mejorando la legibilidad del código.
+
+### Constantes de control de flujo
+
+- **NUEVA_LINEA**: Constante que representa el carácter de nueva línea (`\n`). Permite cambiar de línea sin recordar la secuencia específica de printf.
+- **RETORNO_DE_CARRO**: Constante que representa el retorno de carro (`\r`). Útil para operaciones de control de cursor.
+
+### Constantes de estado
+
+- **EXITO**: Constante que representa el éxito en la ejecución de una función (valor 1).
+- **FALLO**: Constante que representa el fallo en la ejecución de una función (valor 0).
+- **SUPERFALLO**: Constante que representa un fallo crítico en la ejecución de una función (valor -1).
+
+### Tipos de datos simplificados
+
+- **string**: Tipo de dato que representa una cadena de caracteres (equivalente a `char*`). Elimina la necesidad de recordar los punteros a char terminados en carácter nulo y las operaciones de aritmética de punteros asociadas.
+
+- **vector**: Tipo de dato para vectores de enteros (equivalente a `int*`).
+- **vectorf**: Tipo de dato para vectores de números reales de simple precisión (equivalente a `float*`).
+- **matriz**: Tipo de dato para matrices de enteros (equivalente a `int**`).
+- **matrizf**: Tipo de dato para matrices de números reales de simple precisión (equivalente a `float**`).
+
+### Ejemplo de uso
+
+```c
+// Uso de constantes de control de flujo
+printf("Primera línea" NUEVA_LINEA);
+printf("Segunda línea" NUEVA_LINEA);
+
+// Uso de constantes de estado
+int resultado = algunaFuncion();
+if (resultado == EXITO) {
+    printf("Operación completada con éxito\n");
+} else if (resultado == FALLO) {
+    printf("Error en la operación\n");
+} else if (resultado == SUPERFALLO) {
+    printf("Error crítico en la operación\n");
+}
+
+// Uso de tipos simplificados
+string nombre = "Juan";
+vector numeros = malloc(10 * sizeof(int));
+matriz tabla = malloc(5 * sizeof(int*));
+```
 
 ---
 
-## ------------------ CAPÍTULO 2: TIPO BOOLEANO ------------------
+## -------------- CAPÍTULO 2: TIPO BOOLEANO --------------
 
-- Podrán declararse variables de tipo "boolean", que podrán valer "TRUE" o "FALSE".
-- Aunque TRUE y FALSE son macros que valen 1 y 0 respectivamente, se recomienda realizar comprobaciones con el operador '==' para aumentar la portabilidad. Por ejemplo, si se define una función "boolean funcion1();", con "return TRUE" y "return FALSE" dentro, y se utiliza en una sentencia condicional 'if', que sea en la forma "if(funcion1()==TRUE)", en lugar de solo "if(funcion1)".
+La biblioteca incluye un tipo de dato booleano que mejora la legibilidad del código y proporciona una representación más clara de valores lógicos, eliminando la dependencia de valores numéricos para representar verdadero y falso.
+
+### Definición del tipo booleano
+
+- **boolean**: Tipo de dato que representa valores lógicos (equivalente a `int`).
+- **TRUE**: Constante que representa el valor verdadero (valor 1).
+- **FALSE**: Constante que representa el valor falso (valor 0).
+
+### Características y recomendaciones
+
+- Aunque `TRUE` y `FALSE` son macros que valen 1 y 0 respectivamente, se recomienda realizar comprobaciones con el operador `==` para aumentar la portabilidad del código.
+- Esta práctica evita problemas de compatibilidad entre diferentes compiladores y plataformas.
+
+### Ejemplo de uso
+
+```c
+// Declaración de variables booleanas
+boolean esValido = TRUE;
+boolean encontrado = FALSE;
+
+// Función que devuelve un valor booleano
+boolean esPar(int numero) {
+    return (numero % 2 == 0) ? TRUE : FALSE;
+}
+
+// Uso recomendado con operador ==
+if (esPar(10) == TRUE) {
+    printf("El número es par\n");
+}
+
+// Uso correcto en condiciones
+if (esValido == TRUE && encontrado == FALSE) {
+    printf("Condición válida\n");
+}
+
+// Comparación de valores booleanos
+boolean resultado = (esPar(5) == FALSE);
+```
 
 ---
 
-## ------------- CAPÍTULO 3: FUNCIONES MISCELÁNEAS --------------
+## -------------- CAPÍTULO 3: FUNCIONES MISCELÁNEAS --------------
 
-- La función "aproximar" recibe un float y ofrecerá el número entero más cercano a él. Esto sirve como contraste a la operación por defecto de C para pasar un float a un int, que es el truncado. Declaración: "int aproximar(float numero)". Más información en la documentación de la propia función.
-- La función "aleatorioEntre2" generará un número real aleatorio entre dos dados, con una precisión a escoger. Declaración: "double aleatorioEntre2(double limiteInferior, double limiteSuperior, int cifrasDePrecision)". Si el límite inferior es mayor al superior, simplemente se intercambiarán. Más información en la documentación de la propia función.
-- La función "enteroAleatorioConSigno" generará un número entero aleatorio entre dos dados, pudiendo ambos ser menores que cero (en aleatorioEntre2 también pueden ser menores que cero). Si el límite inferior es mayor al superior, simplemente se intercambiarán. Declaración: "int enteroAleatorioConSigno(int limiteInferior, int limiteSuperior)". Ambos límites estarán incluidos en las posibilidades del resultado. Más información en la documentación de la propia función.
-- La función "aleatorioBinomial" genera un valor aleatorio según una distribución binomial B(n, p). Declaración: "int aleatorioBinomial(int n, double p)".
-- La función "aleatorioNormal" genera un valor aleatorio según una distribución normal N(mu, sigma^2). Declaración: "double aleatorioNormal(double mu, double sigma)".
-- La función "yesOrNo" es una función booleana que realizará una pregunta al usuario y solo admitirá por teclado una 'y' o una 'n' (mayúscula o minúscula). Devuelve "TRUE" si teclea 'y', "FALSE" si tecla una 'n'. Declaración: "boolean yesOrNo(string preguntaAImprimir)". La salida si se invoca "boolean opcion = yesOrNo("¿Estás seguro?");" Será, textualmente, "¿Estás seguro? (Y/N): |", siendo la última barra vertical el cursor de la consola. Más información en la documentación de la propia función.
-- Las funciones "abrirFpBloq" "cerrarFpBloq" se encargan de realizar de forma atómica aperturas y cierres de ficheros de forma bloqueante. Además, por restricciones del propio lenguaje C para abrir ficheros bloqueados, también sirve como método de sincronización. Declaraciones: "FILE *abrirFpBloq(string ruta, string modo)" y "void cerrarFpBloq(FILE *fichero)". Más información en la documentación de la propia función.
-- La función "descomponerFactoresPrimos" descompone un número en factores primos y los devuelve en un array. Declaración: "int descomponerFactoresPrimos(int n, int \*factores)".
-- La función "descomponerPolinomioRuffini" descompone un polinomio en raíces enteras usando Ruffini y las devuelve en un array. Declaración: "int descomponerPolinomioRuffini(const int *coef, int grado, int *raices)".
-- La función "mcd" calcula el máximo común divisor de dos números enteros usando el algoritmo de Euclides. Declaración: "int mcd(int a, int b)".
-- La función "mcm" calcula el mínimo común múltiplo de dos números enteros. Declaración: "int mcm(int a, int b)".
-- La función "mcd_descp" calcula el máximo común divisor usando la descomposición en factores primos. Declaración: "int mcd_descp(int a, int b)".
-- La función "mcm_descp" calcula el mínimo común múltiplo usando la descomposición en factores primos. Declaración: "int mcm_descp(int a, int b)".
-- La función "distanciaTecladoQWERTY" calcula la distancia entre dos letras en el teclado QWERTY, considerando la distancia vertical como 0.5 y la horizontal como 1. Declaración: "float distanciaTecladoQWERTY(char a, char b)".
+La biblioteca incluye un conjunto de funciones utilitarias que proporcionan funcionalidades comunes en programación, desde operaciones matemáticas básicas hasta generación de números aleatorios y manejo de archivos.
+
+### Funciones de aproximación y redondeo
+
+- **int aproximar(float numero)**: Recibe un número de punto flotante y devuelve el entero más cercano a él. Esto contrasta con la operación por defecto de C para convertir float a int, que es el truncado.
+
+### Funciones de generación de números aleatorios
+
+- **double aleatorioEntre2(double limiteInferior, double limiteSuperior, int cifrasDePrecision)**: Genera un número real aleatorio entre dos límites dados, con una precisión especificada. Si el límite inferior es mayor al superior, los intercambia automáticamente.
+
+- **int enteroAleatorioConSigno(int limiteInferior, int limiteSuperior)**: Genera un número entero aleatorio entre dos límites, pudiendo ambos ser negativos. Ambos límites están incluidos en las posibilidades del resultado.
+
+- **int aleatorioBinomial(int n, double p)**: Genera un valor aleatorio según una distribución binomial B(n, p).
+
+- **double aleatorioNormal(double mu, double sigma)**: Genera un valor aleatorio según una distribución normal N(μ, σ²).
+
+### Funciones de interacción con el usuario
+
+- **boolean yesOrNo(string preguntaAImprimir)**: Realiza una pregunta al usuario y solo admite 'y' o 'n' (mayúscula o minúscula). Devuelve `TRUE` si se teclea 'y', `FALSE` si se teclea 'n'. Muestra el prompt: "¿Pregunta? (Y/N): |"
+
+### Funciones de manejo de archivos
+
+- **FILE\* abrirFpBloq(string ruta, string modo)**: Abre un archivo de forma atómica y bloqueante.
+- **void cerrarFpBloq(FILE\* fichero)**: Cierra un archivo de forma atómica y bloqueante.
+
+Estas funciones también sirven como método de sincronización debido a las restricciones del lenguaje C para abrir archivos bloqueados.
+
+### Funciones matemáticas
+
+- **int descomponerFactoresPrimos(int n, int\* factores)**: Descompone un número en factores primos y los almacena en el array proporcionado.
+
+- **int descomponerPolinomioRuffini(const int* coef, int grado, int* raices)**: Descompone un polinomio en raíces enteras usando el método de Ruffini.
+
+- **int mcd(int a, int b)**: Calcula el máximo común divisor usando el algoritmo de Euclides.
+
+- **int mcm(int a, int b)**: Calcula el mínimo común múltiplo de dos números enteros.
+
+- **int mcd_descp(int a, int b)**: Calcula el máximo común divisor usando descomposición en factores primos.
+
+- **int mcm_descp(int a, int b)**: Calcula el mínimo común múltiplo usando descomposición en factores primos.
+
+### Funciones especializadas
+
+- **float distanciaTecladoQWERTY(char a, char b)**: Calcula la distancia entre dos letras en el teclado QWERTY, considerando la distancia vertical como 0.5 y la horizontal como 1.
+
+### Ejemplo de uso
+
+```c
+// Aproximación de números
+int redondeado = aproximar(3.7);  // Resultado: 4
+int redondeado2 = aproximar(3.2); // Resultado: 3
+
+// Generación de números aleatorios
+double aleatorio = aleatorioEntre2(0.0, 1.0, 3);
+int entero = enteroAleatorioConSigno(-10, 10);
+int binomial = aleatorioBinomial(10, 0.5);
+double normal = aleatorioNormal(0.0, 1.0);
+
+// Interacción con usuario
+boolean respuesta = yesOrNo("¿Continuar?");
+
+// Operaciones matemáticas
+int factores[10];
+int numFactores = descomponerFactoresPrimos(24, factores);
+int maximo = mcd(48, 18);  // Resultado: 6
+int minimo = mcm(12, 18);  // Resultado: 36
+
+// Distancia en teclado
+float distancia = distanciaTecladoQWERTY('a', 's');  // Resultado: 1.0
+```
 
 ---
 
 ## -------------- CAPÍTULO 4: LECTURA DE DATOS POR TECLADO --------------
 
-### Lectura normal
+La biblioteca proporciona un sistema completo y simplificado para la lectura de datos desde la entrada estándar, incluyendo tanto lectura normal como lectura oculta para datos sensibles.
 
-- Podrá leerse cualquier tipo de dato entre 'int', 'float', 'double', 'long' y 'string' invocando a la función macro "leer".
-- " int num = leer(num, "Introduce un número entero: ");"
-- " float num = leer(num, "Introduce un número real de simple precisión: ");"
-- "double num = leer(num, "Introduce un número entero largo: ");"
-- " long num = leer(num, "Introduce un número real de doble precisión: ");"
-- "string nom = leer(nom, "Introduce tu nombre: ", 10);", es un caso especial, porque requiere al final el número máximo de caracteres que admitirá la lectura.
+### Funciones de lectura normal
 
-### Lectura oculta (contraseñas)
+La biblioteca permite leer cualquier tipo de dato básico (`int`, `float`, `double`, `long` y `string`) utilizando la función macro `leer`. Esta macro simplifica la entrada de datos eliminando la necesidad de recordar los formatos específicos de `scanf`.
 
-La biblioteca también proporciona funciones para leer datos de la entrada estándar **sin mostrar los caracteres tecleados** (ideal para contraseñas o datos sensibles). Se usan igual que las funciones normales, pero con el prefijo `leerPassword` o el macro genérico `leerPassword`:
+#### Sintaxis de uso
 
-- `int secreto = leerPassword(0, "Introduce un número secreto: ");`
-- `long lsecreto = leerPassword(0L, "Introduce un long secreto: ");`
-- `float fsecreto = leerPassword(0.0f, "Introduce un float secreto: ");`
-- `double dsecreto = leerPassword(0.0, "Introduce un double secreto: ");`
-- `string pass = leerPassword(pass, "Introduce tu contraseña: ", 20);` (requiere el buffer y la longitud máxima, igual que leerString)
+- **int**: `int num = leer(num, "Introduce un número entero: ");`
+- **float**: `float num = leer(num, "Introduce un número real de simple precisión: ");`
+- **double**: `double num = leer(num, "Introduce un número real de doble precisión: ");`
+- **long**: `long num = leer(num, "Introduce un número entero largo: ");`
+- **string**: `string nom = leer(nom, "Introduce tu nombre: ", 10);`
 
-En el caso de strings, mientras se escribe se muestran asteriscos (`*`). Para los tipos numéricos, la entrada permanece completamente oculta.
+**Nota**: Para strings, es necesario especificar el número máximo de caracteres que se admitirán en la lectura.
+
+### Funciones de lectura oculta (contraseñas)
+
+La biblioteca también proporciona funciones para leer datos de la entrada estándar **sin mostrar los caracteres tecleados**, ideal para contraseñas o datos sensibles. Se usan igual que las funciones normales, pero con el prefijo `leerPassword`:
+
+#### Sintaxis de uso
+
+- **int**: `int secreto = leerPassword(0, "Introduce un número secreto: ");`
+- **long**: `long lsecreto = leerPassword(0L, "Introduce un long secreto: ");`
+- **float**: `float fsecreto = leerPassword(0.0f, "Introduce un float secreto: ");`
+- **double**: `double dsecreto = leerPassword(0.0, "Introduce un double secreto: ");`
+- **string**: `string pass = leerPassword(pass, "Introduce tu contraseña: ", 20);`
+
+#### Características de la lectura oculta
+
+- **Strings**: Mientras se escribe, se muestran asteriscos (`*`) en lugar de los caracteres reales.
+- **Tipos numéricos**: La entrada permanece completamente oculta, sin mostrar ningún carácter.
+
+### Ejemplo de uso
+
+```c
+// Lectura normal
+int edad = leer(edad, "Introduce tu edad: ");
+float altura = leer(altura, "Introduce tu altura en metros: ");
+double peso = leer(peso, "Introduce tu peso en kg: ");
+long telefono = leer(telefono, "Introduce tu teléfono: ");
+string nombre = leer(nombre, "Introduce tu nombre: ", 50);
+
+// Lectura oculta para datos sensibles
+int pin = leerPassword(0, "Introduce tu PIN: ");
+string password = leerPassword(password, "Introduce tu contraseña: ", 20);
+
+// Verificación de datos leídos
+printf("Hola %s, tienes %d años\n", nombre, edad);
+printf("Tu altura es %.2f metros y pesas %.1f kg\n", altura, peso);
+```
 
 ---
 
 ## -------------- CAPÍTULO 5: IMPRIMIR DATOS POR CONSOLA --------------
 
-- Podrá imprimirse cualquier tipo de dato entre 'int', 'float', 'double', 'long' y 'string' invocando a la función macro "print".
-- " int num=7; print(num);"
-- "long num=7; print(num);"
-- " float num=7.0; print(num);"
-- "double num=7.0; print(num);"
-- "string s="hola"; print(s);"
-- También existe "println", "printlnln", "printlnlnln" y todo lo mencionado en este capítulo con el prefijo "err" delante, que imprimirá la variable en el búfer de errores.
-- Escribir "errprintlnlnln(num);" siendo 'num' una variable entera, es lo mismo que escribir "fprintf(stderr, "%d\n\n\n", num);"
+La biblioteca proporciona un sistema simplificado para imprimir datos en la consola, eliminando la necesidad de recordar los formatos específicos de `printf` y proporcionando variantes para diferentes tipos de salida.
+
+### Funciones de impresión básica
+
+La biblioteca permite imprimir cualquier tipo de dato básico (`int`, `float`, `double`, `long` y `string`) utilizando la función macro `print`. Esta macro simplifica la salida de datos eliminando la necesidad de recordar los formatos específicos de `printf`.
+
+#### Sintaxis de uso
+
+- **int**: `int num = 7; print(num);`
+- **long**: `long num = 7; print(num);`
+- **float**: `float num = 7.0; print(num);`
+- **double**: `double num = 7.0; print(num);`
+- **string**: `string s = "hola"; print(s);`
+
+### Variantes de impresión
+
+La biblioteca proporciona varias variantes de la función `print` para diferentes necesidades de formato:
+
+- **print**: Imprime el valor sin salto de línea
+- **println**: Imprime el valor seguido de un salto de línea (`\n`)
+- **printlnln**: Imprime el valor seguido de dos saltos de línea (`\n\n`)
+- **printlnlnln**: Imprime el valor seguido de tres saltos de línea (`\n\n\n`)
+
+### Impresión en búfer de errores
+
+Todas las funciones de impresión tienen su equivalente para el búfer de errores (`stderr`), utilizando el prefijo `err`:
+
+- **errprint**: Imprime en el búfer de errores sin salto de línea
+- **errprintln**: Imprime en el búfer de errores con un salto de línea
+- **errprintlnln**: Imprime en el búfer de errores con dos saltos de línea
+- **errprintlnlnln**: Imprime en el búfer de errores con tres saltos de línea
+
+### Ejemplo de uso
+
+```c
+// Variables de ejemplo
+int numero = 42;
+float decimal = 3.14159;
+double precision = 2.718281828;
+long grande = 1234567890L;
+string texto = "Hola mundo";
+
+// Impresión básica
+print(numero);      // Imprime: 42
+print(decimal);     // Imprime: 3.14159
+print(precision);   // Imprime: 2.718281828
+print(grande);      // Imprime: 1234567890
+print(texto);       // Imprime: Hola mundo
+
+// Impresión con saltos de línea
+println(numero);    // Imprime: 42\n
+printlnln(texto);   // Imprime: Hola mundo\n\n
+printlnlnln(decimal); // Imprime: 3.14159\n\n\n
+
+// Impresión en búfer de errores
+errprint("Error: ");           // Imprime en stderr: Error:
+errprintln("Valor inválido");  // Imprime en stderr: Valor inválido\n
+errprintlnlnln(numero);        // Imprime en stderr: 42\n\n\n
+
+// Equivalente a fprintf(stderr, "%d\n\n\n", numero);
+```
 
 ---
 
 ## -------------- CAPÍTULO 6: OPERACIONES ÚTILES CON STRINGS --------------
 
-- La función "todoMayusculas" convierte todos los caracteres de la 'a' a la 'z' que haya en un string a mayúsculas, lo estuvieran ya o no. Declaración: "string todoMayusculas(string cadenaParaConvertir)". Más información en la documentación de la propia función. Lo mismo para la función "todoMinusculas".
-- La función "meterLetraEnCadena" es una operación simple de colocar un carácter al final de un string. Declaración: "int meterLetraEnCadena(string \*cadena, char caracterAlFinal)". Más información en la documentación de la propia función.
-- La función "siguienteChar" constituye un iterador de cadenas de caracteres, útil cuando se quiere evaluar cada letra de un string por separado, por ejemplo, en procesamiento de tramas enviadas por red siguiendo un protocolo en el que el prefijo se divide en campos específicos de un par de caracteres a lo sumo. Se utiliza invocándolo con NULL cuando se quiere iterar. Por ejemplo, haciendo siguienteChar("hola"), obtendremos una 'h'. Después, haciendo siguienteChar(NULL), obtendremos una 'o', y así sucesivamente. Declaración: "char siguienteChar(string)". Más información en la documentación de la propia función.
-- La función "substring" recibe una cadena de caracteres y un límite superior e inferior. Devuelve otro string cortado de forma que "string s = substring("Hola mundo", 3, 8);" valdrá "a mund". Si recibe números negativos o una cadena no válida, devolverá NULL. Declaración: "string substring(string cadenaParaCortar, int caracterComienzo, int caracterFinal)". Más información en la documentación de la propia función.
-- La función "numaparicioneschar" cuenta el número de veces que aparece un carácter en una cadena. Declaración: "int numaparicioneschar(string cadenaParaRecorrer, char caracterParaBuscar)". Más información en la documentación de la propia función.
-- La función "numaparicionessub" busca una cadena dentro de otra cadena. Es análoga a la anterior, pero sustituyendo el char por un segundo string. Declaración: "int numaparicionessub(string cadenaParaRecorrer, string cadenaParaBuscar)". Más información en la documentación de la propia función.
-- La función "combinaciones" calcula combinaciones sin repetición C(n, m). Declaración: "long combinaciones(int n, int m)".
-- La función "combinacionesConRepeticion" calcula combinaciones con repetición C'(n, m). Declaración: "long combinacionesConRepeticion(int n, int m)".
-- La función "variaciones" calcula variaciones sin repetición V(n, m). Declaración: "long variaciones(int n, int m)".
-- La función "variacionesConRepeticion" calcula variaciones con repetición V'(n, m). Declaración: "long variacionesConRepeticion(int n, int m)".
-- La función "permutaciones" calcula permutaciones sin repetición P(n). Declaración: "long permutaciones(int n)".
-- La función "permutacionesConRepeticion" calcula permutaciones con repetición P(n; m1, m2, ..., mk). Declaración: "long permutacionesConRepeticion(int n, const int \*ms, int k)".
+La biblioteca incluye un conjunto completo de funciones para el manejo y manipulación de cadenas de caracteres, así como funciones matemáticas combinatorias que son útiles en el procesamiento de strings.
+
+### Funciones de transformación de strings
+
+- **string todoMayusculas(string cadenaParaConvertir)**: Convierte todos los caracteres de la 'a' a la 'z' que haya en un string a mayúsculas, independientemente de si ya lo estaban o no.
+
+- **string todoMinusculas(string cadenaParaConvertir)**: Convierte todos los caracteres de la 'A' a la 'Z' que haya en un string a minúsculas, independientemente de si ya lo estaban o no.
+
+### Funciones de manipulación de strings
+
+- **int meterLetraEnCadena(string\* cadena, char caracterAlFinal)**: Añade un carácter al final de un string. Modifica la cadena original y devuelve el resultado de la operación.
+
+- **string substring(string cadenaParaCortar, int caracterComienzo, int caracterFinal)**: Extrae una subcadena de una cadena dada, desde la posición `caracterComienzo` hasta `caracterFinal` (exclusivo). Si recibe números negativos o una cadena no válida, devuelve NULL.
+
+### Funciones de iteración y búsqueda
+
+- **char siguienteChar(string)**: Implementa un iterador de cadenas de caracteres. Útil para procesar cada carácter de un string por separado. Se utiliza invocándolo con NULL para continuar la iteración.
+
+- **int numaparicioneschar(string cadenaParaRecorrer, char caracterParaBuscar)**: Cuenta el número de veces que aparece un carácter específico en una cadena.
+
+- **int numaparicionessub(string cadenaParaRecorrer, string cadenaParaBuscar)**: Cuenta el número de veces que aparece una subcadena dentro de otra cadena.
+
+### Funciones matemáticas combinatorias
+
+- **long combinaciones(int n, int m)**: Calcula combinaciones sin repetición C(n, m).
+- **long combinacionesConRepeticion(int n, int m)**: Calcula combinaciones con repetición C'(n, m).
+- **long variaciones(int n, int m)**: Calcula variaciones sin repetición V(n, m).
+- **long variacionesConRepeticion(int n, int m)**: Calcula variaciones con repetición V'(n, m).
+- **long permutaciones(int n)**: Calcula permutaciones sin repetición P(n).
+- **long permutacionesConRepeticion(int n, const int\* ms, int k)**: Calcula permutaciones con repetición P(n; m1, m2, ..., mk).
+
+### Ejemplo de uso
+
+```c
+// Transformación de strings
+string texto = "Hola Mundo";
+string mayusculas = todoMayusculas(texto);  // "HOLA MUNDO"
+string minusculas = todoMinusculas(texto);  // "hola mundo"
+
+// Manipulación de strings
+string cadena = "Hola";
+meterLetraEnCadena(&cadena, '!');  // cadena = "Hola!"
+string sub = substring("Hola mundo", 3, 8);  // "a mun"
+
+// Iteración de caracteres
+char c = siguienteChar("Hola");  // 'H'
+c = siguienteChar(NULL);         // 'o'
+c = siguienteChar(NULL);         // 'l'
+c = siguienteChar(NULL);         // 'a'
+c = siguienteChar(NULL);         // '\0'
+
+// Búsqueda en strings
+int apariciones = numaparicioneschar("hola mundo", 'o');  // 2
+int subcadenas = numaparicionessub("hola hola mundo", "hola");  // 2
+
+// Cálculos combinatorios
+long comb = combinaciones(5, 3);      // C(5,3) = 10
+long var = variaciones(5, 3);         // V(5,3) = 60
+long perm = permutaciones(4);         // P(4) = 24
+
+// Permutaciones con repetición
+int ms[] = {2, 1, 1};  // 2 elementos iguales, 1 diferente, 1 diferente
+long permRep = permutacionesConRepeticion(4, ms, 3);  // P(4;2,1,1) = 12
+```
 
 ---
 
 ## -------------- CAPÍTULO 7: OPERACIONES CON VECTORES Y MATRICES --------------
 
-- Se definen operaciones para los tipo de dato "vector" y "vectorf" mencionados en el capítulo 1 de este manual. Son "leerVectorI/F", "imprimirVectorI/F", "productoEscalarI/F", "productoVectorialI/F" y "concatenarVectoresI/F".
-- Declaraciones: "vector leerVectorI(int numeroElementos, string cadenaParaImprimir)","vectorf leerVectorF(int numeroElementos, string cadenaParaImprimir)", "void imprimirVectorI(vector imprimido, int numeroDeElementosQueTiene)", "void imprimirVectorF(vectorf imprimido, int numeroDeElementosQueTiene)", "int productoEscalarI(vector vector1, vector vector2, int numeroElementosQueTienen)", "float productoEscalarF(vectorf vector1, vectorf vector2, int numeroElementosQueTienen)", "vector productoVectorialI(vector vector1, vector vector2)", "vectorf productoVectorialF(vectorf vector1, vectorf vector2)", "vector concatenarVectoresI(vector vectorIzquierda, vector vectorDerecha, int numElementosPrimero, int numElementosSegundo)", "vectorf concatenarVectoresF(vectorf vectorIzquierda, vectorf vectorDerecha, int numElementosPrimero, int numElementosSegundo)". Más información en las documentaciones de las propias funciones.
-- Se definen operaciones para los tipos de dato "matriz" y "matrizf" mencionados en el capítulo 1 de este manual. Son "leerMatrizI/F", "generarMatrizI/F", "imprimirMatrizI/F", "multiplicar/sumar/restarMatrI/F", "numPorMatrI/F", "determinanteI/F" y "concatenarMatricesEnHorizontal/VerticalI/F".
-- Las declaraciones son iguales a las de vectores, pero con un argumento de tipo 'int' más ya que son dos dimensiones. Las excepciones son la de multiplicar, que recibe "int filasPrimeraMatriz, int columnasPrimeraTambienFilasSegunda, int columnasSegundaMatriz", la de concatenación horizontal, que recibe "int filasPrimeraTambienFilasSegunda, int columnasPrimeraMatriz, int columnasSegundaMatriz", y la concatenación vertical, que recibe "int filasPrimeraMatriz, int filasSegundaMatriz, int columnasPrimeraTambienColumnasSegunda". Son casos en los que siempre las variables agrupadas necesitan ser iguales para poder realizar la correspondiente operación. Por último, se añaden generarMatrizI/F, que reciben "int filas, int columnas, int/float limiteInferior, int/float limiteSuperior", y sirven para crear una matriz de tamaño fijo con información aleatoria entre dos umbrales. En generarMatrizF, además, habrá un último campo al final "int cifrasDePrecision". Más información en las documentaciones de las propias funciones.
+La biblioteca proporciona un conjunto completo de funciones para el manejo de vectores y matrices, tanto de enteros como de números reales, simplificando las operaciones matemáticas más comunes en programación científica y de ingeniería.
+
+### Operaciones con vectores
+
+La biblioteca define operaciones para los tipos de dato `vector` (enteros) y `vectorf` (floats) mencionados en el capítulo 1.
+
+#### Funciones de entrada y salida
+
+- **vector leerVectorI(int numeroElementos, string cadenaParaImprimir)**: Lee un vector de enteros desde teclado.
+- **vectorf leerVectorF(int numeroElementos, string cadenaParaImprimir)**: Lee un vector de floats desde teclado.
+- **void imprimirVectorI(vector imprimido, int numeroDeElementosQueTiene)**: Imprime un vector de enteros.
+- **void imprimirVectorF(vectorf imprimido, int numeroDeElementosQueTiene)**: Imprime un vector de floats.
+
+#### Operaciones matemáticas
+
+- **int productoEscalarI(vector vector1, vector vector2, int numeroElementosQueTienen)**: Calcula el producto escalar de dos vectores de enteros.
+- **float productoEscalarF(vectorf vector1, vectorf vector2, int numeroElementosQueTienen)**: Calcula el producto escalar de dos vectores de floats.
+- **vector productoVectorialI(vector vector1, vector vector2)**: Calcula el producto vectorial de dos vectores de enteros (solo para vectores de 3 dimensiones).
+- **vectorf productoVectorialF(vectorf vector1, vectorf vector2)**: Calcula el producto vectorial de dos vectores de floats (solo para vectores de 3 dimensiones).
+
+#### Operaciones de combinación
+
+- **vector concatenarVectoresI(vector vectorIzquierda, vector vectorDerecha, int numElementosPrimero, int numElementosSegundo)**: Concatena dos vectores de enteros.
+- **vectorf concatenarVectoresF(vectorf vectorIzquierda, vectorf vectorDerecha, int numElementosPrimero, int numElementosSegundo)**: Concatena dos vectores de floats.
+
+### Operaciones con matrices
+
+La biblioteca define operaciones para los tipos de dato `matriz` (enteros) y `matrizf` (floats).
+
+#### Funciones de entrada y salida
+
+- **matriz leerMatrizI(int filas, int columnas, string cadenaParaImprimir)**: Lee una matriz de enteros desde teclado.
+- **matrizf leerMatrizF(int filas, int columnas, string cadenaParaImprimir)**: Lee una matriz de floats desde teclado.
+- **void imprimirMatrizI(matriz imprimida, int filas, int columnas)**: Imprime una matriz de enteros.
+- **void imprimirMatrizF(matrizf imprimida, int filas, int columnas)**: Imprime una matriz de floats.
+
+#### Funciones de generación
+
+- **matriz generarMatrizI(int filas, int columnas, int limiteInferior, int limiteSuperior)**: Genera una matriz de enteros con valores aleatorios.
+- **matrizf generarMatrizF(int filas, int columnas, float limiteInferior, float limiteSuperior, int cifrasDePrecision)**: Genera una matriz de floats con valores aleatorios.
+
+#### Operaciones matemáticas
+
+- **matriz multiplicarMatrI(matriz matriz1, matriz matriz2, int filasPrimeraMatriz, int columnasPrimeraTambienFilasSegunda, int columnasSegundaMatriz)**: Multiplica dos matrices de enteros.
+- **matrizf multiplicarMatrF(matrizf matriz1, matrizf matriz2, int filasPrimeraMatriz, int columnasPrimeraTambienFilasSegunda, int columnasSegundaMatriz)**: Multiplica dos matrices de floats.
+- **matriz sumarMatrI(matriz matriz1, matriz matriz2, int filas, int columnas)**: Suma dos matrices de enteros.
+- **matrizf sumarMatrF(matrizf matriz1, matrizf matriz2, int filas, int columnas)**: Suma dos matrices de floats.
+- **matriz restarMatrI(matriz matriz1, matriz matriz2, int filas, int columnas)**: Resta dos matrices de enteros.
+- **matrizf restarMatrF(matrizf matriz1, matrizf matriz2, int filas, int columnas)**: Resta dos matrices de floats.
+- **matriz numPorMatrI(int escalar, matriz matriz, int filas, int columnas)**: Multiplica una matriz de enteros por un escalar.
+- **matrizf numPorMatrF(float escalar, matrizf matriz, int filas, int columnas)**: Multiplica una matriz de floats por un escalar.
+- **int determinanteI(matriz matriz, int dimension)**: Calcula el determinante de una matriz de enteros.
+- **float determinanteF(matrizf matriz, int dimension)**: Calcula el determinante de una matriz de floats.
+
+#### Operaciones de combinación
+
+- **matriz concatenarMatricesEnHorizontalI(matriz matriz1, matriz matriz2, int filasPrimeraTambienFilasSegunda, int columnasPrimeraMatriz, int columnasSegundaMatriz)**: Concatena dos matrices horizontalmente.
+- **matrizf concatenarMatricesEnHorizontalF(matrizf matriz1, matrizf matriz2, int filasPrimeraTambienFilasSegunda, int columnasPrimeraMatriz, int columnasSegundaMatriz)**: Concatena dos matrices de floats horizontalmente.
+- **matriz concatenarMatricesEnVerticalI(matriz matriz1, matriz matriz2, int filasPrimeraMatriz, int filasSegundaMatriz, int columnasPrimeraTambienColumnasSegunda)**: Concatena dos matrices verticalmente.
+- **matrizf concatenarMatricesEnVerticalF(matrizf matriz1, matrizf matriz2, int filasPrimeraMatriz, int filasSegundaMatriz, int columnasPrimeraTambienColumnasSegunda)**: Concatena dos matrices de floats verticalmente.
+
+### Ejemplo de uso
+
+```c
+// Operaciones con vectores
+vector v1 = leerVectorI(3, "Introduce el primer vector: ");
+vector v2 = leerVectorI(3, "Introduce el segundo vector: ");
+
+int escalar = productoEscalarI(v1, v2, 3);
+vector producto = productoVectorialI(v1, v2);
+vector concatenado = concatenarVectoresI(v1, v2, 3, 3);
+
+imprimirVectorI(v1, 3);
+imprimirVectorI(producto, 3);
+
+// Operaciones con matrices
+matriz m1 = leerMatrizI(2, 2, "Introduce la primera matriz: ");
+matriz m2 = leerMatrizI(2, 2, "Introduce la segunda matriz: ");
+
+matriz suma = sumarMatrI(m1, m2, 2, 2);
+matriz producto_mat = multiplicarMatrI(m1, m2, 2, 2, 2);
+int det = determinanteI(m1, 2);
+
+imprimirMatrizI(suma, 2, 2);
+printf("Determinante: %d\n", det);
+
+// Generación de matrices aleatorias
+matrizf aleatoria = generarMatrizF(3, 3, 0.0, 10.0, 2);
+imprimirMatrizF(aleatoria, 3, 3);
+```
 
 ---
 
 ## -------------- CAPÍTULO 8: OPERACIONES CON MATRICES OBJETO --------------
 
-- Se define una estructura de datos especial llamada 'tipoMatriz', con su análoga 'tipoMatrizf' para números reales, que será muy útil para ayudar al programador a no tener que preocuparse en absoluto por los tamaños, siendo todos ellos manejados de forma subyacente por la API. Esta define todas las funciones comentadas en el capítulo anterior para matrices. Adoptarán los mismos nombres, con el sufijo "\_O" al final. Es decir:
-- Para leer una matriz, "tipoMatriz[/f] leerMatriz[I/F]\_O(int filas, int columnas, string imprimir)"
-- Para generar una matriz con celdas aleatorias, "tipoMatriz[/f] generarMatriz[I/F]\_O(int filas, int columnas, [int/float] limiteInferior, [int/float] limiteSuperior[/, int cifrasDePrecision])"
-- Para imprimir una matriz por pantalla, "void imprimirMatriz[I/F]\_O(tipoMatriz[/f] matrizParaImprimir)"
-- Para multiplicar matrices, "tipoMatriz[/f] multiplicarMatr[I/F]\_O(tipoMatriz[/f] matriz1, tipoMatriz[/f] matriz2)".
-- Para sumar o restar matrices, "tipoMatriz[/f] [sumar/restar]Matr[I/F]\_O(tipoMatriz[/f] matriz1, tipoMatriz[/f] matriz2)".
-- Para multiplicar una matriz por un escalar, "tipoMatriz[/f] numPorMatr[I/F]\_O([int/float] escalar, tipoMatriz[/f] matriz)".
-- Para obtener el determinante de una matriz, "[int/float] determinante[I/F]\_O(tipoMatriz[/f] matriz)".
-- Para concatenar matrices, "tipoMatriz[/f] concatenarMatricesEn[Horizontal/Vertical][I/F]\_O(tipoMatriz[/f] matriz1, tipoMatriz[/f] matriz2)".
-- Más información en las documentaciones de las propias funciones.
+La biblioteca incluye estructuras de datos especializadas para matrices que encapsulan tanto los datos como las dimensiones, eliminando la necesidad de manejar manualmente los tamaños y proporcionando una interfaz más intuitiva y segura.
+
+### Estructuras de datos
+
+- **tipoMatriz**: Estructura que encapsula una matriz de enteros junto con sus dimensiones.
+- **tipoMatrizf**: Estructura que encapsula una matriz de números reales junto con sus dimensiones.
+
+Estas estructuras son especialmente útiles para ayudar al programador a no tener que preocuparse por los tamaños, ya que todos ellos son manejados de forma subyacente por la API.
+
+### Funciones de entrada y salida
+
+- **tipoMatriz leerMatrizI_O(int filas, int columnas, string imprimir)**: Lee una matriz de enteros desde teclado.
+- **tipoMatrizf leerMatrizF_O(int filas, int columnas, string imprimir)**: Lee una matriz de floats desde teclado.
+- **void imprimirMatrizI_O(tipoMatriz matrizParaImprimir)**: Imprime una matriz de enteros.
+- **void imprimirMatrizF_O(tipoMatrizf matrizParaImprimir)**: Imprime una matriz de floats.
+
+### Funciones de generación
+
+- **tipoMatriz generarMatrizI_O(int filas, int columnas, int limiteInferior, int limiteSuperior)**: Genera una matriz de enteros con valores aleatorios.
+- **tipoMatrizf generarMatrizF_O(int filas, int columnas, float limiteInferior, float limiteSuperior, int cifrasDePrecision)**: Genera una matriz de floats con valores aleatorios.
+
+### Operaciones matemáticas
+
+- **tipoMatriz multiplicarMatrI_O(tipoMatriz matriz1, tipoMatriz matriz2)**: Multiplica dos matrices de enteros.
+- **tipoMatrizf multiplicarMatrF_O(tipoMatrizf matriz1, tipoMatrizf matriz2)**: Multiplica dos matrices de floats.
+- **tipoMatriz sumarMatrI_O(tipoMatriz matriz1, tipoMatriz matriz2)**: Suma dos matrices de enteros.
+- **tipoMatrizf sumarMatrF_O(tipoMatrizf matriz1, tipoMatrizf matriz2)**: Suma dos matrices de floats.
+- **tipoMatriz restarMatrI_O(tipoMatriz matriz1, tipoMatriz matriz2)**: Resta dos matrices de enteros.
+- **tipoMatrizf restarMatrF_O(tipoMatrizf matriz1, tipoMatrizf matriz2)**: Resta dos matrices de floats.
+- **tipoMatriz numPorMatrI_O(int escalar, tipoMatriz matriz)**: Multiplica una matriz de enteros por un escalar.
+- **tipoMatrizf numPorMatrF_O(float escalar, tipoMatrizf matriz)**: Multiplica una matriz de floats por un escalar.
+- **int determinanteI_O(tipoMatriz matriz)**: Calcula el determinante de una matriz de enteros.
+- **float determinanteF_O(tipoMatrizf matriz)**: Calcula el determinante de una matriz de floats.
+
+### Operaciones de combinación
+
+- **tipoMatriz concatenarMatricesEnHorizontalI_O(tipoMatriz matriz1, tipoMatriz matriz2)**: Concatena dos matrices de enteros horizontalmente.
+- **tipoMatrizf concatenarMatricesEnHorizontalF_O(tipoMatrizf matriz1, tipoMatrizf matriz2)**: Concatena dos matrices de floats horizontalmente.
+- **tipoMatriz concatenarMatricesEnVerticalI_O(tipoMatriz matriz1, tipoMatriz matriz2)**: Concatena dos matrices de enteros verticalmente.
+- **tipoMatrizf concatenarMatricesEnVerticalF_O(tipoMatrizf matriz1, tipoMatrizf matriz2)**: Concatena dos matrices de floats verticalmente.
+
+### Ventajas de las matrices objeto
+
+- **Gestión automática de dimensiones**: No es necesario pasar manualmente las dimensiones a cada función.
+- **Mayor seguridad**: Las operaciones verifican automáticamente la compatibilidad de dimensiones.
+- **Código más limpio**: Sintaxis más intuitiva y menos propensa a errores.
+- **Encapsulación**: Los datos y sus metadatos están unidos en una sola estructura.
+
+### Ejemplo de uso
+
+```c
+// Crear matrices objeto
+tipoMatriz m1 = leerMatrizI_O(2, 2, "Introduce la primera matriz: ");
+tipoMatriz m2 = leerMatrizI_O(2, 2, "Introduce la segunda matriz: ");
+
+// Operaciones matemáticas sin especificar dimensiones
+tipoMatriz suma = sumarMatrI_O(m1, m2);
+tipoMatriz producto = multiplicarMatrI_O(m1, m2);
+int det = determinanteI_O(m1);
+
+// Imprimir resultados
+imprimirMatrizI_O(suma);
+imprimirMatrizI_O(producto);
+printf("Determinante: %d\n", det);
+
+// Generar matriz aleatoria
+tipoMatrizf aleatoria = generarMatrizF_O(3, 3, 0.0, 10.0, 2);
+imprimirMatrizF_O(aleatoria);
+
+// Concatenación
+tipoMatriz horizontal = concatenarMatricesEnHorizontalI_O(m1, m2);
+tipoMatriz vertical = concatenarMatricesEnVerticalI_O(m1, m2);
+```
 
 ---
 
 ## -------------- CAPÍTULO 9: OPERACIONES CON PILAS --------------
 
-- Se define una estructura de datos especial llamada 'Pila'. Funcionará como un almacenamiento de datos de tipo LIFO.
-- El tipo de dato que almacenará dependerá de lo que el usuario defina con la macro 'TIPO_INFO_PILAS'. Por ejemplo, "#define TIPO_INFO_PILAS float" hará que la estructura almacene números reales. Si no se realiza esta acción, el tipo por defecto será 'int'. Naturalmente, por restricciones del preprocesador de C, solo se podrá trabajar con un tipo de dato por programa.
-  Ofrecerá las operaciones de inicializado "void pilaCreaVacia(Pila *pilaParaInicializar)", comprobación de tener algo de información "boolean pilaVacia (Pila *pilaParaVerSiTieneAlgo)", insertar un nuevo elemento en la pila "int pilaInserta(tipoElementoDeLaPila valorParaInsertar, Pila *pilaDondeSeInsertara)", sacar el elemento en la cima de la pila "tipoElementoDeLaPila pilaSuprime(Pila *pilaDeLaQueSeExtraera)", e imprimir la pila por consola "void pilaImprime (Pila pilaParaImprimir)".
-- Más información en las documentaciones de las propias funciones.
+La biblioteca incluye una implementación completa de la estructura de datos pila (stack), que funciona como un almacenamiento de datos de tipo LIFO (Last In, First Out - Último en entrar, primero en salir).
+
+### Estructura de datos
+
+- **Pila**: Estructura de datos que implementa el comportamiento LIFO, donde el último elemento insertado es el primero en ser extraído.
+
+### Configuración del tipo de datos
+
+El tipo de dato que almacenará la pila se define mediante la macro `TIPO_INFO_PILAS`:
+
+- **Por defecto**: Si no se define la macro, la pila almacenará enteros (`int`).
+- **Configuración personalizada**: `#define TIPO_INFO_PILAS float` hará que la estructura almacene números reales.
+
+**Nota**: Por restricciones del preprocesador de C, solo se puede trabajar con un tipo de dato por programa.
+
+### Funciones principales
+
+- **void pilaCreaVacia(Pila \*pilaParaInicializar)**: Inicializa una pila vacía, preparándola para su uso.
+
+- **boolean pilaVacia(Pila \*pilaParaVerificar)**: Verifica si la pila está vacía. Devuelve `TRUE` si la pila no contiene elementos, `FALSE` en caso contrario.
+
+- **int pilaInserta(tipoElementoDeLaPila valorParaInsertar, Pila \*pilaDondeSeInsertara)**: Inserta un nuevo elemento en la cima de la pila. Devuelve un código de estado indicando el éxito o fracaso de la operación.
+
+- **tipoElementoDeLaPila pilaSuprime(Pila \*pilaDeLaQueSeExtraera)**: Extrae y devuelve el elemento que está en la cima de la pila. Si la pila está vacía, el comportamiento depende de la implementación.
+
+- **void pilaImprime(Pila pilaParaImprimir)**: Imprime todos los elementos de la pila en la consola, mostrando su estructura LIFO.
+
+### Características de la implementación
+
+- **Gestión automática de memoria**: La pila maneja automáticamente la asignación y liberación de memoria.
+- **Verificación de estado**: Funciones para verificar si la pila está vacía antes de realizar operaciones.
+- **Flexibilidad de tipos**: Permite trabajar con diferentes tipos de datos mediante configuración de macros.
+- **Operaciones estándar**: Implementa todas las operaciones básicas de una pila (push, pop, peek, isEmpty).
+
+### Ejemplo de uso
+
+```c
+// Configurar el tipo de datos (opcional)
+#define TIPO_INFO_PILAS int
+
+// Declarar e inicializar la pila
+Pila miPila;
+pilaCreaVacia(&miPila);
+
+// Verificar si está vacía
+if (pilaVacia(&miPila) == TRUE) {
+    printf("La pila está vacía\n");
+}
+
+// Insertar elementos
+pilaInserta(10, &miPila);
+pilaInserta(20, &miPila);
+pilaInserta(30, &miPila);
+
+// Imprimir la pila
+printf("Contenido de la pila:\n");
+pilaImprime(miPila);
+
+// Extraer elementos (LIFO: 30, 20, 10)
+int elemento1 = pilaSuprime(&miPila);  // 30
+int elemento2 = pilaSuprime(&miPila);  // 20
+int elemento3 = pilaSuprime(&miPila);  // 10
+
+printf("Elementos extraídos: %d, %d, %d\n", elemento1, elemento2, elemento3);
+
+// Verificar estado final
+if (pilaVacia(&miPila) == TRUE) {
+    printf("La pila está vacía nuevamente\n");
+}
+```
 
 ---
 
 ## -------------- CAPÍTULO 10: OPERACIONES CON COLAS --------------
 
-- Se define una estructura de datos especial llamada 'Cola'. Funcionará como un almacenamiento de datos de tipo FIFO.
-- El tipo de dato que almacenará dependerá de lo que el usuario defina con la macro 'TIPO_INFO_COLAS'. Por ejemplo, "#define TIPO_INFO_COLAS float" hará que la estructura almacene números reales. Si no se realiza esta acción, el tipo por defecto será 'int'. Naturalmente, por restricciones del preprocesador de C, solo se podrá trabajar con un tipo de dato por programa.
-  Ofrecerá las operaciones de inicializado "void colaCreaVacia(Cola *colaParaInicializar)", comprobación de tener algo de información "boolean colaVacia (Cola *colaParaVerSiTieneAlgo)", insertar un nuevo elemento en la cola "int colaInserta(tipoElementoDeLaCola valorParaInsertar, Cola *colaDondeSeInsertara)", sacar el elemento al comienzo de la cola "tipoElementoDeLaCola colaSuprime(Cola *colaDeLaQueSeExtraera)", e imprimir la cola por consola "void colaImprime (Cola colaParaImprimir)".
-- Más información en las documentaciones de las propias funciones.
+La biblioteca incluye una implementación completa de la estructura de datos cola (queue), que funciona como un almacenamiento de datos de tipo FIFO (First In, First Out - Primero en entrar, primero en salir).
+
+### Estructura de datos
+
+- **Cola**: Estructura de datos que implementa el comportamiento FIFO, donde el primer elemento insertado es el primero en ser extraído.
+
+### Configuración del tipo de datos
+
+El tipo de dato que almacenará la cola se define mediante la macro `TIPO_INFO_COLAS`:
+
+- **Por defecto**: Si no se define la macro, la cola almacenará enteros (`int`).
+- **Configuración personalizada**: `#define TIPO_INFO_COLAS float` hará que la estructura almacene números reales.
+
+**Nota**: Por restricciones del preprocesador de C, solo se puede trabajar con un tipo de dato por programa.
+
+### Funciones principales
+
+- **void colaCreaVacia(Cola \*colaParaInicializar)**: Inicializa una cola vacía, preparándola para su uso.
+
+- **boolean colaVacia(Cola \*colaParaVerificar)**: Verifica si la cola está vacía. Devuelve `TRUE` si la cola no contiene elementos, `FALSE` en caso contrario.
+
+- **int colaInserta(tipoElementoDeLaCola valorParaInsertar, Cola \*colaDondeSeInsertara)**: Inserta un nuevo elemento al final de la cola. Devuelve un código de estado indicando el éxito o fracaso de la operación.
+
+- **tipoElementoDeLaCola colaSuprime(Cola \*colaDeLaQueSeExtraera)**: Extrae y devuelve el elemento que está al frente de la cola. Si la cola está vacía, el comportamiento depende de la implementación.
+
+- **void colaImprime(Cola colaParaImprimir)**: Imprime todos los elementos de la cola en la consola, mostrando su estructura FIFO.
+
+### Características de la implementación
+
+- **Gestión automática de memoria**: La cola maneja automáticamente la asignación y liberación de memoria.
+- **Verificación de estado**: Funciones para verificar si la cola está vacía antes de realizar operaciones.
+- **Flexibilidad de tipos**: Permite trabajar con diferentes tipos de datos mediante configuración de macros.
+- **Operaciones estándar**: Implementa todas las operaciones básicas de una cola (enqueue, dequeue, peek, isEmpty).
+
+### Ejemplo de uso
+
+```c
+// Configurar el tipo de datos (opcional)
+#define TIPO_INFO_COLAS int
+
+// Declarar e inicializar la cola
+Cola miCola;
+colaCreaVacia(&miCola);
+
+// Verificar si está vacía
+if (colaVacia(&miCola) == TRUE) {
+    printf("La cola está vacía\n");
+}
+
+// Insertar elementos
+colaInserta(10, &miCola);
+colaInserta(20, &miCola);
+colaInserta(30, &miCola);
+
+// Imprimir la cola
+printf("Contenido de la cola:\n");
+colaImprime(miCola);
+
+// Extraer elementos (FIFO: 10, 20, 30)
+int elemento1 = colaSuprime(&miCola);  // 10
+int elemento2 = colaSuprime(&miCola);  // 20
+int elemento3 = colaSuprime(&miCola);  // 30
+
+printf("Elementos extraídos: %d, %d, %d\n", elemento1, elemento2, elemento3);
+
+// Verificar estado final
+if (colaVacia(&miCola) == TRUE) {
+    printf("La cola está vacía nuevamente\n");
+}
+```
 
 ---
 
-## -------------- CAPÍTULO 11: LISTAS ENLAZADAS CON ORIENTACION A OBJETOS --------------
+## -------------- CAPÍTULO 11: LISTAS ENLAZADAS CON ORIENTACIÓN A OBJETOS --------------
 
-- Se define una estructura de datos especial llamada 'tipoLista'. Funcionará como una lista enlazada de cualquier tipo de dato definido con unas operaciones definidas.
-- Para este caso, como es muy común utilizar listas enlazadas con tipos de dato diferentes, se han definido cinco datos. Los tres primeros responden a las macros 'TIPO1_INFO_LISTA', 'TIPO2_INFO_LISTA' y 'TIPO3_INFO_LISTA', que por defecto serán 'int'. El cuarto será siempre 'int', y el último será siempre 'float'.
-- Para declarar una lista, será necesario realizar las operaciones:
-  tipoLista lista;
-  inicializarTipoLista(&lista);
-  colocarTipo[Info[/2/3]/Int/Float]EnLista(&lista);
-- Una vez hecho hecho, se podrá utilizar la lista con los paradigmas de lenguajes orientados a objetos, con sus métodos y atributos.
-- Atributos: 'vacia' (equivalente a cualquier 'isEmpty' de otros lenguajes), 'numElementos' (equivalente al 'length' de otros lenguajes) y 'lst' (la lista de nodos autorreferenciados propiamente dicha).
-- Métodos:
-  'annadirPPio' (ejemplo: "colocarTipoFloatEnLista(&lista); (lista.annadirPPio)(&lista, 9.5);") añadirá un 9.5 al principio de la lista de floats
-  'annadirFin' (ejemplo: "(lista.annadirFin)(&lista, 9.5);") añadirá un 9.5 al final de la lista de floats
-  'annadirEnLugar' (ejemplo: "(lista.annadirEnLugar)(&lista, 2, 9.5);") añadirá un 9.5 en el tercer lugar de la lista de floats, dejando 2 delante (si hay menos, simplemente lo añadirá al final),
-  'mostrarLista' (ejemplo: "(lista.mostrarLista)(&lista)") imprimirá la lista por pantalla
-  'borrarPpio' (ejemplo: "(lista.borrarPpio)(&lista)") borrará el primer miembro de la lista de floats.
-  'borrarFin' (ejemplo: "(lista.borrarFin)(&lista)") borrará el último miembro de la lista de floats.
-  'borrarElValor' (ejemplo: "(lista.borrarElValor)(&lista, 9.5)") borrará el '9.5' de la lista de floats. Si hubiera más de 1, solo borrará el que se encuentre primero de ellos.
-  'modificarElValor' (ejemplo: "(lista.modificarElValor)(&lista, 9.5, 9.3)") sustituirá el primer 9.5 que encuentre por un 9.3 .
-  'vaciarLaLista' (ejemplo: "(lista.vaciarLaLista)(&lista)") borrará todos los elementos de la lista de floats.
+La biblioteca incluye implementaciones avanzadas de listas enlazadas que siguen paradigmas de programación orientada a objetos, proporcionando estructuras de datos flexibles y eficientes para diferentes necesidades.
 
-- Se define una estructura de datos especial llamada 'tipoListaSalto'. Es una lista circular doblemente enlazada de enteros, donde cada nodo, además de los enlaces clásicos (siguiente y anterior), dispone de enlaces de salto a posiciones 2, 4, 8, 16... nodos adelante, hasta menos de la mitad de la lista. Esto permite acceder a cualquier posición de la forma más rápida posible.
-- Para declarar una lista de este tipo:
-  tipoListaSalto lista;
-  inicializarListaSalto(&lista);
-- Una vez inicializada, se puede utilizar con los siguientes métodos (todos accesibles como punteros a función, igual que en la lista orientada a objetos):
-  - 'annadirPpio' (ejemplo: "lista.annadirPpio(&lista, 5);") añade un 5 al principio de la lista.
-  - 'annadirFin' (ejemplo: "lista.annadirFin(&lista, 10);") añade un 10 al final de la lista.
-  - 'annadirEnLugar' (ejemplo: "lista.annadirEnLugar(&lista, 4, 99);") añade un 99 en la posición 4 (usando saltos para llegar más rápido).
-  - 'mostrarLista' (ejemplo: "lista.mostrarLista(&lista)") imprime la lista por pantalla, mostrando también los saltos de cada nodo.
-  - 'borrarPpio' (ejemplo: "lista.borrarPpio(&lista)") borra el primer nodo de la lista.
-  - 'borrarFin' (ejemplo: "lista.borrarFin(&lista)") borra el último nodo de la lista.
-  - 'borrarValor' (ejemplo: "lista.borrarValor(&lista, 99)") borra el primer nodo cuyo valor sea 99.
-  - 'modificarValor' (ejemplo: "lista.modificarValor(&lista, 99, 77)") sustituye el primer 99 que encuentre por un 77.
-  - 'vaciarLista' (ejemplo: "lista.vaciarLista(&lista)") borra todos los elementos de la lista.
-- Cada operación recalcula automáticamente los saltos para mantener la eficiencia.
-- Esta estructura es ideal para listas donde se requiera acceso rápido a posiciones arbitrarias, manteniendo la flexibilidad de una lista doblemente enlazada y la eficiencia de los saltos.
+### tipoLista - Lista orientada a objetos
 
-- Se define una estructura de datos especial llamada 'tipoListaSet'. Es una lista enlazada simple de enteros, sin nodo centinela y que no permite valores repetidos.
-- Para declarar una lista de este tipo:
-  tipoListaSet set;
-  inicializarListaSet(&set);
-- Una vez inicializada, se puede utilizar con los siguientes métodos (todos accesibles como punteros a función, igual que en las otras listas):
-  - 'annadirPpio' (ejemplo: "set.annadirPpio(&set, 5);") añade un 5 al principio de la lista si no existe ya.
-  - 'annadirFin' (ejemplo: "set.annadirFin(&set, 10);") añade un 10 al final de la lista si no existe ya.
-  - 'annadirEnLugar' (ejemplo: "set.annadirEnLugar(&set, 3, 99);") añade un 99 en la posición 3 si no existe ya (si la posición es mayor que el tamaño, lo añade al final).
-  - 'mostrarLista' (ejemplo: "set.mostrarLista(&set)") imprime la lista por pantalla.
-  - 'borrarPpio' (ejemplo: "set.borrarPpio(&set)") borra el primer nodo de la lista.
-  - 'borrarFin' (ejemplo: "set.borrarFin(&set)") borra el último nodo de la lista.
-  - 'borrarValor' (ejemplo: "set.borrarValor(&set, 99)") borra el primer nodo cuyo valor sea 99.
-  - 'vaciarLista' (ejemplo: "set.vaciarLista(&set)") borra todos los elementos de la lista.
-- Cada operación garantiza que no se almacenan valores repetidos en la lista.
-- Esta estructura es ideal para representar conjuntos (sets) de enteros, donde no se permiten duplicados y se requiere una gestión sencilla y eficiente.
+Se define una estructura de datos especial llamada `tipoLista` que funciona como una lista enlazada con paradigmas de programación orientada a objetos.
+
+#### Configuración de tipos de datos
+
+La biblioteca soporta cinco tipos de datos diferentes para las listas:
+
+- **Tres tipos configurables**: Controlados por las macros `TIPO1_INFO_LISTA`, `TIPO2_INFO_LISTA` y `TIPO3_INFO_LISTA` (por defecto `int`).
+- **Dos tipos fijos**: Un tipo `int` y un tipo `float` siempre disponibles.
+
+#### Inicialización
+
+Para declarar y configurar una lista:
+
+```c
+tipoLista lista;
+inicializarTipoLista(&lista);
+colocarTipo[Info/2/3/Int/Float]EnLista(&lista);
+```
+
+#### Atributos de la lista
+
+- **vacia**: Equivalente a `isEmpty` en otros lenguajes, indica si la lista está vacía.
+- **numElementos**: Equivalente a `length`, indica el número de elementos en la lista.
+- **lst**: La lista de nodos autorreferenciados propiamente dicha.
+
+#### Métodos disponibles
+
+- **annadirPPio**: Añade un elemento al principio de la lista.
+- **annadirFin**: Añade un elemento al final de la lista.
+- **annadirEnLugar**: Añade un elemento en una posición específica.
+- **mostrarLista**: Imprime la lista por pantalla.
+- **borrarPpio**: Borra el primer elemento de la lista.
+- **borrarFin**: Borra el último elemento de la lista.
+- **borrarElValor**: Borra el primer elemento con un valor específico.
+- **modificarElValor**: Sustituye el primer elemento con un valor específico por otro.
+- **vaciarLaLista**: Borra todos los elementos de la lista.
+
+### tipoListaSalto - Lista con enlaces de salto
+
+Es una lista circular doblemente enlazada de enteros con enlaces de salto que permiten acceso rápido a posiciones arbitrarias.
+
+#### Características especiales
+
+- **Enlaces de salto**: Cada nodo tiene enlaces adicionales a posiciones 2, 4, 8, 16... nodos adelante.
+- **Acceso rápido**: Permite llegar a cualquier posición de la forma más eficiente posible.
+- **Recálculo automático**: Cada operación recalcula automáticamente los saltos para mantener la eficiencia.
+
+#### Métodos disponibles
+
+- **annadirPpio**: Añade un elemento al principio.
+- **annadirFin**: Añade un elemento al final.
+- **annadirEnLugar**: Añade un elemento en una posición específica usando saltos.
+- **mostrarLista**: Imprime la lista mostrando también los saltos.
+- **borrarPpio**: Borra el primer nodo.
+- **borrarFin**: Borra el último nodo.
+- **borrarValor**: Borra el primer nodo con un valor específico.
+- **modificarValor**: Sustituye el primer elemento con un valor específico.
+- **vaciarLista**: Borra todos los elementos.
+
+### tipoListaSet - Lista sin duplicados
+
+Es una lista enlazada simple de enteros que no permite valores repetidos, ideal para representar conjuntos.
+
+#### Características especiales
+
+- **Sin duplicados**: Cada operación garantiza que no se almacenan valores repetidos.
+- **Sin nodo centinela**: Implementación más eficiente en memoria.
+- **Gestión automática**: Maneja automáticamente la inserción evitando duplicados.
+
+#### Métodos disponibles
+
+- **annadirPpio**: Añade un elemento al principio si no existe ya.
+- **annadirFin**: Añade un elemento al final si no existe ya.
+- **annadirEnLugar**: Añade un elemento en una posición específica si no existe ya.
+- **mostrarLista**: Imprime la lista por pantalla.
+- **borrarPpio**: Borra el primer nodo.
+- **borrarFin**: Borra el último nodo.
+- **borrarValor**: Borra el primer nodo con un valor específico.
+- **vaciarLista**: Borra todos los elementos.
+
+### Ejemplo de uso
+
+```c
+// Lista orientada a objetos
+tipoLista lista;
+inicializarTipoLista(&lista);
+colocarTipoIntEnLista(&lista);
+
+(lista.annadirPPio)(&lista, 10);
+(lista.annadirFin)(&lista, 20);
+(lista.annadirEnLugar)(&lista, 1, 15);
+(lista.mostrarLista)(&lista);
+
+// Lista con saltos
+tipoListaSalto listaSalto;
+inicializarListaSalto(&listaSalto);
+
+listaSalto.annadirPpio(&listaSalto, 5);
+listaSalto.annadirFin(&listaSalto, 10);
+listaSalto.annadirEnLugar(&listaSalto, 1, 7);
+listaSalto.mostrarLista(&listaSalto);
+
+// Lista set (sin duplicados)
+tipoListaSet set;
+inicializarListaSet(&set);
+
+set.annadirPpio(&set, 5);
+set.annadirPpio(&set, 5);  // No se añade (duplicado)
+set.annadirFin(&set, 10);
+set.mostrarLista(&set);
+```
 
 ---
 
 ## -------------- CAPÍTULO 12: OTRAS ESTRUCTURAS DE DATOS --------------
 
-- Se define el tipo de dato 'Arbol', que almacenará una serie de datos en forma de árbol.
-- Su tipo de dato se controlará con la macro TIPO_INFO_ARBOL.
-- Ofrece las operaciones "Arbol creaArbol(tipoInfoArbol datoParaLaRaiz)", "void [pre/en/pos]Orden(Arbol arbolParaRecorrer)", "void amplitudArbol(Arbol arbolParaRecorrer)", "int altura(Arbol nodoParaEvaluar)", "int numNodos[/Hoja/Internos](Arbol arbolParaRecorrer)", "int sustituye(Arbol raiz, tipoInfoArbol x, tipoInfoArbol y)", "int numHijoUnico(Arbol arbolParaEvaluar)", "Arbol buscar[Max/Min](Arbol arbolParaBuscar)", "boolean [similares/equivalentes](Arbol arbol1, Arbol arbol2)" y "Arbol especular(Arbol arbolParaEspecularizar)".
-- Se define el tipo de dato 'Monticulo', que funcionará como un árbol binario ordenado.
-- Su comportamiento será controlado por tres macros. 'NUM_ELEMS_MONT' controlará el número máximo de elementos que podrá tener un montículo (por defecto será 100), y la información será accesible a través de una clave y un valor, dos campos cuyos datos se definirán con las macros TIPO_CLAVE_MONT y TIPO_INFO_MONT (por defecto serán ambos 'int').
-- Ofrece las operaciones '[crear/iniciar/vaciar]Monticulo(Monticulo *m)', 'filtrado[Ascendente/Descendente](Monticulo *m, int valorParaFiltrar)', 'insertar', 'eliminarMinimo', '[decrementar/incrementar]Clave' y la booleana 'esMonticulo'.
-- Por último, se define el tipo de dato 'tipoGrafo', que almacenará un número límite de nodos controlado por la macro 'NUM_ELEMS_GRAFO', que por defecto será 20.
-- Tendrá operaciones 'iniciarGrafo', 'profundidad', 'amplitud', 'ordenTop', 'caminos', 'djikstra', 'costeyTrayectoria', 'todosCaminosMin', 'buscarVertices'.
-- Existirá una función extra "void construirMonticuloDeAristas(tipoGrafo *grafo, Monticulo *m)" que construirá un montículo a partir de un grafo.
+La biblioteca incluye implementaciones de estructuras de datos avanzadas como árboles, montículos y grafos, proporcionando herramientas completas para el manejo de datos jerárquicos y relaciones complejas.
+
+### Árboles binarios
+
+Se define el tipo de dato `Arbol` que almacena datos en forma de árbol binario.
+
+#### Configuración del tipo de datos
+
+El tipo de dato se controla con la macro `TIPO_INFO_ARBOL`, permitiendo personalizar el tipo de información almacenada en cada nodo.
+
+#### Funciones principales
+
+- **Arbol creaArbol(tipoInfoArbol datoParaLaRaiz)**: Crea un nuevo árbol con el dato especificado como raíz.
+
+- **void preOrden(Arbol arbolParaRecorrer)**: Recorre el árbol en preorden (raíz, izquierda, derecha).
+- **void enOrden(Arbol arbolParaRecorrer)**: Recorre el árbol en inorden (izquierda, raíz, derecha).
+- **void posOrden(Arbol arbolParaRecorrer)**: Recorre el árbol en postorden (izquierda, derecha, raíz).
+
+- **void amplitudArbol(Arbol arbolParaRecorrer)**: Recorre el árbol por niveles (amplitud).
+
+- **int altura(Arbol nodoParaEvaluar)**: Calcula la altura del árbol o subárbol.
+
+- **int numNodos(Arbol arbolParaRecorrer)**: Cuenta el número total de nodos.
+- **int numNodosHoja(Arbol arbolParaRecorrer)**: Cuenta el número de nodos hoja.
+- **int numNodosInternos(Arbol arbolParaRecorrer)**: Cuenta el número de nodos internos.
+
+- **int sustituye(Arbol raiz, tipoInfoArbol x, tipoInfoArbol y)**: Sustituye todas las ocurrencias de x por y en el árbol.
+
+- **int numHijoUnico(Arbol arbolParaEvaluar)**: Cuenta el número de nodos con un solo hijo.
+
+- **Arbol buscarMax(Arbol arbolParaBuscar)**: Encuentra el nodo con el valor máximo.
+- **Arbol buscarMin(Arbol arbolParaBuscar)**: Encuentra el nodo con el valor mínimo.
+
+- **boolean similares(Arbol arbol1, Arbol arbol2)**: Verifica si dos árboles tienen la misma estructura.
+- **boolean equivalentes(Arbol arbol1, Arbol arbol2)**: Verifica si dos árboles son idénticos.
+
+- **Arbol especular(Arbol arbolParaEspecularizar)**: Crea el espejo del árbol (intercambia hijos izquierdo y derecho).
+
+### Montículos (Heaps)
+
+Se define el tipo de dato `Monticulo` que funciona como un árbol binario ordenado.
+
+#### Configuración
+
+El comportamiento se controla mediante tres macros:
+
+- **NUM_ELEMS_MONT**: Número máximo de elementos (por defecto 100).
+- **TIPO_CLAVE_MONT**: Tipo de dato para las claves (por defecto `int`).
+- **TIPO_INFO_MONT**: Tipo de dato para los valores (por defecto `int`).
+
+#### Funciones principales
+
+- **void crearMonticulo(Monticulo \*m)**: Crea un nuevo montículo.
+- **void iniciarMonticulo(Monticulo \*m)**: Inicializa un montículo existente.
+- **void vaciarMonticulo(Monticulo \*m)**: Vacía el montículo.
+
+- **void filtradoAscendente(Monticulo \*m, int valorParaFiltrar)**: Aplica filtrado ascendente.
+- **void filtradoDescendente(Monticulo \*m, int valorParaFiltrar)**: Aplica filtrado descendente.
+
+- **void insertar(Monticulo \*m, tipoClaveMont clave, tipoInfoMont info)**: Inserta un nuevo elemento.
+- **void eliminarMinimo(Monticulo \*m)**: Elimina el elemento mínimo.
+
+- **void decrementarClave(Monticulo \*m, int posicion, int nuevaClave)**: Decrementa la clave de un elemento.
+- **void incrementarClave(Monticulo \*m, int posicion, int nuevaClave)**: Incrementa la clave de un elemento.
+
+- **boolean esMonticulo(Monticulo \*m)**: Verifica si la estructura cumple las propiedades de montículo.
+
+### Grafos
+
+Se define el tipo de dato `tipoGrafo` para representar grafos con un número limitado de nodos.
+
+#### Configuración
+
+- **NUM_ELEMS_GRAFO**: Número máximo de nodos (por defecto 20).
+
+#### Funciones principales
+
+- **void iniciarGrafo(tipoGrafo \*g)**: Inicializa un grafo vacío.
+
+- **void profundidad(tipoGrafo \*g, int nodoInicial)**: Realiza recorrido en profundidad (DFS).
+- **void amplitud(tipoGrafo \*g, int nodoInicial)**: Realiza recorrido en amplitud (BFS).
+
+- **void ordenTop(tipoGrafo \*g)**: Calcula el ordenamiento topológico.
+
+- **void caminos(tipoGrafo \*g, int origen, int destino)**: Encuentra caminos entre dos nodos.
+
+- **void djikstra(tipoGrafo \*g, int nodoOrigen)**: Aplica el algoritmo de Dijkstra.
+
+- **void costeyTrayectoria(tipoGrafo \*g, int origen, int destino)**: Calcula el costo y trayectoria entre dos nodos.
+
+- **void todosCaminosMin(tipoGrafo \*g)**: Encuentra todos los caminos mínimos (Floyd-Warshall).
+
+- **void buscarVertices(tipoGrafo \*g, int criterio)**: Busca vértices según un criterio específico.
+
+#### Función especial
+
+- **void construirMonticuloDeAristas(tipoGrafo *grafo, Monticulo *m)**: Construye un montículo a partir de las aristas del grafo, útil para algoritmos como Kruskal.
+
+### Ejemplo de uso
+
+```c
+// Crear y manipular un árbol
+Arbol arbol = creaArbol(10);
+// ... insertar más nodos ...
+preOrden(arbol);
+printf("Altura: %d\n", altura(arbol));
+printf("Nodos: %d\n", numNodos(arbol));
+
+// Trabajar con montículos
+Monticulo monticulo;
+crearMonticulo(&monticulo);
+insertar(&monticulo, 5, 100);
+insertar(&monticulo, 3, 200);
+insertar(&monticulo, 7, 150);
+eliminarMinimo(&monticulo);
+
+// Manejar grafos
+tipoGrafo grafo;
+iniciarGrafo(&grafo);
+// ... añadir nodos y aristas ...
+djikstra(&grafo, 0);
+amplitud(&grafo, 0);
+```
 
 ---
 
@@ -761,8 +1488,75 @@ free(interseccion.info);
 
 Esta funcionalidad es fundamental para aplicaciones de geometría computacional, álgebra lineal, optimización y análisis de sistemas de ecuaciones lineales en espacios de dimensión arbitraria.
 
-## -------------- CAPÍTULO 21: LÍNEAS DE TRABAJO FUTURO --------------
+## -------------- CAPÍTULO 21: AUTÓMATAS FINITOS --------------
 
-- Máquinas de Turing.
-- Autómatas finitos, tanto deterministas como no deterministas.
-- Gramáticas
+La biblioteca incluye un módulo completo para la implementación y gestión de autómatas finitos deterministas y no deterministas. Los autómatas finitos son modelos computacionales fundamentales en la teoría de lenguajes formales y teoría de la computación, utilizados para reconocer patrones y validar cadenas de símbolos.
+
+### Estructuras de datos
+
+- **tipoAutomata**: Estructura que representa un autómata finito con:
+  - `alfabeto`: Array de caracteres que representa los símbolos del alfabeto
+  - `numSimbolos`: Número de símbolos en el alfabeto
+  - `estados`: Array de strings con los nombres de los estados
+  - `numEstados`: Número de estados del autómata
+  - `transiciones`: Matriz de strings que representa la función de transición (estado × símbolo → estado)
+  - `estadoInicial`: String con el nombre del estado inicial
+  - `estadosFinales`: Array de strings con los nombres de los estados finales
+  - `numEstadosFinales`: Número de estados finales
+
+### Funciones principales
+
+- **tipoAutomata* crearAutomata(char* alfabeto, int numSimbolos, string\* estados, int numEstados, string** transiciones, string estadoInicial, string\* estadosFinales, int numEstadosFinales)\*\*: Crea un autómata finito con los parámetros especificados. La matriz de transiciones debe tener dimensiones [numEstados][numSimbolos] y contener los nombres de los estados destino. Para autómatas no deterministas, las transiciones faltantes se representan con NULL o '\0'. Devuelve un puntero al autómata creado o NULL si hay errores.
+
+- **boolean evaluarCadena(tipoAutomata\* automata, string cadena)**: Evalúa una cadena de entrada en el autómata. Procesa la cadena símbolo por símbolo, siguiendo las transiciones del autómata desde el estado inicial. Devuelve TRUE si el autómata termina en un estado final después de procesar toda la cadena, FALSE en caso contrario (incluyendo errores o transiciones faltantes).
+
+- **void destruirAutomata(tipoAutomata\* automata)**: Libera toda la memoria asociada al autómata, incluyendo la matriz de transiciones y sus strings anidados.
+
+### Ejemplo de uso básico
+
+```c
+// Definir alfabeto y estados
+char alfabeto[] = "01";
+string estados[] = {"q0", "q1", "q2"};
+string estadoInicial = "q0";
+string estadosFinales[] = {"q2"};
+
+// Definir matriz de transiciones (estado × símbolo → estado)
+string transiciones[3][2] = {
+    {"q1", "q0"},  // q0 con 0 → q1, q0 con 1 → q0
+    {"q2", "q1"},  // q1 con 0 → q2, q1 con 1 → q1
+    {"q2", "q0"}   // q2 con 0 → q2, q2 con 1 → q0
+};
+
+// Crear punteros para la matriz de transiciones
+string* transicionesPtr[3];
+for (int i = 0; i < 3; i++) {
+    transicionesPtr[i] = transiciones[i];
+}
+
+// Crear el autómata
+tipoAutomata* automata = crearAutomata(alfabeto, 2, estados, 3, transicionesPtr,
+                                       estadoInicial, estadosFinales, 1);
+
+// Evaluar cadenas
+boolean resultado1 = evaluarCadena(automata, "00");  // TRUE (q0→q1→q2)
+boolean resultado2 = evaluarCadena(automata, "01");  // FALSE (q0→q0→q1)
+boolean resultado3 = evaluarCadena(automata, "000"); // TRUE (q0→q1→q2→q2)
+
+// Liberar memoria
+destruirAutomata(automata);
+```
+
+### Características técnicas
+
+- **Autómatas deterministas y no deterministas**: Soporte completo para ambos tipos de autómatas. Los autómatas no deterministas pueden tener transiciones faltantes (NULL o '\0').
+
+- **Validación robusta**: Verificación de parámetros de entrada, consistencia entre dimensiones de matrices y existencia de estados referenciados.
+
+- **Gestión de memoria**: Manejo automático de la memoria dinámica para strings y estructuras anidadas.
+
+- **Evaluación de cadenas**: Procesamiento símbolo por símbolo con búsqueda de transiciones por nombre de estado.
+
+- **Flexibilidad**: Los nombres de estados pueden ser cualquier string, no solo caracteres individuales.
+
+Esta funcionalidad es esencial para aplicaciones de procesamiento de lenguajes, validación de patrones, compiladores, análisis léxico y cualquier sistema que requiera reconocimiento de cadenas según reglas específicas.

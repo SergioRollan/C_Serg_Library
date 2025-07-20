@@ -2,9 +2,9 @@
 /*****************************************************************************************************************/
 /********************************** BIBLIOTECA DE FUNCIONES DE C, CÓDIGO FUENTE **********************************/
 /**********************************     AUTOR: SERGIO JUAN ROLLÁN MORALEJO      **********************************/
-/**********************************              VERSIÓN NO: 1.0                **********************************/
+/**********************************              VERSIÓN NO: 3.0                **********************************/
 /**********************************      FECHA DE PUBLICACIÓN: 03-07-2022       **********************************/
-/**********************************     FECHA DE ACTUALIZACIÓN: 09-07-2025      **********************************/
+/**********************************     FECHA DE ACTUALIZACIÓN: 20-07-2025      **********************************/
 /*****************************************************************************************************************/
 /*****************************************************************************************************************/
 #include "sergioteca.h"
@@ -6468,7 +6468,7 @@ tipoKey* getKeys(tipoDiccionario* dict, int* count)
 /**
  * @brief Inicializa una lista circular doblemente enlazada con saltos.
  * @param lst Puntero a la lista a inicializar.
- */ 
+ */
 void inicializarListaSalto(tipoListaSalto *lst) 
 {
     lst->cabecera = (nodoSalto*)malloc(sizeof(nodoSalto));
@@ -6492,7 +6492,7 @@ void inicializarListaSalto(tipoListaSalto *lst)
 /**
  * @brief Libera todos los saltos de un nodo.
  * @param n Puntero al nodo.
- */ 
+ */
 static void liberarSaltosNodo(nodoSalto *n) 
 {
     if (n->saltos) free(n->saltos);
@@ -6503,7 +6503,7 @@ static void liberarSaltosNodo(nodoSalto *n)
 /**
  * @brief Recalcula los saltos de toda la lista.
  * @param lst Puntero a la lista.
- */ 
+ */
 static void recalcularSaltos(tipoListaSalto *lst) 
 {
     if (lst->numElementos == 0) return;
@@ -6533,7 +6533,7 @@ static void recalcularSaltos(tipoListaSalto *lst)
  * @param lst Puntero a la lista.
  * @param valor Valor a insertar.
  * @return 0 si éxito, -1 si error.
- */ 
+ */
 int annadirPpioSalto(tipoListaSalto *lst, int valor) 
 {
     nodoSalto *nuevo = (nodoSalto*)malloc(sizeof(nodoSalto));
@@ -6556,7 +6556,7 @@ int annadirPpioSalto(tipoListaSalto *lst, int valor)
  * @param lst Puntero a la lista.
  * @param valor Valor a insertar.
  * @return 0 si éxito, -1 si error.
- */ 
+ */
 int annadirFinSalto(tipoListaSalto *lst, int valor) 
 {
     nodoSalto *nuevo = (nodoSalto*)malloc(sizeof(nodoSalto));
@@ -6579,7 +6579,7 @@ int annadirFinSalto(tipoListaSalto *lst, int valor)
  * @param lst Puntero a la lista.
  * @param pos Posición destino (1-indexado).
  * @return Puntero al nodo en la posición pos, o NULL si fuera de rango.
- */ 
+ */
 static nodoSalto* buscarNodoPorSaltos(tipoListaSalto *lst, int pos) 
 {
     if (pos < 1 || pos > lst->numElementos) return NULL;
@@ -6612,7 +6612,7 @@ static nodoSalto* buscarNodoPorSaltos(tipoListaSalto *lst, int pos)
  * @param pos Posición donde insertar (1-indexado).
  * @param valor Valor a insertar.
  * @return 0 si éxito, -1 si error.
- */ 
+ */
 int annadirEnLugarSalto(tipoListaSalto *lst, int pos, int valor) 
 {
     if (pos < 1 || pos > lst->numElementos+1) return -1;
@@ -6639,7 +6639,7 @@ int annadirEnLugarSalto(tipoListaSalto *lst, int pos, int valor)
  * @brief Borra el primer nodo de la lista.
  * @param lst Puntero a la lista.
  * @return 0 si éxito, -1 si error.
- */ 
+ */
 int borrarPpioSalto(tipoListaSalto *lst) 
 {
     if (lst->numElementos == 0) return -1;
@@ -6657,7 +6657,7 @@ int borrarPpioSalto(tipoListaSalto *lst)
  * @brief Borra el último nodo de la lista.
  * @param lst Puntero a la lista.
  * @return 0 si éxito, -1 si error.
- */ 
+ */
 int borrarFinSalto(tipoListaSalto *lst) 
 {
     if (lst->numElementos == 0) return -1;
@@ -6676,7 +6676,7 @@ int borrarFinSalto(tipoListaSalto *lst)
  * @param lst Puntero a la lista.
  * @param valor Valor a borrar.
  * @return 0 si éxito, -1 si no encontrado.
- */ 
+ */
 int borrarValorSalto(tipoListaSalto *lst, int valor) 
 {
     if (lst->numElementos == 0) return -1;
@@ -6703,7 +6703,7 @@ int borrarValorSalto(tipoListaSalto *lst, int valor)
  * @param valorAnt Valor a buscar.
  * @param valorNuevo Valor nuevo.
  * @return 0 si éxito, -1 si no encontrado.
- */ 
+ */
 int modificarValorSalto(tipoListaSalto *lst, int valorAnt, int valorNuevo) 
 {
     if (lst->numElementos == 0) return -1;
@@ -6723,7 +6723,7 @@ int modificarValorSalto(tipoListaSalto *lst, int valorAnt, int valorNuevo)
  * @brief Vacía la lista, liberando toda la memoria.
  * @param lst Puntero a la lista.
  * @return 0 si éxito, -1 si ya estaba vacía.
- */ 
+ */
 int vaciarListaSalto(tipoListaSalto *lst) 
 {
     if (lst->numElementos == 0) return -1;
@@ -6744,7 +6744,7 @@ int vaciarListaSalto(tipoListaSalto *lst)
 /**
  * @brief Muestra la lista por pantalla, indicando los saltos de cada nodo.
  * @param lst Puntero a la lista.
- */ 
+ */
 void mostrarListaSalto(tipoListaSalto *lst) 
 {
     printf("[Lista circular doblemente enlazada con saltos] (%d elementos):\n", lst->numElementos);
@@ -6774,7 +6774,7 @@ void mostrarListaSalto(tipoListaSalto *lst)
 /**
  * @brief Inicializa una lista enlazada simple de enteros sin centinela y sin repetidos.
  * @param lst Puntero a la lista a inicializar.
- */ 
+ */
 void inicializarListaSet(tipoListaSet *lst) 
 {
     lst->primero = NULL;
@@ -6794,7 +6794,7 @@ void inicializarListaSet(tipoListaSet *lst)
  * @param lst Puntero a la lista.
  * @param valor Valor a insertar.
  * @return 0 si éxito, -1 si ya existe o error de memoria.
- */ 
+ */
 int annadirPpioSet(tipoListaSet *lst, int valor) 
 {
     nodoSet *actual = lst->primero;
@@ -6817,7 +6817,7 @@ int annadirPpioSet(tipoListaSet *lst, int valor)
  * @param lst Puntero a la lista.
  * @param valor Valor a insertar.
  * @return 0 si éxito, -1 si ya existe o error de memoria.
- */ 
+ */
 int annadirFinSet(tipoListaSet *lst, int valor) 
 {
     nodoSet *actual = lst->primero;
@@ -6843,7 +6843,7 @@ int annadirFinSet(tipoListaSet *lst, int valor)
  * @param pos Posición donde insertar (1-indexado).
  * @param valor Valor a insertar.
  * @return 0 si éxito, -1 si ya existe o error de memoria.
- */ 
+ */
 int annadirEnLugarSet(tipoListaSet *lst, int pos, int valor) 
 {
     if (pos <= 1) return annadirPpioSet(lst, valor);
@@ -6877,7 +6877,7 @@ int annadirEnLugarSet(tipoListaSet *lst, int pos, int valor)
  * @brief Borra el primer nodo de la lista.
  * @param lst Puntero a la lista.
  * @return 0 si éxito, -1 si vacía.
- */ 
+ */
 int borrarPpioSet(tipoListaSet *lst) 
 {
     if (!lst->primero) return -1;
@@ -6892,7 +6892,7 @@ int borrarPpioSet(tipoListaSet *lst)
  * @brief Borra el último nodo de la lista.
  * @param lst Puntero a la lista.
  * @return 0 si éxito, -1 si vacía.
- */ 
+ */
 int borrarFinSet(tipoListaSet *lst) 
 {
     if (!lst->primero) return -1;
@@ -6916,7 +6916,7 @@ int borrarFinSet(tipoListaSet *lst)
  * @param lst Puntero a la lista.
  * @param valor Valor a borrar.
  * @return 0 si éxito, -1 si no encontrado.
- */ 
+ */
 int borrarValorSet(tipoListaSet *lst, int valor) 
 {
     nodoSet *actual = lst->primero, *ant = NULL;
@@ -6940,7 +6940,7 @@ int borrarValorSet(tipoListaSet *lst, int valor)
  * @brief Vacía la lista, liberando toda la memoria.
  * @param lst Puntero a la lista.
  * @return 0 si éxito, -1 si ya estaba vacía.
- */ 
+ */
 int vaciarListaSet(tipoListaSet *lst) 
 {
     if (!lst->primero) return -1;
@@ -6959,7 +6959,7 @@ int vaciarListaSet(tipoListaSet *lst)
 /**
  * @brief Muestra la lista por pantalla.
  * @param lst Puntero a la lista.
- */ 
+ */
 void mostrarListaSet(tipoListaSet *lst) 
 {
     printf("[Lista enlazada simple tipo set] (%d elementos): ", lst->numElementos);
@@ -6980,7 +6980,7 @@ void mostrarListaSet(tipoListaSet *lst)
  * @brief Crea un nuevo objeto gantt vacío con el nombre dado.
  * @param nombreProyecto Nombre del proyecto.
  * @return Puntero al objeto gantt creado (debe liberarse manualmente).
- */ 
+ */
 gantt* crearGantt(string nombreProyecto) 
 {
     gantt *g = (gantt*)malloc(sizeof(gantt));
@@ -7012,7 +7012,7 @@ static boolean detectarCiclo(int v, boolean **matriz, boolean *visitado, boolean
  * @brief Verifica si un diagrama de Gantt no tiene ciclos en sus dependencias.
  * @param g Puntero al objeto gantt a comprobar.
  * @return TRUE si el diagrama es válido (sin ciclos), FALSE si tiene ciclos.
- */ 
+ */
 boolean comprobarGanttValido(gantt *g) 
 {
     if (!g || g->numTareas == 0) return TRUE;
@@ -7972,8 +7972,8 @@ int calcularD(codigo* c)
             {
                 if ((c->G[i][k] == __1 && c->G[j][k] == __0) || 
                     (c->G[i][k] == __0 && c->G[j][k] == __1))
-                        pesoSuma++;
-            }
+                    pesoSuma++;
+                }
             if (pesoSuma > 0 && pesoSuma < minPeso) minPeso = pesoSuma;
         }
     }
@@ -8086,7 +8086,7 @@ codigo generarCodigoInicializado(bit_t** b)
                             {
                                 if (c.G[i][k] == __1 && c.H[j][k] == __1)
                                     producto = producto == 1 ? 0 : 1;
-                            }
+                                }
                             if (producto == 1) c.H[j][i] = c.H[j][i] == __1 ? __0 : __1;
                         }
                     }
@@ -8353,7 +8353,7 @@ void imprimirHiperplano(hiperplano h)
  * @param h Hiperplano original.
  * @return Hiperplano ortogonal (subespacio ortogonal).
  */
-hiperplano hiperplanoOrtogonal(hiperplano h, int ecuacion) 
+hiperplano hiperplanoOrtogonal(hiperplano h) 
 {
     hiperplano ort;
     ort.dimension = h.dimension;
@@ -8578,4 +8578,150 @@ hiperplano hiperplanoInterseccion(hiperplano h1, hiperplano h2)
     free(filasIndependientes);
     
     return resultado;
+}
+
+
+/**
+ * Crea un autómata finito determinista o no determinista.
+ * @param simbolos Lista de símbolos del alfabeto.
+ * @param numSimbolos Número de símbolos.
+ * @param estados Lista de estados.
+ * @param numEstados Número de estados.
+ * @param transiciones Matriz de transiciones [numEstados][numSimbolos]. '\0' si no hay transición.
+ * @param estadoInicial Estado inicial (debe estar en estados[]).
+ * @param estadosFinales Lista de estados finales (todos deben estar en estados[]).
+ * @param numEstadosFinales Cantidad de estados finales.
+ * @return Puntero al automata creado o NULL si hubo error.
+ */
+tipoAutomata* crearAutomata(
+    string simbolos, int numSimbolos,
+    string* estados, int numEstados,
+    string **transiciones,
+    string estadoInicial,
+    string *estadosFinales, int numEstadosFinales
+) 
+{
+    if (!simbolos || !estados || !transiciones || !estadoInicial || !estadosFinales) return NULL;
+    if (numSimbolos <= 0 || numEstados <= 0 || numEstadosFinales <= 0) return NULL;
+
+    boolean encontrado = FALSE;
+    for (int i = 0; i < numEstados; i++) 
+    {
+        if (strcmp(estados[i], estadoInicial) == 0) 
+        {
+            encontrado = TRUE;
+            break;
+        }
+    }
+    if (!encontrado) return NULL;
+    for (int i = 0; i < numEstadosFinales; i++) 
+    {
+        encontrado = FALSE;
+        for (int j = 0; j < numEstados; j++) 
+        {
+            if (strcmp(estadosFinales[i], estados[j]) == 0) 
+            {
+                encontrado = TRUE;
+                break;
+            }
+        }
+        if (!encontrado) return NULL;
+    }
+
+    tipoAutomata* aut = (tipoAutomata*)malloc(sizeof(tipoAutomata));
+    if (!aut) return NULL;
+
+    aut->simbolos = (char*)malloc(sizeof(char) * numSimbolos);
+    if (!aut->simbolos) { free(aut); return NULL; }
+    memcpy(aut->simbolos, simbolos, sizeof(char) * numSimbolos);
+    aut->numSimbolos = numSimbolos;
+
+    aut->estados = (string*)malloc(sizeof(string) * numEstados);
+    if (!aut->estados) { free(aut->simbolos); free(aut); return NULL; }
+    for (int i = 0; i < numEstados; i++)
+        aut->estados[i] = strdup(estados[i]);
+    aut->numEstados = numEstados;
+
+    aut->estadoInicial = strdup(estadoInicial);
+
+    aut->estadosFinales = (string*)malloc(sizeof(string) * numEstadosFinales);
+    for (int i = 0; i < numEstadosFinales; i++) 
+        aut->estadosFinales[i] = strdup(estadosFinales[i]);
+    aut->numEstadosFinales = numEstadosFinales;
+
+    aut->transiciones = (string**)malloc(sizeof(string*) * numEstados);
+    if (!aut->transiciones) return NULL;
+    for (int i = 0; i < numEstados; i++) 
+    {
+        aut->transiciones[i] = (string*)malloc(sizeof(string) * numSimbolos);
+        for (int j = 0; j < numSimbolos; j++)
+            aut->transiciones[i][j] = transiciones[i][j] ? strdup(transiciones[i][j]) : NULL;
+    }
+
+    return aut;
+}
+
+/**
+ * Evalúa una cadena de símbolos sobre el autómata.
+ * @param automata El autómata.
+ * @param cadena Cadena de símbolos a evaluar.
+ * @return TRUE si acepta, FALSE si hay error o no acepta.
+ */
+int evaluarCadena(tipoAutomata* aut, string cadena) 
+{
+    if (!aut || !cadena) return FALSE;
+    string estadoActual = aut->estadoInicial;
+    for (int i = 0; cadena[i] != '\0'; i++)
+    {
+        char simbolo = cadena[i];
+        int simboloIndex = -1;
+        for (int j = 0; j < aut->numSimbolos; j++) 
+        {
+            if (aut->simbolos[j] == simbolo) 
+            {
+                simboloIndex = j;
+                break;
+            }
+        }
+        if (simboloIndex == -1) return FALSE;
+        int estadoIndex = -1;
+        for (int j = 0; j < aut->numEstados; j++) 
+        {
+            if (strcmp(aut->estados[j], estadoActual) == 0) 
+            {
+                estadoIndex = j;
+                break;
+            }
+        }
+        if (estadoIndex == -1) return FALSE;
+        string siguiente = aut->transiciones[estadoIndex][simboloIndex];
+        if (!siguiente) return FALSE;
+        estadoActual = siguiente;
+    }
+    for (int i = 0; i < aut->numEstadosFinales; i++)
+        if (strcmp(estadoActual, aut->estadosFinales[i]) == 0) return TRUE;
+    return FALSE;
+}
+
+/**
+ * Libera toda la memoria usada por el autómata.
+ * @param automata El autómata a destruir.
+ */
+void destruirAutomata(tipoAutomata* aut) 
+{
+    if (!aut) return;
+    free(aut->simbolos);
+    for (int i = 0; i < aut->numEstados; i++) free(aut->estados[i]);
+    free(aut->estados);
+    free(aut->estadoInicial);
+    for (int i = 0; i < aut->numEstadosFinales; i++) free(aut->estadosFinales[i]);
+    free(aut->estadosFinales);
+    for (int i = 0; i < aut->numEstados; i++) 
+    {
+        for (int j = 0; j < aut->numSimbolos; j++)
+            if (aut->transiciones[i][j]) free(aut->transiciones[i][j]);
+        free(aut->transiciones[i]);
+    }
+    free(aut->transiciones);
+    free(aut);
 }

@@ -2,8 +2,8 @@
 /*****************************************************************************************************************/
 /********************************** BIBLIOTECA DE FUNCIONES DE C, DECLARACIONES **********************************/
 /************************************** AUTOR: SERGIO JUAN ROLLÁN MORALEJO ***************************************/
-/*****************************************       VERSIÓN NO: 1.0       *******************************************/
-/************************************** FECHA DE FINALIZACIÓN: 03-07-2022 ****************************************/
+/*****************************************       VERSIÓN NO: 3.0       *******************************************/
+/************************************** FECHA DE FINALIZACIÓN: 20-07-2025 ****************************************/
 /*****************************************************************************************************************/
 /*****************************************************************************************************************/
 
@@ -65,6 +65,7 @@ typedef int* vector;
 typedef vector* matriz;
 typedef float* vectorf;
 typedef vectorf* matrizf;
+////////////////////////////////////////////////
 
 
 //////////////////////////////////////////////// arboles
@@ -78,10 +79,10 @@ typedef struct tipoNodo
 	struct tipoNodo *izq,*der;
 } tipoNodo;
 typedef tipoNodo *Arbol;
+////////////////////////////////////////////////
 
 
 //////////////////////////////////////////////// monticulos
-
 #ifndef NUM_ELEMS_MONT
   #define NUM_ELEMS_MONT 100
 #endif
@@ -103,6 +104,7 @@ typedef struct
 	tipoElementoMonticulo elemento[NUM_ELEMS_MONT];
 	int tam;
 }Monticulo;
+////////////////////////////////////////////////
 
 
 //////////////////////////////////////////////// grafos
@@ -131,6 +133,23 @@ typedef struct
 	vertices directorio[NUM_ELEMS_GRAFO];
 	int orden;
 }tipoGrafo;
+////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////// automatas
+typedef struct
+{
+	char *simbolos;
+	int numSimbolos;
+	string *estados;
+	int numEstados;
+	string **transiciones;
+	string estadoInicial;
+	string *estadosFinales;
+	int numEstadosFinales;
+}tipoAutomata;
+////////////////////////////////////////////////
+
 
 
 //////////////////////////////////////////////// lista enlazada
@@ -180,11 +199,11 @@ typedef struct nodo_salto {
     struct nodo_salto *sig;
     struct nodo_salto *ant;
     int numSaltos;
-    struct nodo_salto **saltos; // array de punteros a saltos
+    struct nodo_salto **saltos;
 } nodoSalto;
 typedef struct tipoListaSalto tipoListaSalto;
 struct tipoListaSalto {
-    nodoSalto *cabecera; // apunta al nodo 1 (vacío)
+    nodoSalto *cabecera;
     int numElementos;
     int (*annadirPpio)(tipoListaSalto*, int);
     int (*annadirFin)(tipoListaSalto*, int);
@@ -883,7 +902,15 @@ boolean bitEsDeInfo(bit_t**,int,int);
 // Hiperplanos
 hiperplano leerHiperplano(int dimension);
 void imprimirHiperplano(hiperplano);
-hiperplano hiperplanoOrtogonal(hiperplano, int);
+hiperplano hiperplanoOrtogonal(hiperplano);
+hiperplano hiperplanoInterseccion(hiperplano, hiperplano);
+
+
+// Autómatas
+tipoAutomata* crearAutomata(string simbolos, int numSimbolos, string* estados, int numEstados, string **transiciones, string estadoInicial, string *estadosFinales, int numEstadosFinales);
+void destruirAutomata(tipoAutomata* automata);
+int evaluarCadena(tipoAutomata* automata, string cadena);
+hiperplano hiperplanoOrtogonal(hiperplano);
 hiperplano hiperplanoInterseccion(hiperplano, hiperplano);
 
 
