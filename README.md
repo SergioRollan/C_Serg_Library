@@ -8,7 +8,7 @@ VERSIÓN NO: 3.0
 
 FECHA DE FINALIZACIÓN: 20-07-2023
 
-Objetivo de la biblioteca: reducir lo máximo posible el número de ".h" que se incluyan en todos los proyectos de C del usuario. Se incluirá en los códigos fuente escribiendo al principio del documento '#include "sergioteca.h"'
+Objetivo de la biblioteca: reducir lo máximo posible el número de ".h" que se incluyan en todos los proyectos de C del usuario, a lo largo de aproximadamente 10000 lineas de código de funciones útiles y reutilizables. Se incluirá en los códigos fuente escribiendo al principio del documento la línea '#include "sergioteca.h"'.
 
 Importaciones que incluye: <stdio.h>, <stdlib.h>, <stdarg.h>, <string.h>, <unistd.h>, <ctype.h>, <math.h>, <time.h>, <conio.h> y <limits.h>.
 
