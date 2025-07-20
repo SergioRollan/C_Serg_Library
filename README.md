@@ -967,7 +967,7 @@ amplitud(&grafo, 0);
 
 ---
 
-## ------- CAPÍTULO 13: ALGORITMOS DE PLANIFICACIÓN DE PROCESOS -------
+## ------ CAPÍTULO 13: ALGORITMOS DE PLANIFICACIÓN DE PROCESOS -------
 
 En este capítulo se describen los principales algoritmos de planificación de procesos utilizados en sistemas operativos para gestionar la ejecución de tareas. Estos algoritmos determinan el orden en que los procesos acceden a la CPU, optimizando criterios como el tiempo de espera, el tiempo de respuesta o el uso de recursos. A continuación se explican los más relevantes:
 
