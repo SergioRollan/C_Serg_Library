@@ -1,3 +1,7 @@
 programa.exe
 prueba.exe
 prueba.c 
+.gitignore
+.vscode
+.vscode/
+.vscode/*

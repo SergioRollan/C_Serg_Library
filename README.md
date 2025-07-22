@@ -4,9 +4,9 @@ BIBLIOTECA DE FUNCIONES DE C
 
 AUTOR: SERGIO JUAN ROLLÁN MORALEJO
 
-VERSIÓN NO: 3.0
+VERSIÓN NO: 3.1
 
-FECHA DE FINALIZACIÓN: 20-07-2023
+FECHA DE FINALIZACIÓN: 22-07-2023
 
 Objetivo de la biblioteca: reducir lo máximo posible el número de ".h" que se incluyan en todos los proyectos de C del usuario, a lo largo de aproximadamente 10000 lineas de código de funciones útiles y reutilizables. Se incluirá en los códigos fuente escribiendo al principio del documento la línea '#include "sergioteca.h"'.
 
@@ -14,31 +14,32 @@ Importaciones que incluye: <stdio.h>, <stdlib.h>, <stdarg.h>, <string.h>, <unist
 
 Sus aportaciones a la abstracción, legibilidad, portabilidad y comodidad del lenguaje C son:
 
-- CAPÍTULO 1: CONSTANTES ÚTILES
-- CAPÍTULO 2: TIPO BOOLEANO
-- CAPÍTULO 3: FUNCIONES MISCELÁNEAS
-- CAPÍTULO 4: LECTURA DE DATOS POR TECLADO
-- CAPÍTULO 5: IMPRIMIR DATOS POR CONSOLA
-- CAPÍTULO 6: OPERACIONES ÚTILES CON STRINGS
-- CAPÍTULO 7: OPERACIONES CON VECTORES Y MATRICES
-- CAPÍTULO 8: OPERACIONES CON MATRICES OBJETO
-- CAPÍTULO 9: OPERACIONES CON PILAS
-- CAPÍTULO 10: OPERACIONES CON COLAS
-- CAPÍTULO 11: LISTAS ENLAZADAS CON ORIENTACIÓN A OBJETOS
-- CAPÍTULO 12: OTRAS ESTRUCTURAS DE DATOS
-- CAPÍTULO 13: ALGORITMOS DE PLANIFICACIÓN DE PROCESOS
-- CAPÍTULO 14: ALGORITMOS DE BÚSQUEDA
-- CAPÍTULO 15: ALGORITMOS DE ORDENACIÓN
-- CAPÍTULO 16: BARAJA DE CARTAS
-- CAPÍTULO 17: DIAGRAMAS DE GANTT
-- CAPÍTULO 18: ESTIMACIÓN DE ESFUERZO
-- CAPÍTULO 19: CÓDIGOS CORRECTORES DE ERRORES
-- CAPÍTULO 20: HIPERPLANOS
-- CAPÍTULO 21: AUTÓMATAS FINITOS
+- [CAPÍTULO 1: CONSTANTES ÚTILES](#capítulo-1-constantes-útiles)
+- [CAPÍTULO 2: TIPO BOOLEANO](#capítulo-2-tipo-booleano)
+- [CAPÍTULO 3: FUNCIONES MISCELÁNEAS](#capítulo-3-funciones-misceláneas)
+- [CAPÍTULO 4: LECTURA DE DATOS POR TECLADO](#capítulo-4-lectura-de-datos-por-teclado)
+- [CAPÍTULO 5: IMPRIMIR DATOS POR CONSOLA](#capítulo-5-imprimir-datos-por-consola)
+- [CAPÍTULO 6: OPERACIONES ÚTILES CON STRINGS](#capítulo-6-operaciones-útiles-con-strings)
+- [CAPÍTULO 7: OPERACIONES CON VECTORES Y MATRICES](#capítulo-7-operaciones-con-vectores-y-matrices)
+- [CAPÍTULO 8: OPERACIONES CON MATRICES OBJETO](#capítulo-8-operaciones-con-matrices-objeto)
+- [CAPÍTULO 9: OPERACIONES CON PILAS](#capítulo-9-operaciones-con-pilas)
+- [CAPÍTULO 10: OPERACIONES CON COLAS](#capítulo-10-operaciones-con-colas)
+- [CAPÍTULO 11: LISTAS ENLAZADAS CON ORIENTACIÓN A OBJETOS](#capítulo-11-listas-enlazadas-con-orientación-a-objetos)
+- [CAPÍTULO 12: DICCIONARIOS](#capítulo-12-diccionarios)
+- [CAPÍTULO 13: OTRAS ESTRUCTURAS DE DATOS](#capítulo-13-otras-estructuras-de-datos)
+- [CAPÍTULO 14: ALGORITMOS DE PLANIFICACIÓN DE PROCESOS](#capítulo-14-algoritmos-de-planificación-de-procesos)
+- [CAPÍTULO 15: ALGORITMOS DE BÚSQUEDA](#capítulo-15-algoritmos-de-búsqueda)
+- [CAPÍTULO 16: ALGORITMOS DE ORDENACIÓN](#capítulo-16-algoritmos-de-ordenación)
+- [CAPÍTULO 17: BARAJA DE CARTAS](#capítulo-17-baraja-de-cartas)
+- [CAPÍTULO 18: DIAGRAMAS DE GANTT](#capítulo-18-diagramas-de-gantt)
+- [CAPÍTULO 19: ESTIMACIÓN DE ESFUERZO](#capítulo-19-estimación-de-esfuerzo)
+- [CAPÍTULO 20: CÓDIGOS CORRECTORES DE ERRORES](#capítulo-20-códigos-correctores-de-errores)
+- [CAPÍTULO 21: HIPERPLANOS](#capítulo-21-hiperplanos)
+- [CAPÍTULO 22: AUTÓMATAS FINITOS](#capítulo-22-autómatas-finitos)
 
 ---
 
-## -------------- CAPÍTULO 1: CONSTANTES ÚTILES --------------
+## -------------- CAPÍTULO 1: CONSTANTES ÚTILES -------------- {#capítulo-1-constantes-útiles}
 
 La biblioteca proporciona un conjunto de constantes y tipos de datos que simplifican la programación en C, eliminando la necesidad de recordar detalles técnicos específicos del lenguaje y mejorando la legibilidad del código.
 
@@ -87,7 +88,7 @@ matriz tabla = malloc(5 * sizeof(int*));
 
 ---
 
-## -------------- CAPÍTULO 2: TIPO BOOLEANO --------------
+## -------------- CAPÍTULO 2: TIPO BOOLEANO -------------- {#capítulo-2-tipo-booleano}
 
 La biblioteca incluye un tipo de dato booleano que mejora la legibilidad del código y proporciona una representación más clara de valores lógicos, eliminando la dependencia de valores numéricos para representar verdadero y falso.
 
@@ -130,7 +131,7 @@ boolean resultado = (esPar(5) == FALSE) ? TRUE : FALSE;
 
 ---
 
-## -------------- CAPÍTULO 3: FUNCIONES MISCELÁNEAS --------------
+## -------------- CAPÍTULO 3: FUNCIONES MISCELÁNEAS -------------- {#capítulo-3-funciones-misceláneas}
 
 La biblioteca incluye un conjunto de funciones utilitarias que proporcionan funcionalidades comunes en programación, desde operaciones matemáticas básicas hasta generación de números aleatorios y manejo de archivos.
 
@@ -223,7 +224,7 @@ long permRep = permutacionesConRepeticion(4, ms, 3);  // P(4;2,1,1) = 12
 
 ---
 
-## -------------- CAPÍTULO 4: LECTURA DE DATOS POR TECLADO --------------
+## -------------- CAPÍTULO 4: LECTURA DE DATOS POR TECLADO -------------- {#capítulo-4-lectura-de-datos-por-teclado}
 
 La biblioteca proporciona un sistema completo y simplificado para la lectura de datos desde la entrada estándar, incluyendo tanto lectura normal como lectura oculta para datos sensibles.
 
@@ -279,7 +280,7 @@ printf("Tu altura es %.2f metros y pesas %.1f kg\n", altura, peso);
 
 ---
 
-## -------------- CAPÍTULO 5: IMPRIMIR DATOS POR CONSOLA --------------
+## -------------- CAPÍTULO 5: IMPRIMIR DATOS POR CONSOLA -------------- {#capítulo-5-imprimir-datos-por-consola}
 
 La biblioteca proporciona un sistema simplificado para imprimir datos en la consola, eliminando la necesidad de recordar los formatos específicos de `printf` y proporcionando variantes para diferentes tipos de salida.
 
@@ -345,7 +346,7 @@ errprintlnlnln(numero);        // Imprime en stderr: 42\n\n\n
 
 ---
 
-## -------------- CAPÍTULO 6: OPERACIONES ÚTILES CON STRINGS --------------
+## -------------- CAPÍTULO 6: OPERACIONES ÚTILES CON STRINGS -------------- {#capítulo-6-operaciones-útiles-con-strings}
 
 La biblioteca incluye un conjunto completo de funciones para el manejo y manipulación de cadenas de caracteres, así como funciones matemáticas combinatorias que son útiles en el procesamiento de strings.
 
@@ -396,7 +397,7 @@ int subcadenas = numaparicionessub("hola hola mundo", "hola");  // 2
 
 ---
 
-## ---------- CAPÍTULO 7: OPERACIONES CON VECTORES Y MATRICES ----------
+## ---------- CAPÍTULO 7: OPERACIONES CON VECTORES Y MATRICES ---------- {#capítulo-7-operaciones-con-vectores-y-matrices}
 
 La biblioteca proporciona un conjunto completo de funciones para el manejo de vectores y matrices, tanto de enteros como de números reales, simplificando las operaciones matemáticas más comunes en programación científica y de ingeniería.
 
@@ -491,7 +492,7 @@ imprimirMatrizF(aleatoria, 3, 3);
 
 ---
 
-## ------------ CAPÍTULO 8: OPERACIONES CON MATRICES OBJETO ------------
+## ------------ CAPÍTULO 8: OPERACIONES CON MATRICES OBJETO ------------ {#capítulo-8-operaciones-con-matrices-objeto}
 
 La biblioteca incluye estructuras de datos especializadas para matrices que encapsulan tanto los datos como las dimensiones, eliminando la necesidad de manejar manualmente los tamaños y proporcionando una interfaz más intuitiva y segura.
 
@@ -569,7 +570,7 @@ tipoMatriz vertical = concatenarMatricesEnVerticalI_O(m1, m2);
 
 ---
 
-## -------------- CAPÍTULO 9: OPERACIONES CON PILAS --------------
+## -------------- CAPÍTULO 9: OPERACIONES CON PILAS -------------- {#capítulo-9-operaciones-con-pilas}
 
 La biblioteca incluye una implementación completa de la estructura de datos pila (stack), que funciona como un almacenamiento de datos de tipo LIFO (Last In, First Out - Último en entrar, primero en salir).
 
@@ -644,7 +645,7 @@ if (pilaVacia(&miPila) == TRUE) {
 
 ---
 
-## -------------- CAPÍTULO 10: OPERACIONES CON COLAS --------------
+## -------------- CAPÍTULO 10: OPERACIONES CON COLAS -------------- {#capítulo-10-operaciones-con-colas}
 
 La biblioteca incluye una implementación completa de la estructura de datos cola (queue), que funciona como un almacenamiento de datos de tipo FIFO (First In, First Out - Primero en entrar, primero en salir).
 
@@ -719,7 +720,7 @@ if (colaVacia(&miCola) == TRUE) {
 
 ---
 
-## --- CAPÍTULO 11: LISTAS ENLAZADAS CON ORIENTACIÓN A OBJETOS ---
+## --- CAPÍTULO 11: LISTAS ENLAZADAS CON ORIENTACIÓN A OBJETOS --- {#capítulo-11-listas-enlazadas-con-orientación-a-objetos}
 
 La biblioteca incluye implementaciones avanzadas de listas enlazadas que siguen paradigmas de programación orientada a objetos, proporcionando estructuras de datos flexibles y eficientes para diferentes necesidades.
 
@@ -839,7 +840,107 @@ set.mostrarLista(&set);
 
 ---
 
-## -------------- CAPÍTULO 12: OTRAS ESTRUCTURAS DE DATOS --------------
+## -------------- CAPÍTULO 12: DICCIONARIOS -------------- {#capítulo-12-diccionarios}
+
+La biblioteca incluye una implementación completa de diccionarios (hash maps) que permiten almacenar pares clave-valor de forma eficiente, proporcionando operaciones de inserción, búsqueda y eliminación con complejidad constante en el caso promedio.
+
+### Estructura de datos
+
+- **tipoDiccionario**: Estructura principal que contiene:
+
+  - `entries`: Array dinámico de elementos del diccionario
+  - `size`: Número actual de elementos almacenados
+  - `capacity`: Capacidad máxima actual del array
+
+- **tipoElementoDiccionario**: Estructura que representa cada entrada del diccionario:
+  - `clave`: Clave única del elemento
+  - `valor`: Valor asociado a la clave
+
+### Tipos de datos
+
+El diccionario utiliza los tipos `tipoKey` y `tipoValor` que por defecto son `char*` (strings), pero pueden ser redefinidos antes de incluir la biblioteca para trabajar con otros tipos de datos.
+
+### Funciones principales
+
+- **void initDictionary(tipoDiccionario\* dict)**: Inicializa un diccionario vacío con capacidad inicial de 10 elementos.
+
+- **void freeDictionary(tipoDiccionario\* dict)**: Libera toda la memoria asociada al diccionario, incluyendo claves y valores.
+
+- **boolean addEntry(tipoDiccionario\* dict, tipoKey key, tipoValor value)**: Añade o actualiza una entrada en el diccionario. Si la clave ya existe, actualiza el valor. Devuelve `TRUE` si la operación fue exitosa.
+
+- **boolean addEntryIfNotExists(tipoDiccionario\* dict, tipoKey key, tipoValor value)**: Añade una entrada solo si la clave no existe previamente. Devuelve `TRUE` si se añadió, `FALSE` si la clave ya existía.
+
+- **boolean removeEntry(tipoDiccionario\* dict, tipoKey key)**: Elimina una entrada del diccionario por su clave. Devuelve `TRUE` si se eliminó, `FALSE` si la clave no existía.
+
+- **tipoValor getValue(tipoDiccionario\* dict, tipoKey key)**: Obtiene el valor asociado a una clave. Devuelve el valor si existe, `NULL` si no se encuentra.
+
+- **tipoValor* getValues(tipoDiccionario* dict, int\* count)**: Obtiene un array con todos los valores del diccionario. El array debe liberarse manualmente con `free`. El parámetro `count` se actualiza con el número de valores.
+
+- **tipoKey* getKeys(tipoDiccionario* dict, int\* count)**: Obtiene un array con todas las claves del diccionario. El array debe liberarse manualmente con `free`. El parámetro `count` se actualiza con el número de claves.
+
+### Características de la implementación
+
+- **Redimensionamiento automático**: El diccionario se redimensiona automáticamente cuando se alcanza la capacidad máxima.
+- **Gestión de memoria**: Manejo automático de la memoria para claves y valores, incluyendo duplicación y liberación.
+- **Comparación de claves**: Utiliza comparación de strings para las claves por defecto.
+- **Operaciones eficientes**: Inserción, búsqueda y eliminación con complejidad O(1) en el caso promedio.
+
+### Ejemplo de uso
+
+```c
+// Inicializar diccionario
+tipoDiccionario dict;
+initDictionary(&dict);
+
+// Añadir entradas
+addEntry(&dict, "nombre", "Juan");
+addEntry(&dict, "edad", "25");
+addEntry(&dict, "ciudad", "Madrid");
+
+// Obtener valores
+tipoValor nombre = getValue(&dict, "nombre");
+printf("Nombre: %s\n", nombre);
+
+// Verificar si existe una clave
+if (getValue(&dict, "telefono") == NULL) {
+    printf("Teléfono no encontrado\n");
+}
+
+// Actualizar valor existente
+addEntry(&dict, "edad", "26");
+
+// Obtener todas las claves
+int numClaves;
+tipoKey* claves = getKeys(&dict, &numClaves);
+printf("Claves en el diccionario:\n");
+for (int i = 0; i < numClaves; i++) {
+    printf("- %s\n", claves[i]);
+}
+free(claves);
+
+// Eliminar una entrada
+removeEntry(&dict, "ciudad");
+
+// Liberar memoria
+freeDictionary(&dict);
+```
+
+### Configuración para otros tipos de datos
+
+Para usar el diccionario con tipos diferentes a `char*`, se pueden redefinir los tipos antes de incluir la biblioteca:
+
+```c
+// Para usar int como clave y float como valor
+#define TIPO_KEY_DICCIONARIO int
+#define TIPO_VALOR_DICCIONARIO float
+#include "sergioteca.h"
+```
+
+**Nota**: Al cambiar los tipos, las funciones de comparación y gestión de memoria se adaptan automáticamente según el tipo definido.
+
+---
+
+## -------------- CAPÍTULO 13: OTRAS ESTRUCTURAS DE DATOS -------------- {#capítulo-13-otras-estructuras-de-datos}
 
 La biblioteca incluye implementaciones de estructuras de datos avanzadas como árboles, montículos y grafos, proporcionando herramientas completas para el manejo de datos jerárquicos y relaciones complejas.
 
@@ -967,7 +1068,7 @@ amplitud(&grafo, 0);
 
 ---
 
-## ------ CAPÍTULO 13: ALGORITMOS DE PLANIFICACIÓN DE PROCESOS -------
+## ------ CAPÍTULO 14: ALGORITMOS DE PLANIFICACIÓN DE PROCESOS ------- {#capítulo-14-algoritmos-de-planificación-de-procesos}
 
 En este capítulo se describen los principales algoritmos de planificación de procesos utilizados en sistemas operativos para gestionar la ejecución de tareas. Estos algoritmos determinan el orden en que los procesos acceden a la CPU, optimizando criterios como el tiempo de espera, el tiempo de respuesta o el uso de recursos. A continuación se explican los más relevantes:
 
@@ -1001,7 +1102,7 @@ En este capítulo se describen los principales algoritmos de planificación de p
 
 Cada algoritmo tiene ventajas e inconvenientes, y la elección depende del contexto y los objetivos del sistema.
 
-## -------------- CAPÍTULO 14: ALGORITMOS DE BÚSQUEDA --------------
+## -------------- CAPÍTULO 15: ALGORITMOS DE BÚSQUEDA -------------- {#capítulo-15-algoritmos-de-búsqueda}
 
 En este capítulo se describen los principales algoritmos de búsqueda implementados en la biblioteca, tanto para enteros como para números reales. Los algoritmos de búsqueda permiten localizar la posición de un elemento dentro de un vector, devolviendo la posición si se encuentra o -1 si no está o si ocurre algún error. A continuación se explican los algoritmos incluidos:
 
@@ -1058,7 +1159,7 @@ Todas las funciones de búsqueda de la biblioteca devuelven la posición del ele
   - En la binaria, ternaria, exponencial y Fibonacci, el mejor caso es encontrar el elemento en el primer intento (centro o primer salto).
   - Todas las búsquedas, salvo la lineal, requieren el vector ordenado.
 
-## -------------- CAPÍTULO 15: ALGORITMOS DE ORDENACIÓN --------------
+## -------------- CAPÍTULO 16: ALGORITMOS DE ORDENACIÓN -------------- {#capítulo-16-algoritmos-de-ordenación}
 
 En este capítulo se explican los algoritmos de ordenación implementados en la biblioteca, tanto clásicos como avanzados, para enteros y números reales. Los algoritmos de ordenación permiten reorganizar los elementos de un vector o lista según un criterio (habitualmente de menor a mayor). A continuación se describen los principales algoritmos incluidos:
 
@@ -1173,7 +1274,7 @@ Cada algoritmo tiene ventajas y desventajas según el tipo y tamaño de los dato
   - Bitonic Sort es eficiente en hardware especializado.
   - Stooge Sort es principalmente de interés académico por su ineficiencia.
 
-## ----------------- CAPÍTULO 16: BARAJA DE CARTAS -------------------
+## ----------------- CAPÍTULO 17: BARAJA DE CARTAS ------------------- {#capítulo-17-baraja-de-cartas}
 
 La biblioteca incluye un completo módulo para la gestión y manipulación de barajas de cartas, pensado tanto para juegos clásicos como para utilidades didácticas.
 
@@ -1206,7 +1307,7 @@ for (int i = 0; i < j->numJugadores; i++) free(j->jugadores[i].mano.cartas);
 free(j->jugadores); free(j);
 ```
 
-## -------------- CAPÍTULO 17: DIAGRAMAS DE GANTT --------------
+## -------------- CAPÍTULO 18: DIAGRAMAS DE GANTT -------------- {#capítulo-18-diagramas-de-gantt}
 
 La biblioteca incluye un módulo completo para la gestión y visualización de diagramas de Gantt, herramientas esenciales en la gestión de proyectos para planificar y programar tareas.
 
@@ -1282,7 +1383,7 @@ free(proyecto);
 
 Esta funcionalidad es especialmente útil para la gestión de proyectos, planificación de recursos y análisis de dependencias entre tareas.
 
-## -------------- CAPÍTULO 18: ESTIMACIÓN DE ESFUERZO --------------
+## -------------- CAPÍTULO 19: ESTIMACIÓN DE ESFUERZO -------------- {#capítulo-19-estimación-de-esfuerzo}
 
 La biblioteca incluye una función para estimar el esfuerzo en horas de desarrollo de proyectos software utilizando el modelo de puntos de caso de uso (UCP - Use Case Points).
 
@@ -1327,7 +1428,7 @@ estimarEsfuerzo();  // Inicia el proceso interactivo de estimación
 
 Esta funcionalidad es especialmente útil para la planificación de proyectos software, estimación de costes y asignación de recursos en el desarrollo de aplicaciones.
 
-## ------------ CAPÍTULO 19: CÓDIGOS CORRECTORES DE ERRORES -------------
+## ------------ CAPÍTULO 20: CÓDIGOS CORRECTORES DE ERRORES ------------- {#capítulo-20-códigos-correctores-de-errores}
 
 La biblioteca incluye un módulo completo para la implementación y gestión de códigos correctores de errores, específicamente códigos de Hamming y códigos lineales generales. Estos códigos son fundamentales en la teoría de la información para detectar y corregir errores en la transmisión de datos.
 
@@ -1417,7 +1518,7 @@ free(c.H);
 
 Esta funcionalidad es esencial para aplicaciones de comunicaciones digitales, almacenamiento de datos y cualquier sistema que requiera transmisión confiable de información.
 
-## -------------- CAPÍTULO 20: HIPERPLANOS --------------
+## -------------- CAPÍTULO 21: HIPERPLANOS -------------- {#capítulo-21-hiperplanos}
 
 La biblioteca incluye un módulo completo para el manejo de hiperplanos en espacios vectoriales de cualquier dimensión. Un hiperplano es una generalización de planos y rectas a espacios de dimensión arbitraria, representado como un sistema de ecuaciones lineales homogéneas.
 
@@ -1483,7 +1584,7 @@ free(interseccion.info);
 
 Esta funcionalidad es fundamental para aplicaciones de geometría computacional, álgebra lineal, optimización y análisis de sistemas de ecuaciones lineales en espacios de dimensión arbitraria.
 
-## -------------- CAPÍTULO 21: AUTÓMATAS FINITOS --------------
+## -------------- CAPÍTULO 22: AUTÓMATAS FINITOS -------------- {#capítulo-22-autómatas-finitos}
 
 La biblioteca incluye un módulo completo para la implementación y gestión de autómatas finitos deterministas y no deterministas. Los autómatas finitos son modelos computacionales fundamentales en la teoría de lenguajes formales y teoría de la computación, utilizados para reconocer patrones y validar cadenas de símbolos.
 
