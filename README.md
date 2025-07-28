@@ -745,9 +745,9 @@ if (colaVacia(&miCola) == TRUE) {
 
 ---
 
-## --- CAPÍTULO 11: LISTAS ENLAZADAS CON ORIENTACIÓN A OBJETOS ---
-
 <a name="capítulo-11-listas-enlazadas-con-orientación-a-objetos"></a>
+
+## --- CAPÍTULO 11: LISTAS ENLAZADAS CON ORIENTACIÓN A OBJETOS ---
 
 La biblioteca incluye implementaciones avanzadas de listas enlazadas que siguen paradigmas de programación orientada a objetos, proporcionando estructuras de datos flexibles y eficientes para diferentes necesidades.
 
