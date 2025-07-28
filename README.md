@@ -39,9 +39,9 @@ Sus aportaciones a la abstracción, legibilidad, portabilidad y comodidad del le
 
 ---
 
-## -------------- CAPÍTULO 1: CONSTANTES ÚTILES --------------
-
 <a name="capítulo-1-constantes-útiles"></a>
+
+## -------------- CAPÍTULO 1: CONSTANTES ÚTILES --------------
 
 La biblioteca proporciona un conjunto de constantes y tipos de datos que simplifican la programación en C, eliminando la necesidad de recordar detalles técnicos específicos del lenguaje y mejorando la legibilidad del código.
 
@@ -90,9 +90,9 @@ matriz tabla = malloc(5 * sizeof(int*));
 
 ---
 
-## -------------- CAPÍTULO 2: TIPO BOOLEANO --------------
-
 <a name="capítulo-2-tipo-booleano"></a>
+
+## -------------- CAPÍTULO 2: TIPO BOOLEANO --------------
 
 La biblioteca incluye un tipo de dato booleano que mejora la legibilidad del código y proporciona una representación más clara de valores lógicos, eliminando la dependencia de valores numéricos para representar verdadero y falso.
 
@@ -135,9 +135,9 @@ boolean resultado = (esPar(5) == FALSE) ? TRUE : FALSE;
 
 ---
 
-## -------------- CAPÍTULO 3: FUNCIONES MISCELÁNEAS --------------
-
 <a name="capítulo-3-funciones-misceláneas"></a>
+
+## -------------- CAPÍTULO 3: FUNCIONES MISCELÁNEAS --------------
 
 La biblioteca incluye un conjunto de funciones utilitarias que proporcionan funcionalidades comunes en programación, desde operaciones matemáticas básicas hasta generación de números aleatorios y manejo de archivos.
 
@@ -235,9 +235,9 @@ double prob = calcularProbabilidadPuntosParciales(puntuaciones, 12, 4, 28);  // 
 
 ---
 
-## -------------- CAPÍTULO 4: LECTURA DE DATOS POR TECLADO --------------
-
 <a name="capítulo-4-lectura-de-datos-por-teclado"></a>
+
+## -------------- CAPÍTULO 4: LECTURA DE DATOS POR TECLADO --------------
 
 La biblioteca proporciona un sistema completo y simplificado para la lectura de datos desde la entrada estándar, incluyendo tanto lectura normal como lectura oculta para datos sensibles.
 
@@ -293,9 +293,9 @@ printf("Tu altura es %.2f metros y pesas %.1f kg\n", altura, peso);
 
 ---
 
-## -------------- CAPÍTULO 5: IMPRIMIR DATOS POR CONSOLA --------------
-
 <a name="capítulo-5-imprimir-datos-por-consola"></a>
+
+## -------------- CAPÍTULO 5: IMPRIMIR DATOS POR CONSOLA --------------
 
 La biblioteca proporciona un sistema simplificado para imprimir datos en la consola, eliminando la necesidad de recordar los formatos específicos de `printf` y proporcionando variantes para diferentes tipos de salida.
 
@@ -361,9 +361,9 @@ errprintlnlnln(numero);        // Imprime en stderr: 42\n\n\n
 
 ---
 
-## -------------- CAPÍTULO 6: OPERACIONES ÚTILES CON STRINGS --------------
-
 <a name="capítulo-6-operaciones-útiles-con-strings"></a>
+
+## -------------- CAPÍTULO 6: OPERACIONES ÚTILES CON STRINGS --------------
 
 La biblioteca incluye un conjunto completo de funciones para el manejo y manipulación de cadenas de caracteres, así como funciones matemáticas combinatorias que son útiles en el procesamiento de strings.
 
@@ -414,9 +414,9 @@ int subcadenas = numaparicionessub("hola hola mundo", "hola");  // 2
 
 ---
 
-## ---------- CAPÍTULO 7: OPERACIONES CON VECTORES Y MATRICES ----------
-
 <a name="capítulo-7-operaciones-con-vectores-y-matrices"></a>
+
+## ---------- CAPÍTULO 7: OPERACIONES CON VECTORES Y MATRICES ----------
 
 La biblioteca proporciona un conjunto completo de funciones para el manejo de vectores y matrices, tanto de enteros como de números reales, simplificando las operaciones matemáticas más comunes en programación científica y de ingeniería.
 
@@ -511,9 +511,9 @@ imprimirMatrizF(aleatoria, 3, 3);
 
 ---
 
-## ------------ CAPÍTULO 8: OPERACIONES CON MATRICES OBJETO ------------
-
 <a name="capítulo-8-operaciones-con-matrices-objeto"></a>
+
+## ------------ CAPÍTULO 8: OPERACIONES CON MATRICES OBJETO ------------
 
 La biblioteca incluye estructuras de datos especializadas para matrices que encapsulan tanto los datos como las dimensiones, eliminando la necesidad de manejar manualmente los tamaños y proporcionando una interfaz más intuitiva y segura.
 
@@ -591,9 +591,9 @@ tipoMatriz vertical = concatenarMatricesEnVerticalI_O(m1, m2);
 
 ---
 
-## -------------- CAPÍTULO 9: OPERACIONES CON PILAS --------------
-
 <a name="capítulo-9-operaciones-con-pilas"></a>
+
+## -------------- CAPÍTULO 9: OPERACIONES CON PILAS --------------
 
 La biblioteca incluye una implementación completa de la estructura de datos pila (stack), que funciona como un almacenamiento de datos de tipo LIFO (Last In, First Out - Último en entrar, primero en salir).
 
@@ -668,9 +668,9 @@ if (pilaVacia(&miPila) == TRUE) {
 
 ---
 
-## -------------- CAPÍTULO 10: OPERACIONES CON COLAS --------------
-
 <a name="capítulo-10-operaciones-con-colas"></a>
+
+## -------------- CAPÍTULO 10: OPERACIONES CON COLAS --------------
 
 La biblioteca incluye una implementación completa de la estructura de datos cola (queue), que funciona como un almacenamiento de datos de tipo FIFO (First In, First Out - Primero en entrar, primero en salir).
 
@@ -867,9 +867,9 @@ set.mostrarLista(&set);
 
 ---
 
-## -------------- CAPÍTULO 12: DICCIONARIOS --------------
-
 <a name="capítulo-12-diccionarios"></a>
+
+## -------------- CAPÍTULO 12: DICCIONARIOS --------------
 
 La biblioteca incluye una implementación completa de diccionarios (hash maps) que permiten almacenar pares clave-valor de forma eficiente, proporcionando operaciones de inserción, búsqueda y eliminación con complejidad constante en el caso promedio.
 
@@ -969,9 +969,9 @@ Para usar el diccionario con tipos diferentes a `char*`, se pueden redefinir los
 
 ---
 
-## -------------- CAPÍTULO 13: OTRAS ESTRUCTURAS DE DATOS --------------
-
 <a name="capítulo-13-otras-estructuras-de-datos"></a>
+
+## -------------- CAPÍTULO 13: OTRAS ESTRUCTURAS DE DATOS --------------
 
 La biblioteca incluye implementaciones de estructuras de datos avanzadas como árboles, montículos y grafos, proporcionando herramientas completas para el manejo de datos jerárquicos y relaciones complejas.
 
@@ -1099,9 +1099,9 @@ amplitud(&grafo, 0);
 
 ---
 
-## ------ CAPÍTULO 14: ALGORITMOS DE PLANIFICACIÓN DE PROCESOS -------
-
 <a name="capítulo-14-algoritmos-de-planificación-de-procesos"></a>
+
+## ------ CAPÍTULO 14: ALGORITMOS DE PLANIFICACIÓN DE PROCESOS -------
 
 En este capítulo se describen los principales algoritmos de planificación de procesos utilizados en sistemas operativos para gestionar la ejecución de tareas. Estos algoritmos determinan el orden en que los procesos acceden a la CPU, optimizando criterios como el tiempo de espera, el tiempo de respuesta o el uso de recursos. A continuación se explican los más relevantes:
 
@@ -1135,9 +1135,9 @@ En este capítulo se describen los principales algoritmos de planificación de p
 
 Cada algoritmo tiene ventajas e inconvenientes, y la elección depende del contexto y los objetivos del sistema.
 
-## -------------- CAPÍTULO 15: ALGORITMOS DE BÚSQUEDA --------------
-
 <a name="capítulo-15-algoritmos-de-búsqueda"></a>
+
+## -------------- CAPÍTULO 15: ALGORITMOS DE BÚSQUEDA --------------
 
 En este capítulo se describen los principales algoritmos de búsqueda implementados en la biblioteca, tanto para enteros como para números reales. Los algoritmos de búsqueda permiten localizar la posición de un elemento dentro de un vector, devolviendo la posición si se encuentra o -1 si no está o si ocurre algún error. A continuación se explican los algoritmos incluidos:
 
@@ -1194,9 +1194,9 @@ Todas las funciones de búsqueda de la biblioteca devuelven la posición del ele
   - En la binaria, ternaria, exponencial y Fibonacci, el mejor caso es encontrar el elemento en el primer intento (centro o primer salto).
   - Todas las búsquedas, salvo la lineal, requieren el vector ordenado.
 
-## -------------- CAPÍTULO 16: ALGORITMOS DE ORDENACIÓN --------------
-
 <a name="capítulo-16-algoritmos-de-ordenación"></a>
+
+## -------------- CAPÍTULO 16: ALGORITMOS DE ORDENACIÓN --------------
 
 En este capítulo se explican los algoritmos de ordenación implementados en la biblioteca, tanto clásicos como avanzados, para enteros y números reales. Los algoritmos de ordenación permiten reorganizar los elementos de un vector o lista según un criterio (habitualmente de menor a mayor). A continuación se describen los principales algoritmos incluidos:
 
@@ -1311,9 +1311,9 @@ Cada algoritmo tiene ventajas y desventajas según el tipo y tamaño de los dato
   - Bitonic Sort es eficiente en hardware especializado.
   - Stooge Sort es principalmente de interés académico por su ineficiencia.
 
-## ----------------- CAPÍTULO 17: BARAJA DE CARTAS -------------------
-
 <a name="capítulo-17-baraja-de-cartas"></a>
+
+## ----------------- CAPÍTULO 17: BARAJA DE CARTAS -------------------
 
 La biblioteca incluye un completo módulo para la gestión y manipulación de barajas de cartas, pensado tanto para juegos clásicos como para utilidades didácticas.
 
@@ -1346,9 +1346,9 @@ for (int i = 0; i < j->numJugadores; i++) free(j->jugadores[i].mano.cartas);
 free(j->jugadores); free(j);
 ```
 
-## -------------- CAPÍTULO 18: DIAGRAMAS DE GANTT --------------
-
 <a name="capítulo-18-diagramas-de-gantt"></a>
+
+## -------------- CAPÍTULO 18: DIAGRAMAS DE GANTT --------------
 
 La biblioteca incluye un módulo completo para la gestión y visualización de diagramas de Gantt, herramientas esenciales en la gestión de proyectos para planificar y programar tareas.
 
@@ -1424,9 +1424,9 @@ free(proyecto);
 
 Esta funcionalidad es especialmente útil para la gestión de proyectos, planificación de recursos y análisis de dependencias entre tareas.
 
-## -------------- CAPÍTULO 19: ESTIMACIÓN DE ESFUERZO --------------
-
 <a name="capítulo-19-estimación-de-esfuerzo"></a>
+
+## -------------- CAPÍTULO 19: ESTIMACIÓN DE ESFUERZO --------------
 
 La biblioteca incluye una función para estimar el esfuerzo en horas de desarrollo de proyectos software utilizando el modelo de puntos de caso de uso (UCP - Use Case Points).
 
@@ -1471,9 +1471,9 @@ estimarEsfuerzo();  // Inicia el proceso interactivo de estimación
 
 Esta funcionalidad es especialmente útil para la planificación de proyectos software, estimación de costes y asignación de recursos en el desarrollo de aplicaciones.
 
-## ------------ CAPÍTULO 20: CÓDIGOS CORRECTORES DE ERRORES -------------
-
 <a name="capítulo-20-códigos-correctores-de-errores"></a>
+
+## ------------ CAPÍTULO 20: CÓDIGOS CORRECTORES DE ERRORES -------------
 
 La biblioteca incluye un módulo completo para la implementación y gestión de códigos correctores de errores, específicamente códigos de Hamming y códigos lineales generales. Estos códigos son fundamentales en la teoría de la información para detectar y corregir errores en la transmisión de datos.
 
@@ -1563,9 +1563,9 @@ free(c.H);
 
 Esta funcionalidad es esencial para aplicaciones de comunicaciones digitales, almacenamiento de datos y cualquier sistema que requiera transmisión confiable de información.
 
-## -------------- CAPÍTULO 21: HIPERPLANOS --------------
-
 <a name="capítulo-21-hiperplanos"></a>
+
+## -------------- CAPÍTULO 21: HIPERPLANOS --------------
 
 La biblioteca incluye un módulo completo para el manejo de hiperplanos en espacios vectoriales de cualquier dimensión. Un hiperplano es una generalización de planos y rectas a espacios de dimensión arbitraria, representado como un sistema de ecuaciones lineales homogéneas.
 
@@ -1631,9 +1631,9 @@ free(interseccion.info);
 
 Esta funcionalidad es fundamental para aplicaciones de geometría computacional, álgebra lineal, optimización y análisis de sistemas de ecuaciones lineales en espacios de dimensión arbitraria.
 
-## -------------- CAPÍTULO 22: AUTÓMATAS FINITOS --------------
-
 <a name="capítulo-22-autómatas-finitos"></a>
+
+## -------------- CAPÍTULO 22: AUTÓMATAS FINITOS --------------
 
 La biblioteca incluye un módulo completo para la implementación y gestión de autómatas finitos deterministas y no deterministas. Los autómatas finitos son modelos computacionales fundamentales en la teoría de lenguajes formales y teoría de la computación, utilizados para reconocer patrones y validar cadenas de símbolos.
 
