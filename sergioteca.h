@@ -2,8 +2,8 @@
 /*****************************************************************************************************************/
 /********************************** BIBLIOTECA DE FUNCIONES DE C, DECLARACIONES **********************************/
 /************************************** AUTOR: SERGIO JUAN ROLLÁN MORALEJO ***************************************/
-/*****************************************       VERSIÓN NO: 3.1      *******************************************/
-/************************************** FECHA DE FINALIZACIÓN: 22-07-2025 ****************************************/
+/*****************************************       VERSIÓN NO: 3.2      *******************************************/
+/************************************** FECHA DE FINALIZACIÓN: 28-07-2025 ****************************************/
 /*****************************************************************************************************************/
 /*****************************************************************************************************************/
 
@@ -482,6 +482,8 @@ long variaciones(int n, int m);
 long variacionesConRepeticion(int n, int m);
 long permutaciones(int n);
 long permutacionesConRepeticion(int n, const int *ms, int k);
+double calcularProbabilidadPuntosParciales(int* puntuaciones, int tam, int repeticiones, int sumaObjetivo);
+void contarCombinaciones(int* puntuaciones, int tam, int repeticiones, int sumaObjetivo, long long* favorables, long long* totales);
 
 
 //operaciones de lectura

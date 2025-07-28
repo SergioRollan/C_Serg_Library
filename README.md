@@ -4,9 +4,9 @@ BIBLIOTECA DE FUNCIONES DE C
 
 AUTOR: SERGIO JUAN ROLLÁN MORALEJO
 
-VERSIÓN NO: 3.1
+VERSIÓN NO: 3.2
 
-FECHA DE FINALIZACIÓN: 22-07-2023
+FECHA DE FINALIZACIÓN: 28-07-2023
 
 Objetivo de la biblioteca: reducir lo máximo posible el número de ".h" que se incluyan en todos los proyectos de C del usuario, a lo largo de aproximadamente 10000 lineas de código de funciones útiles y reutilizables. Se incluirá en los códigos fuente escribiendo al principio del documento la línea '#include "sergioteca.h"'.
 
@@ -157,6 +157,7 @@ La biblioteca incluye un conjunto de funciones utilitarias que proporcionan func
 - **long variacionesConRepeticion(int n, int m)**: Calcula variaciones con repetición V'(n, m).
 - **long permutaciones(int n)**: Calcula permutaciones sin repetición P(n).
 - **long permutacionesConRepeticion(int n, const int\* ms, int k)**: Calcula permutaciones con repetición P(n; m1, m2, ..., mk).
+- **double calcularProbabilidadPuntosParciales(int\* puntuaciones, int tam, int repeticiones, int sumaObjetivo)**: Calcula la probabilidad (en porcentaje) de obtener una puntuación igual o mayor sumando varios valores de un conjunto dado de puntuaciones posibles.
 
 ### Funciones de interacción con el usuario
 
@@ -220,6 +221,10 @@ long perm = permutaciones(4);         // P(4) = 24
 // Permutaciones con repetición
 int ms[] = {2, 1, 1};  // 2 elementos iguales, 1 diferente, 1 diferente
 long permRep = permutacionesConRepeticion(4, ms, 3);  // P(4;2,1,1) = 12
+
+// Cálculo de probabilidad de puntos
+int puntuaciones[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15};
+double prob = calcularProbabilidadPuntosParciales(puntuaciones, 12, 4, 28);  // Probabilidad de obtener al menos 28 puntos con 4 repeticiones
 ```
 
 ---

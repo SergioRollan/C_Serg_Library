@@ -2,9 +2,9 @@
 /*****************************************************************************************************************/
 /********************************** BIBLIOTECA DE FUNCIONES DE C, CÓDIGO FUENTE **********************************/
 /**********************************     AUTOR: SERGIO JUAN ROLLÁN MORALEJO      **********************************/
-/**********************************              VERSIÓN NO: 3.1                **********************************/
+/**********************************              VERSIÓN NO: 3.2                **********************************/
 /**********************************      FECHA DE PUBLICACIÓN: 03-07-2022       **********************************/
-/**********************************     FECHA DE ACTUALIZACIÓN: 22-07-2025      **********************************/
+/**********************************     FECHA DE ACTUALIZACIÓN: 28-07-2025      **********************************/
 /*****************************************************************************************************************/
 /*****************************************************************************************************************/
 #include "sergioteca.h"
@@ -8724,4 +8724,66 @@ void destruirAutomata(tipoAutomata* aut)
     }
     free(aut->transiciones);
     free(aut);
+}
+
+
+void contarCombinaciones(int* puntuaciones, int tam, int repeticiones, int sumaObjetivo, long long* favorables, long long* totales) 
+{
+    if (!puntuaciones || tam <= 0 || repeticiones <= 0 || !favorables || !totales) return;
+    *favorables = 0;
+    *totales = pow(tam, repeticiones);
+    
+    int* combinacion = (int*)malloc(repeticiones * sizeof(int));
+    if (!combinacion) return;
+    
+    for (int i = 0; i < repeticiones; i++) combinacion[i] = 0;
+    
+    boolean continuar = TRUE;
+    while (continuar) 
+    {
+        int suma = 0;
+        for (int i = 0; i < repeticiones; i++)
+            suma += puntuaciones[combinacion[i]];
+        
+        if (suma >= sumaObjetivo) (*favorables)++;
+        
+        int pos = repeticiones - 1;
+        while (pos >= 0) 
+        {
+            combinacion[pos]++;
+            if (combinacion[pos] >= tam) 
+            {
+                combinacion[pos] = 0;
+                pos--;
+            } else break;
+        }
+        
+        if (pos < 0) continuar = FALSE;
+    }
+    
+    free(combinacion);
+}
+
+/**
+ * Calcula la probabilidad (en porcentaje) de obtener una puntuación igual o mayor
+ * sumando varios valores de un conjunto dado de puntuaciones posibles.
+ * 
+ * @param puntuaciones Array de posibles puntuaciones a usar.
+ * @param tam Tamaño del array de puntuaciones.
+ * @param repeticiones Número de veces que se elige una puntuación.
+ * @param sumaObjetivo Puntuación mínima a alcanzar.
+ * @return Probabilidad (entre 0 y 100) de alcanzar al menos la sumaObjetivo.
+ * @example double prob = calcularProbabilidad([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 18, 21, 25], 15, 8, 100); // Probabilidad de obtener al menos 100 puntos con 8 carreras en ese sistema de puntuación.
+ */
+double calcularProbabilidadPuntosParciales(int* puntuaciones, int tam, int repeticiones, int sumaObjetivo) 
+{
+    if (!puntuaciones || tam <= 0 || repeticiones <= 0 || sumaObjetivo < 0) return 0.0;
+    
+    long long favorables = 0;
+    long long totales = 0;
+
+    contarCombinaciones(puntuaciones, tam, repeticiones, sumaObjetivo, &favorables, &totales);
+
+    if (totales == 0) return 0.0;
+    return (double)favorables / totales * 100.0;
 }
