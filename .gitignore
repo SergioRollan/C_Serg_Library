@@ -5,3 +5,4 @@ prueba.c
 .vscode
 .vscode/
 .vscode/*
+.vscode/c_cpp_properties.json
